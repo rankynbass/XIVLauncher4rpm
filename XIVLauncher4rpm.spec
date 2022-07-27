@@ -7,12 +7,15 @@
 
 Name:           XIVLauncher
 Version:        1.0.0.9
+# Replace * with percent sign and uncomment to use this macro. Use if adding
+# the distro tag to the release.
+# *define _rel *(echo "*{RELEASE}" | awk -F. '{print $1}')
 Release:        1
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Fedora native version)
 License:        GPLv3
 URL:            https://github.com/goatcorp/FFXIVQuickLauncher
 Source0:        https://github.com/goatcorp/FFXIVQuickLauncher/archive/%{UpstreamTag}.tar.gz
-Source1:        https://github.com/rankynbass/XIVLauncher4rpm/archive/XIVLauncher-%{version}-%{release}.tar.gz
+Source1:        https://github.com/rankynbass/XIVLauncher4rpm/archive/%{version}-%{release}.tar.gz
 
 # These package names are from the fedora / redhat repos. Other rpm distros might
 # have different names for these.
@@ -56,7 +59,7 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # The official repo is used for Source0, so unpack that first.
 %setup -b 0 -n FFXIVQuickLauncher-%{UpstreamTag}
 # Now unpack the extra files from this repo into a folder
-%setup -b 1 -n XIVLauncher4rpm
+%setup -b 1 -n XIVLauncher4rpm-%{version}-%{release}
 
 # BUILD SECTION
 %build
@@ -69,7 +72,7 @@ git commit -m "work around bug needing git repo to build"
 cd src/XIVLauncher.Core
 dotnet publish -r linux-x64 --sc -o "%{launcher}" --configuration Release
 cp ../../misc/linux_distrib/512.png %{launcher}/xivlauncher.png
-cd %{_builddir}/XIVLauncher4rpm
+cd %{_builddir}/XIVLauncher4rpm-%{version}-%{release}
 cp openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop %{launcher}/
 
 # INSTALL SECTION
