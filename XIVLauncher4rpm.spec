@@ -113,6 +113,7 @@ fi
 
 # BUILD SECTION
 %build
+rm -rf %{launcher}
 mkdir -p %{launcher}
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
 dotnet publish -r linux-x64 --sc -o "%{launcher}" --configuration Release
