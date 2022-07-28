@@ -59,18 +59,11 @@ mkdir -p ~/build
 cd ~/build
 git clone https://github.com/rankynbass/XIVLauncher4rpm.git
 cd XIVLauncher4rpm
-spectool -g -R XIVLauncher4rpm.spec
-```
-If this works, you should end up with 2 .tar.gz files in `~/rpmbuild/SOURCE`. The version number file is an archive of this repo. The master
-file is the lastest version of the master branch of goatcorp's <a href=https://github.com/goatcorp/FFXIVQuickLauncher>FFXIVQuickLauncher</a> repo.
-```
-$ ls
-1.0.0.9-1.tar.gz  master.tar.gz
 ```
 Now you can build the rpms.
 
-`rpmbuild -bb XIVLauncher4rpm.spec` or `rpmbuild -ba XIVLauncher4rpm.spec` if you want to build source rpm as well. Be aware that the srpm will
-include the source files from master FFXIVQuickLauncher repository, so it will be fairly large.
+`rpmbuild -bb XIVLauncher4rpm.spec` to just build a binary rpm or `rpmbuild -ba XIVLauncher4rpm.spec` if you want to build source rpm as well.
+Be aware that the srpm will include the source files from goatcorp/FFXIVQuickLauncher repository, so it will be fairly large.
 
 In the end you should have an rpm file in `~/rpmbuild/RPMS/x86_64/` called `XIVLauncher-<version>.x86_64.rpm`. If you build sources as well, that 
 will be in `~/rpmbuild/SRPMS/`.
