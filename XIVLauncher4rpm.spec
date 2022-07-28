@@ -1,21 +1,27 @@
 # SPEC file for compiling a native version of XIVLauncher for rpm-based distros
 # Currently only tested with Fedora 36.
 
-# Pick a tag to pull from the main repo -- master will pull the latest version,
-# but this can also be set to any tag in the repo (for example, 6.2.43)
-%define UpstreamTag master
-
 Name:           XIVLauncher
 Version:        1.0.0.9
 # Replace * with percent sign and uncomment to use this macro. Use if adding
 # the distro tag to the release.
 # *define _rel *(echo "*{RELEASE}" | awk -F. '{print $1}')
-Release:        1
+Release:        2
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Fedora native version)
+Group:          Applications/Games
 License:        GPLv3
-URL:            https://github.com/goatcorp/FFXIVQuickLauncher
-Source0:        https://github.com/goatcorp/FFXIVQuickLauncher/archive/%{UpstreamTag}.tar.gz
-Source1:        https://github.com/rankynbass/XIVLauncher4rpm/archive/%{version}-%{release}.tar.gz
+URL:            https://github.com/rankynbass/XIVLauncher4rpm
+# Pick a tag or branch to pull from the main repo -- master will pull the latest version,
+# but this can also be set to any tag in the repo (for example, 6.2.43)
+# Using a version tag is useful for archival purposes -- the spec file will pull the same
+# sources every time, as long as the tag doesn't change. Rebuilds will be consistant.
+%define UpstreamTag 6.2.44
+# Pick a tag or branch to pull from XIVLauncher4rpm. main is used for the primary branch so that it doesn't
+# have a name clash with the goatcorp repo. Mostly for my own sanity while testing.
+# The canary branch will always have a spec file that just pulls the latest upstream git.
+%define DownstreamTag 1.0.0.9-2
+Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
+Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 
 # These package names are from the fedora / redhat repos. Other rpm distros might
 # have different names for these.
@@ -56,24 +62,63 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # to be in the SOURCES folder. Use 'spectool -g -R XIVLauncher4rpm.spec' before running
 # rpmbuild.
 %prep
-# The official repo is used for Source0, so unpack that first.
-%setup -b 0 -n FFXIVQuickLauncher-%{UpstreamTag}
-# Now unpack the extra files from this repo into a folder
-%setup -b 1 -n XIVLauncher4rpm-%{version}-%{release}
+%define repo0 FFXIVQuickLauncher-%{UpstreamTag}
+if [ ! -f "%{_sourcedir}/%{repo0}.tar.gz" ];
+then
+#   If the tarball is missing, the git repo. Then checkout the appropriate branch / tag, and build a tarball
+#   for making the src.rpm
+    echo "No source file found! Creating..."
+    cd %{_builddir}
+    rm -rf %{repo0}
+    git clone https://github.com/goatcorp/FFXIVQuickLauncher
+    mv FFXIVQuickLauncher %{repo0}
+    cd %{repo0}
+    git checkout %{UpstreamTag}
+    git archive --format=tar.gz -o %{_sourcedir}/%{repo0}.tar.gz --prefix=%{repo0}/ master
+else
+#   If the tarball is present (for example, if building from src.rpm), unzip it, then set up a git repo to
+#   work around a build bug in the source. Can't use setup macro because rpmbuild will fail if there's no
+#   source files present and the macro is present, even if it wouldn't be used.
+    cd %{_builddir}
+    rm -rf %{repo0}
+    gzip -dc %{_sourcedir}/%{repo0}.tar.gz | tar -xvvf -
+    if [ $? -ne 0 ]; then
+        exit $?
+    fi
+    cd %{_builddir}/%{repo0}
+    git init
+    git add .
+    git commit -m "Working around build bug"
+fi
+
+%define repo1 XIVLauncher4rpm-%{DownstreamTag}
+if [ ! -f "%{_sourcedir}/%{repo1}.tar.gz" ];
+then
+    echo "No source file found! Creating..."
+    cd %{_builddir}
+    rm -rf %{repo1}
+    git clone https://github.com/rankynbass/XIVLauncher4rpm
+    mv XIVLauncher4rpm %{repo1}
+    cd %{repo1}
+    git checkout %{DownstreamTag}
+    git archive --format=tar.gz -o %{_sourcedir}/%{repo1}.tar.gz --prefix=%{repo1}/ main
+else
+    cd %{_builddir}
+    rm -rf %{repo1}
+    gzip -dc %{_sourcedir}/%{repo1}.tar.gz | tar -xvvf -
+    if [ $? -ne 0 ]; then
+        exit $?
+    fi
+fi
 
 # BUILD SECTION
 %build
 mkdir -p %{launcher}
-cd %{_builddir}/FFXIVQuickLauncher-%{UpstreamTag}
-# initialize a git archive. Otherwise build will fail.
-git init
-git add .
-git commit -m "work around bug needing git repo to build"
-cd src/XIVLauncher.Core
+cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
 dotnet publish -r linux-x64 --sc -o "%{launcher}" --configuration Release
 cp ../../misc/linux_distrib/512.png %{launcher}/xivlauncher.png
-cd %{_builddir}/XIVLauncher4rpm-%{version}-%{release}
-cp openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop %{launcher}/
+cd %{_builddir}/%{repo1}
+cp openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop LICENSE %{launcher}/
 
 # INSTALL SECTION
 %install
@@ -89,6 +134,7 @@ ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
 rm -rf %{buildroot}
 
 %files
+%license /opt/XIVLauncher/LICENSE
 /usr/bin/xivlauncher
 /usr/share/applications/XIVLauncher.desktop
 /usr/share/pixmaps/xivlauncher.png

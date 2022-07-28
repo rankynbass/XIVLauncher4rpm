@@ -15,11 +15,15 @@ If you'd like to live on the edge, or the flatpak version is unsuitable for some
 Either install it by double-clicking in your graphical environment (or single-clicking if you have it set that way), or open a terminal and use your
 package manager to install it. You do know what you're doing, right? In Fedora, the command is:
 
-`sudo dnf install <filename.rpm>`
+```
+sudo dnf install <filename.rpm>
+```
 
 As a last resort, you could install it with
 
-`sudo rpm -i <filename.rpm>`
+```
+sudo rpm -i <filename.rpm>
+```
 
 But that might not play nice with your disto's package manager.
 
@@ -30,11 +34,21 @@ When you clone the git repository from github, DO NOT clone it into this folder,
 
 Download the required development packages:
 
-`sudo dnf rpmdevtools rpm-build`
+```
+sudo dnf rpmdevtools rpm-build
+```
+
+Set up the build directories if they don't already exist (`~/rpmbuild` and subfolders). Do NOT run with sudo:
+
+```
+rpmdev-setuptree
+```
 
 Install all the dependencies needed for the build. Theoretically this should be done by the rpmbuild tool, but it doesn't always work.
 
-```sudo dnf install aria2 SDL2 libsecret libattr fontconfig lcms2 libXcursor libXrandr libXdamage libXi gettext freetype mesa-libGLU libSM libgcc libpcap libFAudio desktop-file-utils jxrlib dotnet-sdk-6.0 git```
+```
+sudo dnf install aria2 SDL2 libsecret libattr fontconfig lcms2 libXcursor libXrandr libXdamage libXi gettext freetype mesa-libGLU libSM libgcc libpcap libFAudio desktop-file-utils jxrlib dotnet-sdk-6.0 git
+```
 
 ## Compiling the code
 
