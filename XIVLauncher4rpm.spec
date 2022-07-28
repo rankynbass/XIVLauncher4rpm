@@ -2,11 +2,11 @@
 # Currently only tested with Fedora 36.
 
 Name:           XIVLauncher
-Version:        canary
+Version:        1.0.0.9
 # Replace * with percent sign and uncomment to use this macro. Use if adding
 # the distro tag to the release.
 # *define _rel *(echo "*{RELEASE}" | awk -F. '{print $1}')
-Release:        1
+Release:        2
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Fedora native version)
 Group:          Applications/Games
 License:        GPLv3
@@ -15,11 +15,11 @@ URL:            https://github.com/rankynbass/XIVLauncher4rpm
 # but this can also be set to any tag in the repo (for example, 6.2.43)
 # Using a version tag is useful for archival purposes -- the spec file will pull the same
 # sources every time, as long as the tag doesn't change. Rebuilds will be consistant.
-%define UpstreamTag master
+%define UpstreamTag 6.2.44
 # Pick a tag or branch to pull from XIVLauncher4rpm. main is used for the primary branch so that it doesn't
 # have a name clash with the goatcorp repo. Mostly for my own sanity while testing.
 # The canary branch will always have a spec file that just pulls the latest upstream git.
-%define DownstreamTag canary
+%define DownstreamTag 1.0.0.9-2
 Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
 Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 
