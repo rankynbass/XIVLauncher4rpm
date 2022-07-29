@@ -43,7 +43,7 @@ Requires:       mesa-libGLU
 Requires:       libSM
 Requires:       libgcc
 Requires:       libpcap
-Requires:       libFAudio
+Requires:       libFAudio or libFAudio0
 Requires:       desktop-file-utils
 Requires:       jxrlib
 
