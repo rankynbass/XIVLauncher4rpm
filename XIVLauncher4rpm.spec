@@ -138,7 +138,6 @@ mv opt/XIVLauncher/COPYING /usr/share/doc/xivlauncher
 rm -rf %{buildroot}
 
 %files
-%license /opt/XIVLauncher/LICENSE
 /usr/bin/xivlauncher
 /usr/share/applications/XIVLauncher.desktop
 /usr/share/pixmaps/xivlauncher.png
@@ -158,5 +157,4 @@ rm -rf %{buildroot}
 /opt/XIVLauncher/XIVLauncher.Core.pdb
 /opt/XIVLauncher/XIVLauncher.Core.xml
 /opt/XIVLauncher/XIVLauncher.desktop
-
-
+%license /usr/share/doc/COPYING
