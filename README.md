@@ -33,6 +33,9 @@ But that might not play nice with your disto's package manager.
 
 ### openSUSE
 
+I've only tested this on openSUSE LEAP 15.4. It installs fine there, but Tumbleweed and prior versions of LEAP might have different package names.
+If that's the case, the rpm will probably complain about not finding anything to provide certain packages.
+
 Ignore the warning that the rpm is unsigned. I don't know how to do that yet, and depending on how difficult it
 is, I might not ever bother.
 
@@ -88,4 +91,5 @@ will be in `~/rpmbuild/SRPMS/`.
 Install as mentioned in the "Installing" section. You can also build from the srpm with `rpmbuild --rebuild <filename.src.rpm>`.
 
 ### OpenSUSE
+
 Instructions to follow. Probably not much different from fedora, but the package names will be different.
