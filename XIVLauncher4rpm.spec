@@ -120,7 +120,7 @@ cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
 dotnet publish -r linux-x64 --sc -o "%{launcher}" --configuration Release
 cp ../../misc/linux_distrib/512.png %{launcher}/xivlauncher.png
 cd %{_builddir}/%{repo1}
-cp openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop LICENSE %{launcher}/
+cp openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop COPYING %{launcher}/
 
 # INSTALL SECTION
 %install
@@ -130,9 +130,9 @@ install -d "%{buildroot}/usr/share/doc/xivlauncher"
 install -D -m 644 "%{launcher}/XIVLauncher.desktop" "%{buildroot}/usr/share/applications/XIVLauncher.desktop"
 install -D -m 644 "%{launcher}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher.png"
 cp -r "%{launcher}"/* "%{buildroot}/opt/XIVLauncher"
+cp %{buildroot}/opt/XIVLauncher/COPYING %{buildroot}/usr/share/doc/xivlauncher/COPYING
 cd %{buildroot}
 ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
-mv opt/XIVLauncher/COPYING /usr/share/doc/xivlauncher
 
 %clean
 rm -rf %{buildroot}
@@ -141,6 +141,7 @@ rm -rf %{buildroot}
 /usr/bin/xivlauncher
 /usr/share/applications/XIVLauncher.desktop
 /usr/share/pixmaps/xivlauncher.png
+/opt/XIVLauncher/COPYING
 /opt/XIVLauncher/libcimgui.so
 /opt/XIVLauncher/libskeychain.so
 /opt/XIVLauncher/libsteam_api64.so
@@ -157,4 +158,4 @@ rm -rf %{buildroot}
 /opt/XIVLauncher/XIVLauncher.Core.pdb
 /opt/XIVLauncher/XIVLauncher.Core.xml
 /opt/XIVLauncher/XIVLauncher.desktop
-%license /usr/share/doc/COPYING
+%license /usr/share/doc/xivlauncher/COPYING
