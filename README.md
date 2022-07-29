@@ -33,6 +33,9 @@ But that might not play nice with your disto's package manager.
 
 ### openSUSE
 
+Ignore the warning that the rpm is unsigned. I don't know how to do that yet, and depending on how difficult it
+is, I might not ever bother.
+
 ```
 sudo zypper install <filename.rpm>
 ```

@@ -6,7 +6,7 @@ Version:        1.0.0.9
 # Replace * with percent sign and uncomment to use this macro. Use if adding
 # the distro tag to the release.
 # *define _rel *(echo "*{RELEASE}" | awk -F. '{print $1}')
-Release:        2
+Release:        3
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Fedora native version)
 Group:          Applications/Games
 License:        GPLv3
@@ -19,7 +19,7 @@ URL:            https://github.com/rankynbass/XIVLauncher4rpm
 # Pick a tag or branch to pull from XIVLauncher4rpm. main is used for the primary branch so that it doesn't
 # have a name clash with the goatcorp repo. Mostly for my own sanity while testing.
 # The canary branch will always have a spec file that just pulls the latest upstream git.
-%define DownstreamTag 1.0.0.9-2
+%define DownstreamTag 1.0.0.9-3
 Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
 Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 
