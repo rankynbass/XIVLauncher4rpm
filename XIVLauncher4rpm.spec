@@ -126,11 +126,13 @@ cp openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop LICENSE %{launcher}/
 %install
 install -d "%{buildroot}/usr/bin"
 install -d "%{buildroot}/opt/XIVLauncher"
+install -d "%{buildroot}/usr/share/doc/xivlauncher"
 install -D -m 644 "%{launcher}/XIVLauncher.desktop" "%{buildroot}/usr/share/applications/XIVLauncher.desktop"
 install -D -m 644 "%{launcher}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher.png"
 cp -r "%{launcher}"/* "%{buildroot}/opt/XIVLauncher"
 cd %{buildroot}
 ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
+mv opt/XIVLauncher/COPYING /usr/share/doc/xivlauncher
 
 %clean
 rm -rf %{buildroot}
