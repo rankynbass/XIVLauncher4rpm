@@ -1,4 +1,5 @@
 # XIVLauncher4rpm
+
 RPMs and build files for native versions of <a href=https://github.com/goatcorp/FFXIVQuickLauncher>FFXIVQuickLauncher</a>. Currently only tested on
 Fedora 36. It'll probably work for Fedora 35 and rawhide as well. I hope to get this set up to build for OpenSUSE eventually. It may even work as is;
 I haven't checked. Try at your own risk (minimal as it probably is).
@@ -11,7 +12,10 @@ Installation Guide</a>. It says Steam Deck, but it should work for most Linux di
 
 If you'd like to live on the edge, or the flatpak version is unsuitable for some reason, read on.
 
-## Installating
+## Installation
+
+### Fedora 35+
+
 Either install it by double-clicking in your graphical environment (or single-clicking if you have it set that way), or open a terminal and use your
 package manager to install it. You do know what you're doing, right? In Fedora, the command is:
 
@@ -27,7 +31,23 @@ sudo rpm -i <filename.rpm>
 
 But that might not play nice with your disto's package manager.
 
-## Setting up the environment
+### openSUSE
+
+I've only tested this on openSUSE LEAP 15.4. It installs fine there, but Tumbleweed and prior versions of LEAP might have different package names.
+If that's the case, the rpm will probably complain about not finding anything to provide certain packages.
+
+Ignore the warning that the rpm is unsigned. I don't know how to do that yet, and depending on how difficult it
+is, I might not ever bother.
+
+```
+sudo zypper install <filename.rpm>
+```
+
+## Building it yourself
+
+### Fedora 35+
+
+**Setting up the environment**
 
 By default, Fedora will want to build in `~/rpmbuild`. If it's somewhere different for your setup, replace ~/rpmbuild with your own build directory.
 When you clone the git repository from github, DO NOT clone it into this folder, do it somewhere else. I'll use `~/build` for these instructions.
@@ -50,7 +70,7 @@ Install all the dependencies needed for the build. Theoretically this should be 
 sudo dnf install aria2 SDL2 libsecret libattr fontconfig lcms2 libXcursor libXrandr libXdamage libXi gettext freetype mesa-libGLU libSM libgcc libpcap libFAudio desktop-file-utils jxrlib dotnet-sdk-6.0 git
 ```
 
-## Compiling the code
+**Compiling the code**
 
 Now pull the source code.
 
@@ -70,11 +90,6 @@ will be in `~/rpmbuild/SRPMS/`.
 
 Install as mentioned in the "Installing" section. You can also build from the srpm with `rpmbuild --rebuild <filename.src.rpm>`.
 
+### OpenSUSE
 
-
-
-
-
-
-
-
+Instructions to follow. Probably not much different from fedora, but the package names will be different.

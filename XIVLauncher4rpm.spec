@@ -6,7 +6,7 @@ Version:        1.0.0.9
 # Replace * with percent sign and uncomment to use this macro. Use if adding
 # the distro tag to the release.
 # *define _rel *(echo "*{RELEASE}" | awk -F. '{print $1}')
-Release:        2
+Release:        3
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Fedora native version)
 Group:          Applications/Games
 License:        GPLv3
@@ -19,31 +19,32 @@ URL:            https://github.com/rankynbass/XIVLauncher4rpm
 # Pick a tag or branch to pull from XIVLauncher4rpm. main is used for the primary branch so that it doesn't
 # have a name clash with the goatcorp repo. Mostly for my own sanity while testing.
 # The canary branch will always have a spec file that just pulls the latest upstream git.
-%define DownstreamTag 1.0.0.9-2
+%define DownstreamTag 1.0.0.9-3
 Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
 Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 
 # These package names are from the fedora / redhat repos. Other rpm distros might
 # have different names for these.
+# (x or y) has been used where fedora and opensuse have different package names (fedora-pkg or opensuse-pkg).
 BuildRequires:  dotnet-sdk-6.0
 BuildRequires:  git
 Requires:       aria2
-Requires:       SDL2
-Requires:       libsecret
-Requires:       libattr
+Requires:       (SDL2 or libSDL2-2_0-0)
+Requires:       (libsecret or libsecret-1-0)
+Requires:       (libattr or libattr1)
 Requires:       fontconfig
 Requires:       lcms2
-Requires:       libXcursor
-Requires:       libXrandr
-Requires:       libXdamage
-Requires:       libXi
-Requires:       gettext
+Requires:       (libXcursor or libXcursor1)
+Requires:       (libXrandr or libXrandr2)
+Requires:       (libXdamage or libXdamage1)
+Requires:       (libXi or libXi6)
+Requires:       (gettext or gettext-runtime)
 Requires:       freetype
-Requires:       mesa-libGLU
-Requires:       libSM
-Requires:       libgcc
-Requires:       libpcap
-Requires:       libFAudio
+Requires:       (mesa-libGLU or libGLU1)
+Requires:       (libSM or libSM6)
+Requires:       (libgcc or libgcc_s1)
+Requires:       (libpcap or libpcap1)
+Requires:       (libFAudio or libFAudio0)
 Requires:       desktop-file-utils
 Requires:       jxrlib
 
