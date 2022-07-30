@@ -1,10 +1,10 @@
 # XIVLauncher4rpm
 
 RPMs and build files for native versions of <a href=https://github.com/goatcorp/FFXIVQuickLauncher>FFXIVQuickLauncher</a>. Currently only tested on
-Fedora 36. It'll probably work for Fedora 35 and rawhide as well. I hope to get this set up to build for OpenSUSE eventually. It may even work as is;
-I haven't checked. Try at your own risk (minimal as it probably is).
+Fedora 35, 36, and openSUSE LEAP 15.4. It'll probably work for other distros as well, if you can work out the dependencies. Try at your own risk
+(minimal as it probably is).
 
-**Warning! This version is not officially supported.**
+**Warning! This version is not officially supported. It works for me, but ymmv**
 
 If you don't know what you're doing, I'd suggest following these instructions: <a href=https://goatcorp.github.io/faq/steamdeck>XIVLauncher Steam Deck
 Installation Guide</a>. It says Steam Deck, but it should work for most Linux distibutions. Or get it directly from
