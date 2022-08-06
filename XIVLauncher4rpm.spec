@@ -23,27 +23,28 @@ URL:            https://github.com/rankynbass/XIVLauncher4rpm
 Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
 Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 
-# These package names are from the fedora / redhat repos. Other rpm distros might
-# have different names for these.
+# These package names are from the fedora / redhat and openSUSE Leap 15.4 repos. Other rpm distros might
+# have different names for these. Confirmed to launch and start downloading in openSUSE, but I haven't
+# tried actually playing the game yet.
 BuildRequires:  dotnet-sdk-6.0
 BuildRequires:  git
 Requires:       aria2
-Requires:       SDL2
-Requires:       libsecret
-Requires:       libattr
+Requires:       (SDL2 or libSDL2-2_0-0)
+Requires:       (libsecret or libsecret-1-0)
+Requires:       (libattr or libattr1)
 Requires:       fontconfig
 Requires:       lcms2
-Requires:       libXcursor
-Requires:       libXrandr
-Requires:       libXdamage
-Requires:       libXi
-Requires:       gettext
+Requires:       (libXcursor or libXcursor1)
+Requires:       (libXrandr or libXrandr2)
+Requires:       (libXdamage or libXdamage1)
+Requires:       (libXi or libXi6)
+Requires:       (gettext or gettext-runtime)
 Requires:       freetype
-Requires:       mesa-libGLU
-Requires:       libSM
-Requires:       libgcc
-Requires:       libpcap
-Requires:       libFAudio
+Requires:       (mesa-libGLU or libGLU1)
+Requires:       (libSM or libSM6)
+Requires:       (libgcc or libgcc_s1)
+Requires:       (libpcap or libpcap1)
+Requires:       (libFAudio or libFAudio0)
 Requires:       desktop-file-utils
 Requires:       jxrlib
 
