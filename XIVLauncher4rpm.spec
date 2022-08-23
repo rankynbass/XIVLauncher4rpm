@@ -2,25 +2,27 @@
 # Currently only tested with Fedora 36.
 
 Name:           XIVLauncher
-Version:        1.0.0.9
+Version:        1.0.1.0
 # Replace * with percent sign and uncomment to use this macro. Use if adding
 # the distro tag to the release.
 # *define _rel *(echo "*{RELEASE}" | awk -F. '{print $1}')
-Release:        3
+Release:        1
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Fedora native version)
 Group:          Applications/Games
 License:        GPLv3
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
-# Pick a tag or branch to pull from the main repo -- master will pull the latest version,
-# but this can also be set to any tag in the repo (for example, 6.2.43)
+# Pick a tag, branch, or commit to checkout from the main repo -- master will pull the latest version,
+# but this can also be set to any tag or commit in the repo (for example, 6.2.43)
 # Using a version tag is useful for archival purposes -- the spec file will pull the same
 # sources every time, as long as the tag doesn't change. Rebuilds will be consistant.
-%define UpstreamTag 6.2.44
+# UpstreamName is used to name the tarball for the source rpm.
+%define UpstreamName 20220823
+%define UpstreamCheckout 6246fde
 # Pick a tag or branch to pull from XIVLauncher4rpm. main is used for the primary branch so that it doesn't
 # have a name clash with the goatcorp repo. Mostly for my own sanity while testing.
 # The canary branch will always have a spec file that just pulls the latest upstream git.
-%define DownstreamTag 1.0.0.9-3
-Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
+%define DownstreamTag 1.0.1.0-1
+Source0:        FFXIVQuickLauncher-%{UpstreamName}.tar.gz
 Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 
 # These package names are from the fedora / redhat repos. Other rpm distros might
@@ -63,10 +65,10 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # to be in the SOURCES folder. Use 'spectool -g -R XIVLauncher4rpm.spec' before running
 # rpmbuild.
 %prep
-%define repo0 FFXIVQuickLauncher-%{UpstreamTag}
+%define repo0 FFXIVQuickLauncher-%{UpstreamName}
 if [ ! -f "%{_sourcedir}/%{repo0}.tar.gz" ];
 then
-#   If the tarball is missing, the git repo. Then checkout the appropriate branch / tag, and build a tarball
+#   If the tarball is missing, clone the git repo. Then checkout the appropriate tag / commit, and build a tarball
 #   for making the src.rpm
     echo "No source file found! Creating..."
     cd %{_builddir}
@@ -74,8 +76,9 @@ then
     git clone https://github.com/goatcorp/FFXIVQuickLauncher
     mv FFXIVQuickLauncher %{repo0}
     cd %{repo0}
-    git checkout %{UpstreamTag}
-    git archive --format=tar.gz -o %{_sourcedir}/%{repo0}.tar.gz --prefix=%{repo0}/ master
+    git checkout %{UpstreamCheckout}
+    git checkout -B %{UpstreamName}
+    git archive --format=tar.gz -o %{_sourcedir}/%{repo0}.tar.gz --prefix=%{repo0}/ HEAD
 else
 #   If the tarball is present (for example, if building from src.rpm), unzip it, then set up a git repo to
 #   work around a build bug in the source. Can't use setup macro because rpmbuild will fail if there's no
