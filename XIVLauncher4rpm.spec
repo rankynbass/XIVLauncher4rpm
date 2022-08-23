@@ -15,14 +15,12 @@ URL:            https://github.com/rankynbass/XIVLauncher4rpm
 # but this can also be set to any tag or commit in the repo (for example, 6.2.43)
 # Using a version tag is useful for archival purposes -- the spec file will pull the same
 # sources every time, as long as the tag doesn't change. Rebuilds will be consistant.
-# UpstreamName is used to name the tarball for the source rpm.
-%define UpstreamName 20220823
-%define UpstreamCheckout 6246fde
+%define UpstreamTag 6246fde
 # Pick a tag or branch to pull from XIVLauncher4rpm. main is used for the primary branch so that it doesn't
 # have a name clash with the goatcorp repo. Mostly for my own sanity while testing.
 # The canary branch will always have a spec file that just pulls the latest upstream git.
 %define DownstreamTag 1.0.1.0-1
-Source0:        FFXIVQuickLauncher-%{UpstreamName}.tar.gz
+Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
 Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 
 # These package names are from the fedora / redhat repos. Other rpm distros might
@@ -65,7 +63,7 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # to be in the SOURCES folder. Use 'spectool -g -R XIVLauncher4rpm.spec' before running
 # rpmbuild.
 %prep
-%define repo0 FFXIVQuickLauncher-%{UpstreamName}
+%define repo0 FFXIVQuickLauncher-%{UpstreamTag}
 if [ ! -f "%{_sourcedir}/%{repo0}.tar.gz" ];
 then
 #   If the tarball is missing, clone the git repo. Then checkout the appropriate tag / commit, and build a tarball
@@ -76,8 +74,7 @@ then
     git clone https://github.com/goatcorp/FFXIVQuickLauncher
     mv FFXIVQuickLauncher %{repo0}
     cd %{repo0}
-    git checkout %{UpstreamCheckout}
-    git checkout -B %{UpstreamName}
+    git checkout %{UpstreamTag}
     git archive --format=tar.gz -o %{_sourcedir}/%{repo0}.tar.gz --prefix=%{repo0}/ HEAD
 else
 #   If the tarball is present (for example, if building from src.rpm), unzip it, then set up a git repo to
@@ -105,7 +102,7 @@ then
     mv XIVLauncher4rpm %{repo1}
     cd %{repo1}
     git checkout %{DownstreamTag}
-    git archive --format=tar.gz -o %{_sourcedir}/%{repo1}.tar.gz --prefix=%{repo1}/ main
+    git archive --format=tar.gz -o %{_sourcedir}/%{repo1}.tar.gz --prefix=%{repo1}/ HEAD
 else
     cd %{_builddir}
     rm -rf %{repo1}
