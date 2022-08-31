@@ -6,7 +6,7 @@ Version:        1.0.1.0
 # Replace * with percent sign and uncomment to use this macro. Use if adding
 # the distro tag to the release.
 # *define _rel *(echo "*{RELEASE}" | awk -F. '{print $1}')
-Release:        1
+Release:        2
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Fedora native version)
 Group:          Applications/Games
 License:        GPLv3
