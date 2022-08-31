@@ -19,7 +19,7 @@ URL:            https://github.com/rankynbass/XIVLauncher4rpm
 # Pick a tag or branch to pull from XIVLauncher4rpm. main is used for the primary branch so that it doesn't
 # have a name clash with the goatcorp repo. Mostly for my own sanity while testing.
 # The canary branch will always have a spec file that just pulls the latest upstream git.
-%define DownstreamTag 1.0.1.0-1
+%define DownstreamTag 1.0.1.0-2
 Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
 Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 
