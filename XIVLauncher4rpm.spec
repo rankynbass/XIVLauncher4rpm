@@ -117,7 +117,7 @@ fi
 rm -rf %{launcher}
 mkdir -p %{launcher}
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{launcher}" --configuration Release
+dotnet publish -r linux-x64 --sc -o "%{launcher}" --configuration Release -p:DefineConstants=WINE_XIV_FEDORA_LINUX
 cp ../../misc/linux_distrib/512.png %{launcher}/xivlauncher.png
 cd %{_builddir}/%{repo1}
 cp openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop COPYING %{launcher}/
