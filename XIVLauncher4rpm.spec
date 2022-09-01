@@ -55,7 +55,7 @@ Requires:       jxrlib
 %global __os_install_post %{nil}
 
 # Binaries will be deposited into this directory. Macro'd for convenience.
-%define launcher %{_builddir}/output
+%define launcher %{_builddir}/XIVLauncher
 
 %description
 Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This is a native build for fedora 36 and possibly other rpm based distos.
@@ -137,6 +137,9 @@ ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
 
 %clean
 rm -rf %{buildroot}
+rm -rf %{_builddir}/%{repo0}
+rm -rf %{_builddir}/%{repo1}
+rm -rf %{_builddir}/%{launcher}
 
 %files
 /usr/bin/xivlauncher
