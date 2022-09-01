@@ -8,6 +8,9 @@ Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Fedora native 
 Group:          Applications/Games
 License:        GPLv3
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
+# Exclusive arch tag. Only builds on x86_64 systems. Hopefully this prevents COPR from trying to build
+# on ppc64le
+ExclusiveArch:  x86_64
 
 # Pick a tag, branch, or commit to checkout from the main repo -- master will pull the latest version,
 # but this can also be set to any tag or commit in the repo (for example, 6.2.43)
