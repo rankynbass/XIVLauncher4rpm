@@ -64,63 +64,24 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # Be aware that rpmbuild DOES NOT download sources from urls. It expects the source files
 # to be in the SOURCES folder. That's why we're pulling from git repos and then archiving.
 %prep
-%define repo0 FFXIVQuickLauncher-%{UpstreamTag}
-if [ ! -f "%{_sourcedir}/%{repo0}.tar.gz" ];
-then
-#   If the tarball is missing, clone the git repo. Then checkout the appropriate tag / commit, and build a tarball
-#   for making the src.rpm
-    echo "No source file found! Creating..."
-    cd %{_builddir}
-    rm -rf %{repo0}
-    git clone https://github.com/goatcorp/FFXIVQuickLauncher
-    mv FFXIVQuickLauncher %{repo0}
-    cd %{repo0}
-    git checkout %{UpstreamTag}
-    git archive --format=tar.gz -o %{_sourcedir}/%{repo0}.tar.gz --prefix=%{repo0}/ HEAD
-else
-#   If the tarball is present (for example, if building from src.rpm), unzip it, then set up a git repo to
-#   work around a build bug in the source. Can't use setup macro because rpmbuild will fail if there's no
-#   source files present and the macro is present, even if it wouldn't be used.
-    cd %{_builddir}
-    rm -rf %{repo0}
-    gzip -dc %{_sourcedir}/%{repo0}.tar.gz | tar -xvvf -
-    if [ $? -ne 0 ]; then
-        exit $?
-    fi
-    cd %{_builddir}/%{repo0}
-    git init
-    git add .
-    git commit -m "Working around build bug"
-fi
+cd %{_builddir}
+git clone https://github.com/goatcorp/FFXIVQuickLauncher
+cd FFXIVQuickLauncher
+git checkout %{UpstreamTag}
 
-%define repo1 XIVLauncher4rpm-%{DownstreamTag}
-if [ ! -f "%{_sourcedir}/%{repo1}.tar.gz" ];
-then
-    echo "No source file found! Creating..."
-    cd %{_builddir}
-    rm -rf %{repo1}
-    git clone https://github.com/rankynbass/XIVLauncher4rpm
-    mv XIVLauncher4rpm %{repo1}
-    cd %{repo1}
-    git checkout %{DownstreamTag}
-    git archive --format=tar.gz -o %{_sourcedir}/%{repo1}.tar.gz --prefix=%{repo1}/ HEAD
-else
-    cd %{_builddir}
-    rm -rf %{repo1}
-    gzip -dc %{_sourcedir}/%{repo1}.tar.gz | tar -xvvf -
-    if [ $? -ne 0 ]; then
-        exit $?
-    fi
-fi
+cd %{_builddir}
+git clone https://github.com/rankynbass/XIVLauncher4rpm
+cd XIVLauncher4rpm
+git checkout COPR
 
 # BUILD SECTION
 %build
 rm -rf %{launcher}
 mkdir -p %{launcher}
-cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
+cd %{_builddir}/FFXIVQuickLauncher/src/XIVLauncher.Core
 dotnet publish -r linux-x64 --sc -o "%{launcher}" --configuration Release -p:DefineConstants=WINE_XIV_FEDORA_LINUX
 cp ../../misc/linux_distrib/512.png %{launcher}/xivlauncher.png
-cd %{_builddir}/%{repo1}
+cd %{_builddir}/XIVLauncher4rpm
 cp openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop COPYING %{launcher}/
 
 # INSTALL SECTION
