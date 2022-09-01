@@ -104,8 +104,7 @@ then
     git clone https://github.com/rankynbass/XIVLauncher4rpm
     mv XIVLauncher4rpm %{repo1}
     cd %{repo1}
-    git checkout COPR
-#   git checkout %{DownstreamTag}
+    git checkout %{DownstreamTag}
     git archive --format=tar.gz -o %{_sourcedir}/%{repo1}.tar.gz --prefix=%{repo1}/ HEAD
 else
     cd %{_builddir}
