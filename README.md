@@ -16,12 +16,21 @@ If you'd like to live on the edge, or the flatpak version is unsuitable for some
 
 ### Important! If upgrading from 1.0.1.0-1 or earlier!
 
-Starting with patch 1.0.1.0-2, there is a switch to using the Fedora-specific build of wine instead of using the default (which apparently targets ubuntu). This might cause future issues with compatability, so just in case, you should delete the ~/.xlcore/compatabilitytool folder before installing the new version. 
+Starting with patch 1.0.1.0-2, there is a switch to using the Fedora-specific build of wine instead of using the default (which apparently targets
+ubuntu). This might cause future issues with compatability, so just in case, you should delete the ~/.xlcore/compatabilitytool folder before installing
+the new version. 
 
 ### Fedora 35+
 
-Either install it by double-clicking in your graphical environment (or single-clicking if you have it set that way), or open a terminal and use your
-package manager to install it. You do know what you're doing, right? In Fedora, the command is:
+You can now install from COPR. Simply open up a terminal and type
+
+```
+sudo dnf copr enable rankyn/xivlauncher
+sudo dnf install XIVLauncher
+```
+
+Otherwise, download the rpm from the release section, and either install it by double-clicking in your graphical environment (or single-clicking if you
+have it set that way), or open a terminal and use your package manager to install it. You do know what you're doing, right? In Fedora, the command is:
 
 ```
 sudo dnf install <filename.rpm>
