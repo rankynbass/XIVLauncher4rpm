@@ -89,6 +89,8 @@ else
     fi
     cd %{_builddir}/%{repo0}
     git init
+    git config user.name "COPRBuildUser"
+    git config user.email "COPRBuildUser@gmail.com"
     git add .
     git commit -m "Working around build bug"
 fi
@@ -102,7 +104,8 @@ then
     git clone https://github.com/rankynbass/XIVLauncher4rpm
     mv XIVLauncher4rpm %{repo1}
     cd %{repo1}
-    git checkout %{DownstreamTag}
+    git checkout COPR
+#   git checkout %{DownstreamTag}
     git archive --format=tar.gz -o %{_sourcedir}/%{repo1}.tar.gz --prefix=%{repo1}/ HEAD
 else
     cd %{_builddir}
