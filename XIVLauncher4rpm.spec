@@ -137,9 +137,7 @@ ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
 
 %clean
 rm -rf %{buildroot}
-rm -rf %{_builddir}/%{repo0}
-rm -rf %{_builddir}/%{repo1}
-rm -rf %{_builddir}/%{launcher}
+rm -rf %{_builddir}/*
 
 %files
 /usr/bin/xivlauncher
