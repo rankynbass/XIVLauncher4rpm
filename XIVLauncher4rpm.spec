@@ -3,23 +3,23 @@
 
 Name:           XIVLauncher
 Version:        1.0.1.0
-# Replace * with percent sign and uncomment to use this macro. Use if adding
-# the distro tag to the release.
-# *define _rel *(echo "*{RELEASE}" | awk -F. '{print $1}')
-Release:        1
+Release:        2
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Fedora native version)
 Group:          Applications/Games
 License:        GPLv3
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
+
 # Pick a tag, branch, or commit to checkout from the main repo -- master will pull the latest version,
 # but this can also be set to any tag or commit in the repo (for example, 6.2.43)
 # Using a version tag is useful for archival purposes -- the spec file will pull the same
 # sources every time, as long as the tag doesn't change. Rebuilds will be consistant.
 %define UpstreamTag 6246fde
-# Pick a tag or branch to pull from XIVLauncher4rpm. main is used for the primary branch so that it doesn't
+
+# Pick a tag or branch to pull from XIVLauncher4rpm. "main" is used for the primary branch so that it doesn't
 # have a name clash with the goatcorp repo. Mostly for my own sanity while testing.
 # The canary branch will always have a spec file that just pulls the latest upstream git.
-%define DownstreamTag 1.0.1.0-1
+# *{VERSION}-*{RELEASE} should be used in most cases.
+%define DownstreamTag %{VERSION}-%{RELEASE}
 Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
 Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 
@@ -50,18 +50,19 @@ Requires:       jxrlib
 
 # There isn't any linux / rpm debug info available with the source git
 %global debug_package %{nil}
+
 # Turn off binary stripping, otherwise the binary breaks.
 %global __os_install_post %{nil}
+
 # Binaries will be deposited into this directory. Macro'd for convenience.
-%define launcher %{_builddir}/output
+%define launcher %{_builddir}/XIVLauncher
 
 %description
 Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This is a native build for fedora 36 and possibly other rpm based distos.
 
 # PREP SECTION
 # Be aware that rpmbuild DOES NOT download sources from urls. It expects the source files
-# to be in the SOURCES folder. Use 'spectool -g -R XIVLauncher4rpm.spec' before running
-# rpmbuild.
+# to be in the SOURCES folder. That's why we're pulling from git repos and then archiving.
 %prep
 %define repo0 FFXIVQuickLauncher-%{UpstreamTag}
 if [ ! -f "%{_sourcedir}/%{repo0}.tar.gz" ];
@@ -117,7 +118,7 @@ fi
 rm -rf %{launcher}
 mkdir -p %{launcher}
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{launcher}" --configuration Release
+dotnet publish -r linux-x64 --sc -o "%{launcher}" --configuration Release -p:DefineConstants=WINE_XIV_FEDORA_LINUX
 cp ../../misc/linux_distrib/512.png %{launcher}/xivlauncher.png
 cd %{_builddir}/%{repo1}
 cp openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop COPYING %{launcher}/
@@ -136,6 +137,7 @@ ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
 
 %clean
 rm -rf %{buildroot}
+rm -rf %{_builddir}/*
 
 %files
 /usr/bin/xivlauncher
