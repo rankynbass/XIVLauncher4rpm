@@ -93,15 +93,22 @@ cd ~/build
 git clone https://github.com/rankynbass/XIVLauncher4rpm.git
 cd XIVLauncher4rpm
 ```
-Now you can build the rpms.
+Now you can build the rpms. First, download the tarballs by using the included script, then build with rpmbuild: 
 
-`rpmbuild -bb XIVLauncher4rpm.spec` to just build a binary rpm or `rpmbuild -ba XIVLauncher4rpm.spec` if you want to build source rpm as well.
-Be aware that the srpm will include the source files from goatcorp/FFXIVQuickLauncher repository, so it will be fairly large.
+```
+.copr/getsources.sh
+rpmbuild -ba XIVLauncher4rpm.spec   # Build binary and source rpm
+#   OR
+rpmbuild -bb XIVLauncher4rpm.spec   # Build binary only
+#   OR
+rpmbuild -bs XIVLauncher4rpm.spec   # Build source rpm only
+rpmbuild -rb ~/rpmbuild/SRPMS/XIVLauncher-<version>-<release>.src.rpm
+```
 
-In the end you should have an rpm file in `~/rpmbuild/RPMS/x86_64/` called `XIVLauncher-<version>.x86_64.rpm`. If you build sources as well, that 
-will be in `~/rpmbuild/SRPMS/`.
+In the end you should have an rpm file in `~/rpmbuild/RPMS/x86_64/` called `XIVLauncher-<version>-<release>.x86_64.rpm`. If you build sources as well, 
+that will be in `~/rpmbuild/SRPMS/`.
 
-Install as mentioned in the "Installing" section. You can also build from the srpm with `rpmbuild --rebuild <filename.src.rpm>`.
+Install as mentioned in the "Installing" section. You can also build from the srpm with `rpmbuild --rb <filename.src.rpm>`.
 
 ### OpenSUSE
 
