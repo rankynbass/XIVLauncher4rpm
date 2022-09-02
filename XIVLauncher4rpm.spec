@@ -3,7 +3,7 @@
 
 Name:           XIVLauncher
 Version:        1.0.1.0
-Release:        2
+Release:        3
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Fedora native version)
 Group:          Applications/Games
 License:        GPLv3
@@ -83,7 +83,7 @@ rm -rf %{launcher}
 mkdir -p %{launcher}
 
 # Work around a build bug: it requires an active git repo.
-cd %{_builddir}
+cd %{_builddir}/%{repo0}
 git init
 git config user.name "COPRBuildUser"
 git config user.email "COPRBuildUser@gmail.com"
