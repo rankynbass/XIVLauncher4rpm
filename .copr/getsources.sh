@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 xlsource=$(rpmbuild --eval='%_sourcedir')
 uptag=6246fde
 downtag=copr-test
