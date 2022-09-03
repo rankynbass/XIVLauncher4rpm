@@ -1,4 +1,4 @@
-# XIVLauncher4rpm
+# XIVLauncher4rpm [![Copr build status](https://copr.fedorainfracloud.org/coprs/rankyn/xivlauncher/package/XIVLauncher/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/rankyn/xivlauncher/package/XIVLauncher/)
 
 RPMs and build files for native versions of <a href=https://github.com/goatcorp/FFXIVQuickLauncher>FFXIVQuickLauncher</a>. Currently only tested on
 Fedora 35, 36, openSUSE LEAP 15.4, and openSUSE Tumbleweed. It'll probably work for other distros as well, if you can work out the dependencies. Try at
