@@ -1,28 +1,38 @@
 # SPEC file for compiling a native version of XIVLauncher for rpm-based distros
-# Currently only tested with Fedora 36.
+# This file has a lot of extra comments, mostly to keep track of what I've learned.
+#
+# Here's a few docs I've found very helpful:
+# http://ftp.rpm.org/max-rpm/s1-rpm-inside-macros.html
+# https://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html-single/RPM_Guide/index.html
+# https://docs.fedoraproject.org/en-US/packaging-guidelines/RPMMacros/
+# https://docs.fedoraproject.org/en-US/legal/license-field/
+
+## COMPATABILITY
+# I've tested on the following distros. It will at least install and launch, although I haven't installed
+# or played on all of them.
+# Fedora - 35 and 36
+# OpenSuse - Leap 15.4 and Tumbleweed
+
+# DEFINITIONS
+%define xlversion 1.0.1.0
+%define xlrelease 3
+
+# REPO TAGS
+# These MUST match the values in .copr/getsources.sh
+# Pick a tag, branch, or commit to checkout from the repos.
+# UpstreamTag is the goatcorp/FFXIVQuickLauncher repo, and DownstreamTag is the rankynbass/XIVLauncher4rpm repo.
+# You can use any tag, branch, or commit. master is primary branch for UpstreamTag, and main for DownstreamTag.
+# Default for DownstreamTag should be %%{xlversion}-%%{xlrelease}
+%define UpstreamTag 6246fde
+%define DownstreamTag copr-test
 
 Name:           XIVLauncher
-Version:        1.0.1.0
-Release:        2
-Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Fedora native version)
+Version:        %{xlversion}
+Release:        %{xlrelease}%{?dist}
+Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM package)
 Group:          Applications/Games
-License:        GPLv3
+License:        GPL-3.0-only
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
-# Exclusive arch tag. Only builds on x86_64 systems. Hopefully this prevents COPR from trying to build
-# on ppc64le
-ExclusiveArch:  x86_64
-
-# Pick a tag, branch, or commit to checkout from the main repo -- master will pull the latest version,
-# but this can also be set to any tag or commit in the repo (for example, 6.2.43)
-# Using a version tag is useful for archival purposes -- the spec file will pull the same
-# sources every time, as long as the tag doesn't change. Rebuilds will be consistant.
-%define UpstreamTag 6246fde
-
-# Pick a tag or branch to pull from XIVLauncher4rpm. "main" is used for the primary branch so that it doesn't
-# have a name clash with the goatcorp repo. Mostly for my own sanity while testing.
-# The canary branch will always have a spec file that just pulls the latest upstream git.
-# *{VERSION}-*{RELEASE} should be used in most cases.
-%define DownstreamTag %{VERSION}-%{RELEASE}
 Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
 Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 
@@ -61,74 +71,54 @@ Requires:       jxrlib
 %define launcher %{_builddir}/XIVLauncher
 
 %description
-Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This is a native build for fedora 36 and possibly other rpm based distos.
+Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This is a native build for fedora 36 and several other rpm based distos.
 
-# PREP SECTION
-# Be aware that rpmbuild DOES NOT download sources from urls. It expects the source files
-# to be in the SOURCES folder. That's why we're pulling from git repos and then archiving.
+### PREP SECTION
+# Be aware that rpmbuild DOES NOT download sources from urls. It expects the source files to be in the %%{_sourcedir} directory.
+# Run the script .copr/getsources.sh to download tarballs to the appropriate locations. 
 %prep
+# Set some short names for convenience.
 %define repo0 FFXIVQuickLauncher-%{UpstreamTag}
-if [ ! -f "%{_sourcedir}/%{repo0}.tar.gz" ];
-then
-#   If the tarball is missing, clone the git repo. Then checkout the appropriate tag / commit, and build a tarball
-#   for making the src.rpm
-    echo "No source file found! Creating..."
-    cd %{_builddir}
-    rm -rf %{repo0}
-    git clone https://github.com/goatcorp/FFXIVQuickLauncher
-    mv FFXIVQuickLauncher %{repo0}
-    cd %{repo0}
-    git checkout %{UpstreamTag}
-    git archive --format=tar.gz -o %{_sourcedir}/%{repo0}.tar.gz --prefix=%{repo0}/ HEAD
-else
-#   If the tarball is present (for example, if building from src.rpm), unzip it, then set up a git repo to
-#   work around a build bug in the source. Can't use setup macro because rpmbuild will fail if there's no
-#   source files present and the macro is present, even if it wouldn't be used.
-    cd %{_builddir}
-    rm -rf %{repo0}
-    gzip -dc %{_sourcedir}/%{repo0}.tar.gz | tar -xvvf -
-    if [ $? -ne 0 ]; then
-        exit $?
-    fi
-    cd %{_builddir}/%{repo0}
-    git init
-    git config user.name "COPRBuildUser"
-    git config user.email "COPRBuildUser@gmail.com"
-    git add .
-    git commit -m "Working around build bug"
-fi
-
 %define repo1 XIVLauncher4rpm-%{DownstreamTag}
-if [ ! -f "%{_sourcedir}/%{repo1}.tar.gz" ];
-then
-    echo "No source file found! Creating..."
-    cd %{_builddir}
-    rm -rf %{repo1}
-    git clone https://github.com/rankynbass/XIVLauncher4rpm
-    mv XIVLauncher4rpm %{repo1}
-    cd %{repo1}
-    git checkout %{DownstreamTag}
-    git archive --format=tar.gz -o %{_sourcedir}/%{repo1}.tar.gz --prefix=%{repo1}/ HEAD
-else
-    cd %{_builddir}
-    rm -rf %{repo1}
-    gzip -dc %{_sourcedir}/%{repo1}.tar.gz | tar -xvvf -
-    if [ $? -ne 0 ]; then
-        exit $?
-    fi
-fi
 
-# BUILD SECTION
+# All setup macro calls will first unpack source0. That's not what we want. So we use -T to supress that.
+# Next, -a 0 tells it to unpack source 0 after changing directory, -c tells it
+# to unpack as if there is no base directory in the tarball, and -n sets the name of the directory to unpack into.     
+%setup -T -a 0 -c -n %{repo0}
+
+# The tarball has the full commit hash as part of the path, which we have now unpacked into FFXIVQuickLauncher-<UpstreamTag>.
+# So we're going to find this messy directory and then move its contents into the parent directory. We don't care
+# about hidden (dot) files, so we wont do anything to grab them.
+longtag=$(find -mindepth 1 -maxdepth 1 -type d)
+mv $longtag/* .
+cd %{_builddir}
+
+# Now unpack the files from the second source into a folder. Again, -T to prevend source0 from unpacking.
+# -b 1 tells it to unpack source1, and -n tells it the name of the folder.
+%setup -T -b 1 -n %{repo1}
+
+
+### BUILD SECTION
 %build
 rm -rf %{launcher}
 mkdir -p %{launcher}
+
+# Work around a build bug: it requires an active git repo.
+cd %{_builddir}/%{repo0}
+git init
+git config user.name "COPRBuildUser"
+git config user.email "COPRBuildUser@gmail.com"
+git add .
+git commit -m "Working around build bug"
+
+# Now initialize dotnet publish to make the launcher.
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
 dotnet publish -r linux-x64 --sc -o "%{launcher}" --configuration Release -p:DefineConstants=WINE_XIV_FEDORA_LINUX
 cp ../../misc/linux_distrib/512.png %{launcher}/xivlauncher.png
 cd %{_builddir}/%{repo1}
 cp openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop COPYING %{launcher}/
 
-# INSTALL SECTION
+### INSTALL SECTION
 %install
 install -d "%{buildroot}/usr/bin"
 install -d "%{buildroot}/opt/XIVLauncher"
@@ -140,10 +130,12 @@ cp %{buildroot}/opt/XIVLauncher/COPYING %{buildroot}/usr/share/doc/xivlauncher/C
 cd %{buildroot}
 ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
 
+### CLEAN SECTION
 %clean
 rm -rf %{buildroot}
 rm -rf %{_builddir}/*
 
+### FILES SECTION
 %files
 /usr/bin/xivlauncher
 /usr/share/applications/XIVLauncher.desktop
@@ -155,14 +147,35 @@ rm -rf %{_builddir}/*
 /opt/XIVLauncher/openssl_fix.cnf
 /opt/XIVLauncher/xivlauncher.sh
 /opt/XIVLauncher/xivlauncher.png
-/opt/XIVLauncher/XIVLauncher.Common.pdb
-/opt/XIVLauncher/XIVLauncher.Common.Unix.pdb
-/opt/XIVLauncher/XIVLauncher.Common.Unix.xml
 /opt/XIVLauncher/XIVLauncher.Common.Windows.pdb
 /opt/XIVLauncher/XIVLauncher.Common.Windows.xml
 /opt/XIVLauncher/XIVLauncher.Common.xml
+/opt/XIVLauncher/XIVLauncher.Common.Unix.pdb
+/opt/XIVLauncher/XIVLauncher.Common.Unix.xml
+/opt/XIVLauncher/XIVLauncher.Common.pdb
 /opt/XIVLauncher/XIVLauncher.Core
 /opt/XIVLauncher/XIVLauncher.Core.pdb
 /opt/XIVLauncher/XIVLauncher.Core.xml
 /opt/XIVLauncher/XIVLauncher.desktop
 %license /usr/share/doc/xivlauncher/COPYING
+
+%changelog
+* Fri Sep 02 2022 Rankyn Bass <rankyn@proton.me>
+- Modify Makefile, add getsources script
+    - No longer requires git. Now just needs wget.
+    - Makefile now calls getsources.sh, which uses wget to download sources
+    - getsources.sh MUST have matching UpstreamTag and DownstreamTag in spec file.
+    - No longer call rpmbuild -bp, which should fix problems with building srpm.
+- Modify spec file
+    - Now works with downloaded sources instead of downloading with git during prep stage.
+    - Reorganized importand definitions (%%define) to the top of the script
+    - Worked out a method to deal with ugly long hash name in upstream tarball
+    - %%setup macro was unpacking source0 tarball multiple times. This has been fixed.
+    - More inline documentation of macros and shell commands.
+    - Fixed warnings about macros expanding in comments.
+- Modify README.md
+    - Updated build instructions.
+    - Included install instructions for openSUSE.
+
+* Mon Aug 29 2022 Rankyn Bass <rankyn@proton.me>
+- First changelog entry - setting up for COPR.

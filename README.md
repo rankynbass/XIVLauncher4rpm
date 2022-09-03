@@ -1,10 +1,8 @@
 # XIVLauncher4rpm
 
 RPMs and build files for native versions of <a href=https://github.com/goatcorp/FFXIVQuickLauncher>FFXIVQuickLauncher</a>. Currently only tested on
-Fedora 35, 36, and openSUSE LEAP 15.4. It'll probably work for other distros as well, if you can work out the dependencies. Try at your own risk
-(minimal as it probably is).
-
-**Warning! This version is not officially supported. It works for me, but ymmv**
+Fedora 35, 36, openSUSE LEAP 15.4, and openSUSE Tumbleweed. It'll probably work for other distros as well, if you can work out the dependencies. Try at
+your own risk (minimal as it probably is).
 
 If you don't know what you're doing, I'd suggest following these instructions: <a href=https://goatcorp.github.io/faq/steamdeck>XIVLauncher Steam Deck
 Installation Guide</a>. It says Steam Deck, but it should work for most Linux distibutions. Or get it directly from
@@ -46,15 +44,21 @@ But that might not play nice with your disto's package manager.
 
 ### openSUSE
 
-I've only tested this on openSUSE LEAP 15.4. It installs fine there, but Tumbleweed and prior versions of LEAP might have different package names.
+I've only tested this on openSUSE LEAP 15.4 and Tumbleweed. Prior versions of LEAP might have different package names.
 If that's the case, the rpm will probably complain about not finding anything to provide certain packages.
 
-Ignore the warning that the rpm is unsigned. I don't know how to do that yet, and depending on how difficult it
-is, I might not ever bother.
+You can add the repo with zypper, and then install as you would any other package. I know it says tumbleweed, but it also works with LEAP 15.4.
+```
+sudo zypper addrepo -r https://copr.fedorainfracloud.org/coprs/rankyn/xivlauncher/repo/opensuse-tumbleweed/rankyn-xivlauncher-opensuse-tumbleweed.repo
+sudo zypper install XIVLauncher
+```
+You'll get a message about accepting the signing key. Hit a to accept.
 
+If you'd prefer to install manually, you can download the rpm from the release section and then do
 ```
 sudo zypper install <filename.rpm>
 ```
+Ignore the warning that the rpm is unsigned. I'm not going to bother with that, and you can avoid it by installing from the repo.
 
 ## Building it yourself
 
@@ -93,16 +97,27 @@ cd ~/build
 git clone https://github.com/rankynbass/XIVLauncher4rpm.git
 cd XIVLauncher4rpm
 ```
-Now you can build the rpms.
+Now you can build the rpms. First, download the tarballs by using the included script, then build with rpmbuild. The third option is actually what the COPR
+build system does. It uses .copr/Makefile to install dependencies for making the binary, then calls the getsources script, then executes rpmbuild -bs. It
+then passes the src.rpm off to the various build environments for different distros. However, even if you have src.rpms, you still need to have internet
+access. The dotnet publish command needs to grab some remote packages. For manual builds, thats obviously not an issue, since you just cloned the repo.
+But for remote builds with copr, or with opensuse's OBS (I haven't tried this one yet), you'll need to make sure the builder has internet access.
 
-`rpmbuild -bb XIVLauncher4rpm.spec` to just build a binary rpm or `rpmbuild -ba XIVLauncher4rpm.spec` if you want to build source rpm as well.
-Be aware that the srpm will include the source files from goatcorp/FFXIVQuickLauncher repository, so it will be fairly large.
+```
+.copr/getsources.sh
+rpmbuild -ba XIVLauncher4rpm.spec   # Build binary and source rpms
+#   OR
+rpmbuild -bb XIVLauncher4rpm.spec   # Build binary only
+#   OR
+rpmbuild -bs XIVLauncher4rpm.spec   # Build source rpm
+rpmbuild -rb ~/rpmbuild/SRPMS/XIVLauncher-<version>-<release>.src.rpm   # Build binary from source rpm.
+```
 
-In the end you should have an rpm file in `~/rpmbuild/RPMS/x86_64/` called `XIVLauncher-<version>.x86_64.rpm`. If you build sources as well, that 
-will be in `~/rpmbuild/SRPMS/`.
+In the end you should have an rpm file in `~/rpmbuild/RPMS/x86_64/` called `XIVLauncher-<version>-<release>.x86_64.rpm`. If you build sources as well, 
+that will be in `~/rpmbuild/SRPMS/`.
 
-Install as mentioned in the "Installing" section. You can also build from the srpm with `rpmbuild --rebuild <filename.src.rpm>`.
+Install as mentioned in the "Installing" section. You can also build from the srpm with `rpmbuild --rb <filename.src.rpm>`.
 
 ### OpenSUSE
 
-Instructions to follow. Probably not much different from fedora, but the package names will be different.
+Nothing yet. If anyone wants to try to get it working, feel free, and report back.
