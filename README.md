@@ -1,10 +1,8 @@
 # XIVLauncher4rpm
 
 RPMs and build files for native versions of <a href=https://github.com/goatcorp/FFXIVQuickLauncher>FFXIVQuickLauncher</a>. Currently only tested on
-Fedora 35, 36, and openSUSE LEAP 15.4. It'll probably work for other distros as well, if you can work out the dependencies. Try at your own risk
-(minimal as it probably is).
-
-**Warning! This version is not officially supported. It works for me, but ymmv**
+Fedora 35, 36, openSUSE LEAP 15.4, and openSUSE Tumbleweed. It'll probably work for other distros as well, if you can work out the dependencies. Try at
+your own risk (minimal as it probably is).
 
 If you don't know what you're doing, I'd suggest following these instructions: <a href=https://goatcorp.github.io/faq/steamdeck>XIVLauncher Steam Deck
 Installation Guide</a>. It says Steam Deck, but it should work for most Linux distibutions. Or get it directly from
@@ -93,16 +91,18 @@ cd ~/build
 git clone https://github.com/rankynbass/XIVLauncher4rpm.git
 cd XIVLauncher4rpm
 ```
-Now you can build the rpms. First, download the tarballs by using the included script, then build with rpmbuild: 
+Now you can build the rpms. First, download the tarballs by using the included script, then build with rpmbuild. The third option is actually what the COPR
+build system does. It uses .copr/Makefile to install dependencies for making the binary, then calls the getsources script, then executes rpmbuild -bs. It
+then passes the src.rpm off to the various build environments for different distros.
 
 ```
 .copr/getsources.sh
-rpmbuild -ba XIVLauncher4rpm.spec   # Build binary and source rpm
+rpmbuild -ba XIVLauncher4rpm.spec   # Build binary and source rpms
 #   OR
 rpmbuild -bb XIVLauncher4rpm.spec   # Build binary only
 #   OR
-rpmbuild -bs XIVLauncher4rpm.spec   # Build source rpm only
-rpmbuild -rb ~/rpmbuild/SRPMS/XIVLauncher-<version>-<release>.src.rpm
+rpmbuild -bs XIVLauncher4rpm.spec   # Build source rpm
+rpmbuild -rb ~/rpmbuild/SRPMS/XIVLauncher-<version>-<release>.src.rpm   # Build binary from source rpm.
 ```
 
 In the end you should have an rpm file in `~/rpmbuild/RPMS/x86_64/` called `XIVLauncher-<version>-<release>.x86_64.rpm`. If you build sources as well, 

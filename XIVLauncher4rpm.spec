@@ -14,14 +14,7 @@
 # Fedora - 35 and 36
 # OpenSuse - Leap 15.4 and Tumbleweed
 
-Name:           XIVLauncher
-Version:        1.0.1.0
-Release:        3
-Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Fedora native version)
-Group:          Applications/Games
-License:        GPLv3
-URL:            https://github.com/rankynbass/XIVLauncher4rpm
-
+## Tags! Make sure these match the values in .copr/getsources.sh
 # Pick a tag, branch, or commit to checkout from the main repo -- master will pull the latest version,
 # but this can also be set to any tag or commit in the repo (for example, 6.2.43)
 # Using a version tag is useful for archival purposes -- the spec file will pull the same
@@ -33,6 +26,14 @@ URL:            https://github.com/rankynbass/XIVLauncher4rpm
 # The canary branch will always have a spec file that just pulls the latest upstream git.
 # %{VERSION}-%{RELEASE} should be used in most cases.
 %define DownstreamTag copr-test
+
+Name:           XIVLauncher
+Version:        1.0.1.0
+Release:        3
+Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM package)
+Group:          Applications/Games
+License:        GPLv3
+URL:            https://github.com/rankynbass/XIVLauncher4rpm
 Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
 Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 
