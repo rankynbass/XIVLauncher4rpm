@@ -18,11 +18,11 @@
 %define xlrelease 3
 
 # REPO TAGS
-# Make sure these match the values in .copr/getsources.sh
-# Pick a tag, branch, or commit to checkout from the repos
-# Upstream is the goatcorp/FFXIVQuickLauncher repo, and Downstream is the rankynbass/XIVLauncher4rpm repo.
-# You can use any tag, branch, or commit. master is primary branch for Upstream, and main for Downstream.
-# Default for Downstream should be %%{xlversion}-%%{xlrelease}
+# These MUST match the values in .copr/getsources.sh
+# Pick a tag, branch, or commit to checkout from the repos.
+# UpstreamTag is the goatcorp/FFXIVQuickLauncher repo, and DownstreamTag is the rankynbass/XIVLauncher4rpm repo.
+# You can use any tag, branch, or commit. master is primary branch for UpstreamTag, and main for DownstreamTag.
+# Default for DownstreamTag should be %%{xlversion}-%%{xlrelease}
 %define UpstreamTag 6246fde
 %define DownstreamTag copr-test
 
@@ -71,7 +71,7 @@ Requires:       jxrlib
 %define launcher %{_builddir}/XIVLauncher
 
 %description
-Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This is a native build for fedora 36 and possibly other rpm based distos.
+Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This is a native build for fedora 36 and several other rpm based distos.
 
 ### PREP SECTION
 # Be aware that rpmbuild DOES NOT download sources from urls. It expects the source files to be in the %{_sourcedir} directory.
@@ -91,7 +91,6 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # about hidden (dot) files, so we wont do anything to grab them.
 longtag=$(find -mindepth 1 -maxdepth 1 -type d)
 mv $longtag/* .
-rm -rf $longtag
 cd %{_builddir}
 
 # Now unpack the files from the second source into a folder. Again, -T to prevend source0 from unpacking.
@@ -156,3 +155,23 @@ rm -rf %{_builddir}/*
 /opt/XIVLauncher/XIVLauncher.Core.xml
 /opt/XIVLauncher/XIVLauncher.desktop
 %license /usr/share/doc/xivlauncher/COPYING
+
+%changelog
+* Fri Sep 02 2022 Rankyn Bass <rankyn@proton.me>
+- Modify Makefile, add getsources script
+    - No longer requires git. Now just needs wget.
+    - Makefile now calls getsources.sh, which uses wget to download sources
+    - getsources.sh MUST have matching UpstreamTag and DownstreamTag in spec file.
+    - No longer call rpmbuild -bp, which should fix problems with building srpm.
+- Modify spec file
+    - Now works with downloaded sources instead of downloading with git during prep stage.
+    - Reorganized importand definitions (%%define) to the top of the script
+    - Worked out a method to deal with ugly long hash name in upstream tarball
+    - %%setup macro was unpacking source0 tarball multiple times. This has been fixed.
+    - More inline documentation of macros and shell commands.
+- Modify README.md
+    - Updated build instructions.
+    - Included install instructions for openSUSE.
+
+* Mon Aug 29 2022 Rankyn Bass <rankyn@proton.me>
+- First changelog entry - setting up for COPR.

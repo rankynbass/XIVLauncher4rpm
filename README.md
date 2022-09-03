@@ -44,15 +44,21 @@ But that might not play nice with your disto's package manager.
 
 ### openSUSE
 
-I've only tested this on openSUSE LEAP 15.4. It installs fine there, but Tumbleweed and prior versions of LEAP might have different package names.
+I've only tested this on openSUSE LEAP 15.4 and Tumbleweed. Prior versions of LEAP might have different package names.
 If that's the case, the rpm will probably complain about not finding anything to provide certain packages.
 
-Ignore the warning that the rpm is unsigned. I don't know how to do that yet, and depending on how difficult it
-is, I might not ever bother.
+You can add the repo with zypper, and then install as you would any other package. I know it says tumbleweed, but it also works with LEAP 15.4.
+```
+sudo zypper addrepo -r https://copr.fedorainfracloud.org/coprs/rankyn/xivlauncher/repo/opensuse-tumbleweed/rankyn-xivlauncher-opensuse-tumbleweed.repo
+sudo zypper install XIVLauncher
+```
+You'll get a message about accepting the signing key. Hit a to accept.
 
+If you'd prefer to install manually, you can download the rpm from the release section and then do
 ```
 sudo zypper install <filename.rpm>
 ```
+Ignore the warning that the rpm is unsigned. I'm not going to bother with that, and you can avoid it by installing from the repo.
 
 ## Building it yourself
 
@@ -93,7 +99,9 @@ cd XIVLauncher4rpm
 ```
 Now you can build the rpms. First, download the tarballs by using the included script, then build with rpmbuild. The third option is actually what the COPR
 build system does. It uses .copr/Makefile to install dependencies for making the binary, then calls the getsources script, then executes rpmbuild -bs. It
-then passes the src.rpm off to the various build environments for different distros.
+then passes the src.rpm off to the various build environments for different distros. However, even if you have src.rpms, you still need to have internet
+access. The dotnet publish command needs to grab some remote packages. For manual builds, thats obviously not an issue, since you just cloned the repo.
+But for remote builds with copr, or with opensuse's OBS (I haven't tried this one yet), you'll need to make sure the builder has internet access.
 
 ```
 .copr/getsources.sh
@@ -112,4 +120,4 @@ Install as mentioned in the "Installing" section. You can also build from the sr
 
 ### OpenSUSE
 
-Instructions to follow. Probably not much different from fedora, but the package names will be different.
+Nothing yet. If anyone wants to try to get it working, feel free, and report back.
