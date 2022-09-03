@@ -146,10 +146,13 @@ rm -rf %{_builddir}/*
 /opt/XIVLauncher/libsteam_api64.so
 /opt/XIVLauncher/openssl_fix.cnf
 /opt/XIVLauncher/xivlauncher.sh
-/opt/XIVLauncher/xivlauncher.pnghttps://docs.fedoraproject.org/en-US/packaging-guidelines/RPMMacros/
+/opt/XIVLauncher/xivlauncher.png
 /opt/XIVLauncher/XIVLauncher.Common.Windows.pdb
 /opt/XIVLauncher/XIVLauncher.Common.Windows.xml
 /opt/XIVLauncher/XIVLauncher.Common.xml
+/opt/XIVLauncher/XIVLauncher.Common.Unix.pdb
+/opt/XIVLauncher/XIVLauncher.Common.Unix.xml
+/opt/XIVLauncher/XIVLauncher.Common.pdb
 /opt/XIVLauncher/XIVLauncher.Core
 /opt/XIVLauncher/XIVLauncher.Core.pdb
 /opt/XIVLauncher/XIVLauncher.Core.xml
