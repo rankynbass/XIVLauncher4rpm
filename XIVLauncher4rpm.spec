@@ -24,7 +24,7 @@
 # You can use any tag, branch, or commit. master is primary branch for UpstreamTag, and main for DownstreamTag.
 # Default for DownstreamTag should be %%{xlversion}-%%{xlrelease}
 %define UpstreamTag 6246fde
-%define DownstreamTag copr-test
+%define DownstreamTag %{xlversion}-%{xlrelease}
 
 Name:           XIVLauncher
 Version:        %{xlversion}
@@ -161,6 +161,7 @@ rm -rf %{_builddir}/*
 
 %changelog
 * Fri Sep 02 2022 Rankyn Bass <rankyn@proton.me>
+- Bump version-release to 1.0.1.0-3
 - Modify Makefile, add getsources script
     - No longer requires git. Now just needs wget.
     - Makefile now calls getsources.sh, which uses wget to download sources
