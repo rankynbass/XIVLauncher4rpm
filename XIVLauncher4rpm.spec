@@ -74,7 +74,7 @@ Requires:       jxrlib
 Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This is a native build for fedora 36 and several other rpm based distos.
 
 ### PREP SECTION
-# Be aware that rpmbuild DOES NOT download sources from urls. It expects the source files to be in the %{_sourcedir} directory.
+# Be aware that rpmbuild DOES NOT download sources from urls. It expects the source files to be in the %%{_sourcedir} directory.
 # Run the script .copr/getsources.sh to download tarballs to the appropriate locations. 
 %prep
 # Set some short names for convenience.
@@ -169,6 +169,7 @@ rm -rf %{_builddir}/*
     - Worked out a method to deal with ugly long hash name in upstream tarball
     - %%setup macro was unpacking source0 tarball multiple times. This has been fixed.
     - More inline documentation of macros and shell commands.
+    - Fixed warnings about macros expanding in comments.
 - Modify README.md
     - Updated build instructions.
     - Included install instructions for openSUSE.
