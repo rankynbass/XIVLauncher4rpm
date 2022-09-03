@@ -1,5 +1,18 @@
 # SPEC file for compiling a native version of XIVLauncher for rpm-based distros
-# Currently only tested with Fedora 36.
+# This file has a lot of extra comments, mostly to keep track of what I've learned. It will also trigger
+# some warnings about macros being expanded in comments. I don't really care about that, I'd rather see
+# the name of a variable or macro exactly as I'm going to use it than avoid the warnings.
+#
+# Here's a few docs I've found very helpful:
+# http://ftp.rpm.org/max-rpm/s1-rpm-inside-macros.html
+# https://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html-single/RPM_Guide/index.html
+# https://docs.fedoraproject.org/en-US/packaging-guidelines/RPMMacros/
+
+## COMPATABILITY
+# I've tested on the following distros. It will at least install and launch, although I haven't installed
+# or played on all of them.
+# Fedora - 35 and 36
+# OpenSuse - Leap 15.4 and Tumbleweed
 
 Name:           XIVLauncher
 Version:        1.0.1.0
@@ -13,10 +26,7 @@ URL:            https://github.com/rankynbass/XIVLauncher4rpm
 # but this can also be set to any tag or commit in the repo (for example, 6.2.43)
 # Using a version tag is useful for archival purposes -- the spec file will pull the same
 # sources every time, as long as the tag doesn't change. Rebuilds will be consistant.
-# If you use a commit instead of a branch or tag, set UpstreamTagLong to the full commit hash.
-# Otherwise set it the same as UpstreamTag.
 %define UpstreamTag 6246fde
-%define UpstreamTagLong 6246fde6b54f8c7e340057fe2d940287c437153f
 
 # Pick a tag or branch to pull from XIVLauncher4rpm. "main" is used for the primary branch so that it doesn't
 # have a name clash with the goatcorp repo. Mostly for my own sanity while testing.
@@ -68,13 +78,25 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # Run the script .copr/getsources.sh to download tarballs to the appropriate locations. 
 %prep
 # Set some short names for convenience.
-%define repo0 FFXIVQuickLauncher-%{UpstreamTagLong}
+%define repo0 FFXIVQuickLauncher-%{UpstreamTag}
 %define repo1 XIVLauncher4rpm-%{DownstreamTag}
 
-# The official repo is used for Source0, so unpack that first.
-%setup -b 0 -n %{repo0}
-# Now unpack the extra files from this repo into a folder
-%setup -b 1 -n %{repo1}
+# All setup macro calls will first unpack source0. That's not what we want. So we use -T to supress that.
+# Next, -a 0 tells it to unpack source 0 after changing directory, -c tells it
+# to unpack as if there is no base directory in the tarball, and -n sets the name of the directory to unpack into.     
+%setup -T -a 0 -c -n %{repo0}
+
+# The tarball has the full commit hash as part of the path, which we have now unpacked into FFXIVQuickLauncher-<UpstreamTag>.
+# So we're going to find this messy directory and then move its contents into the parent directory. We don't care
+# about hidden (dot) files, so we wont do anything to grab them.
+longtag=$(find -mindepth 1 -maxdepth 1 -type d)
+mv $longtag/* .
+rm -rf $longtag
+cd %{_builddir}
+
+# Now unpack the files from the second source into a folder. Again, -T to prevend source0 from unpacking.
+# -b 1 tells it to unpack source1, and -n tells it the name of the folder.
+%setup -T -b 1 -n %{repo1}
 
 
 ### BUILD SECTION
@@ -125,10 +147,7 @@ rm -rf %{_builddir}/*
 /opt/XIVLauncher/libsteam_api64.so
 /opt/XIVLauncher/openssl_fix.cnf
 /opt/XIVLauncher/xivlauncher.sh
-/opt/XIVLauncher/xivlauncher.png
-/opt/XIVLauncher/XIVLauncher.Common.pdb
-/opt/XIVLauncher/XIVLauncher.Common.Unix.pdb
-/opt/XIVLauncher/XIVLauncher.Common.Unix.xml
+/opt/XIVLauncher/xivlauncher.pnghttps://docs.fedoraproject.org/en-US/packaging-guidelines/RPMMacros/
 /opt/XIVLauncher/XIVLauncher.Common.Windows.pdb
 /opt/XIVLauncher/XIVLauncher.Common.Windows.xml
 /opt/XIVLauncher/XIVLauncher.Common.xml
