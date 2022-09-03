@@ -1,12 +1,11 @@
 # SPEC file for compiling a native version of XIVLauncher for rpm-based distros
-# This file has a lot of extra comments, mostly to keep track of what I've learned. It will also trigger
-# some warnings about macros being expanded in comments. I don't really care about that, I'd rather see
-# the name of a variable or macro exactly as I'm going to use it than avoid the warnings.
+# This file has a lot of extra comments, mostly to keep track of what I've learned.
 #
 # Here's a few docs I've found very helpful:
 # http://ftp.rpm.org/max-rpm/s1-rpm-inside-macros.html
 # https://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html-single/RPM_Guide/index.html
 # https://docs.fedoraproject.org/en-US/packaging-guidelines/RPMMacros/
+# https://docs.fedoraproject.org/en-US/legal/license-field/
 
 ## COMPATABILITY
 # I've tested on the following distros. It will at least install and launch, although I haven't installed
@@ -14,25 +13,25 @@
 # Fedora - 35 and 36
 # OpenSuse - Leap 15.4 and Tumbleweed
 
-## Tags! Make sure these match the values in .copr/getsources.sh
-# Pick a tag, branch, or commit to checkout from the main repo -- master will pull the latest version,
-# but this can also be set to any tag or commit in the repo (for example, 6.2.43)
-# Using a version tag is useful for archival purposes -- the spec file will pull the same
-# sources every time, as long as the tag doesn't change. Rebuilds will be consistant.
-%define UpstreamTag 6246fde
+# DEFINITIONS
+%define xlversion 1.0.1.0
+%define xlrelease 3
 
-# Pick a tag or branch to pull from XIVLauncher4rpm. "main" is used for the primary branch so that it doesn't
-# have a name clash with the goatcorp repo. Mostly for my own sanity while testing.
-# The canary branch will always have a spec file that just pulls the latest upstream git.
-# %{VERSION}-%{RELEASE} should be used in most cases.
+# REPO TAGS
+# Make sure these match the values in .copr/getsources.sh
+# Pick a tag, branch, or commit to checkout from the repos
+# Upstream is the goatcorp/FFXIVQuickLauncher repo, and Downstream is the rankynbass/XIVLauncher4rpm repo.
+# You can use any tag, branch, or commit. master is primary branch for Upstream, and main for Downstream.
+# Default for Downstream should be %%{xlversion}-%%{xlrelease}
+%define UpstreamTag 6246fde
 %define DownstreamTag copr-test
 
 Name:           XIVLauncher
-Version:        1.0.1.0
-Release:        3
+Version:        %{xlversion}
+Release:        %{xlrelease}%{?dist}
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM package)
 Group:          Applications/Games
-License:        GPLv3
+License:        GPL-3.0-only
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
 Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
 Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
