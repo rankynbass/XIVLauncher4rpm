@@ -14,8 +14,8 @@
 # OpenSuse - Leap 15.4 and Tumbleweed
 
 # DEFINITIONS
-%define xlversion 1.0.1.0
-%define xlrelease 3a
+%define xlversion %(awk 'NR==3 {print; exit}' < _version)
+%define xlrelease %(awk 'NR==4 {print; exit}' < _version)
 
 # REPO TAGS
 # These MUST match the values in .copr/getsources.sh
@@ -23,7 +23,7 @@
 # UpstreamTag is the goatcorp/FFXIVQuickLauncher repo, and DownstreamTag is the rankynbass/XIVLauncher4rpm repo.
 # You can use any tag, branch, or commit. master is primary branch for UpstreamTag, and main for DownstreamTag.
 # Default for DownstreamTag should be %%{xlversion}-%%{xlrelease}
-%define UpstreamTag 6246fde
+%define UpstreamTag %(awk 'NR==2 {print; exit}' < _version)
 %define DownstreamTag %{xlversion}-%{xlrelease}
 
 Name:           XIVLauncher
