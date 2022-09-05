@@ -13,10 +13,9 @@
 # Fedora - 35 and 36
 # OpenSuse - Leap 15.4 and Tumbleweed
 
-# SOURCES
-# I've put them up here because I need them one of them declared before it's used in some definitions.
-Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
-Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
+# Version File Source
+# I've put it here because I need it declared before it's used in some definitions. And it's Source2 because I'm
+# not going to renumber them.
 Source2:        _version
 
 # DEFINITIONS
@@ -34,6 +33,8 @@ Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM pac
 Group:          Applications/Games
 License:        GPL-3.0-only
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
+Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
+Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 
 
 # These package names are from the fedora / redhat repos. Other rpm distros might
@@ -165,7 +166,7 @@ rm -rf %{_builddir}/*
     - Now gets UpstreamTag, DownstreamTag from _version file.
 - Modify spec file
     - Now gets UpstreamTag, xlversion, and xlrelease from _version file.
-    - Moved sources up above definitions, because I need them declared before using them in %%define tags.
+    - Moved source2 up above definitions, because I need it declared before using it in %%define tags.
 
 * Sun Sep 04 2022 Rankyn Bass <rankyn@proton.me>
 - Bump version-release to 1.0.1.0-3a
