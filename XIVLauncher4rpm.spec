@@ -7,23 +7,23 @@
 # https://docs.fedoraproject.org/en-US/packaging-guidelines/RPMMacros/
 # https://docs.fedoraproject.org/en-US/legal/license-field/
 
-## COMPATABILITY
+# COMPATABILITY
 # I've tested on the following distros. It will at least install and launch, although I haven't installed
 # or played on all of them.
 # Fedora - 35 and 36
 # OpenSuse - Leap 15.4 and Tumbleweed
 
-# DEFINITIONS
-%define xlversion 1.0.1.0
-%define xlrelease 3a
+# Version File Source
+# I've put it here because I need it declared before it's used in some definitions. And it's Source2 because I'm
+# not going to renumber them.
+Source2:        _version
 
-# REPO TAGS
-# These MUST match the values in .copr/getsources.sh
-# Pick a tag, branch, or commit to checkout from the repos.
-# UpstreamTag is the goatcorp/FFXIVQuickLauncher repo, and DownstreamTag is the rankynbass/XIVLauncher4rpm repo.
-# You can use any tag, branch, or commit. master is primary branch for UpstreamTag, and main for DownstreamTag.
-# Default for DownstreamTag should be %%{xlversion}-%%{xlrelease}
-%define UpstreamTag 6246fde
+# DEFINITIONS
+# Repo tags are now pulled from the _version file, so it only has to be changed in one place.
+# This is why sources were declared above.
+%define UpstreamTag %(awk 'NR==2 {print; exit}' < %{SOURCE2} )
+%define xlversion %(awk 'NR==3 {print; exit}' < %{SOURCE2} )
+%define xlrelease %(awk 'NR==4 {print; exit}' < %{SOURCE2} )
 %define DownstreamTag %{xlversion}-%{xlrelease}
 
 Name:           XIVLauncher
@@ -35,6 +35,7 @@ License:        GPL-3.0-only
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
 Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
 Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
+
 
 # These package names are from the fedora / redhat repos. Other rpm distros might
 # have different names for these.
@@ -156,33 +157,4 @@ rm -rf %{_builddir}/*
 %license /usr/share/doc/xivlauncher/COPYING
 
 %changelog
-* Sun Sep 04 2022 Rankyn Bass <rankyn@proton.me>
-- Bump version-release to 1.0.1.0-3a
-- Modify Makefile, getsources.sh
-    - Remove wget, replace with curl
-- Modify spec file
-    - Add -p:BuildHash=UpstreamTag to prevent git describe.
-    - Drop unneeded git build dependency
-    - Drop git init section
-    - Add xivlogo.png to install directory (from misc/header.png)
-
-* Fri Sep 02 2022 Rankyn Bass <rankyn@proton.me>
-- Bump version-release to 1.0.1.0-3
-- Modify Makefile, add getsources script
-    - No longer requires git. Now just needs wget.
-    - Makefile now calls getsources.sh, which uses wget to download sources
-    - getsources.sh MUST have matching UpstreamTag and DownstreamTag in spec file.
-    - No longer call rpmbuild -bp, which should fix problems with building srpm.
-- Modify spec file
-    - Now works with downloaded sources instead of downloading with git during prep stage.
-    - Reorganized importand definitions (%%define) to the top of the script
-    - Worked out a method to deal with ugly long hash name in upstream tarball
-    - %%setup macro was unpacking source0 tarball multiple times. This has been fixed.
-    - More inline documentation of macros and shell commands.
-    - Fixed warnings about macros expanding in comments.
-- Modify README.md
-    - Updated build instructions.
-    - Included install instructions for openSUSE.
-
-* Mon Aug 29 2022 Rankyn Bass <rankyn@proton.me>
-- First changelog entry - setting up for COPR.
+# See CHANGELOG.md
