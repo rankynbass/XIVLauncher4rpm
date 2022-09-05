@@ -84,7 +84,7 @@ rpmdev-setuptree
 Install all the dependencies needed for the build. Theoretically this should be done by the rpmbuild tool, but it doesn't always work.
 
 ```
-sudo dnf install aria2 SDL2 libsecret libattr fontconfig lcms2 libXcursor libXrandr libXdamage libXi gettext freetype mesa-libGLU libSM libgcc libpcap libFAudio desktop-file-utils jxrlib dotnet-sdk-6.0 git
+sudo dnf install aria2 SDL2 libsecret libattr fontconfig lcms2 libXcursor libXrandr libXdamage libXi gettext freetype mesa-libGLU libSM libgcc libpcap libFAudio desktop-file-utils jxrlib dotnet-sdk-6.0
 ```
 
 **Compiling the code**

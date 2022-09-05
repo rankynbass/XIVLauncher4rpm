@@ -15,7 +15,7 @@
 
 # DEFINITIONS
 %define xlversion 1.0.1.0
-%define xlrelease 3
+%define xlrelease 3a
 
 # REPO TAGS
 # These MUST match the values in .copr/getsources.sh
@@ -24,7 +24,7 @@
 # You can use any tag, branch, or commit. master is primary branch for UpstreamTag, and main for DownstreamTag.
 # Default for DownstreamTag should be %%{xlversion}-%%{xlrelease}
 %define UpstreamTag 6246fde
-%define DownstreamTag %{xlversion}-%{xlrelease}
+%define DownstreamTag no-git # %{xlversion}-%{xlrelease}
 
 Name:           XIVLauncher
 Version:        %{xlversion}
@@ -40,7 +40,6 @@ Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 # have different names for these.
 # (x or y) has been used where fedora and opensuse have different package names (fedora-pkg or opensuse-pkg).
 BuildRequires:  dotnet-sdk-6.0
-BuildRequires:  git
 Requires:       aria2
 Requires:       (SDL2 or libSDL2-2_0-0)
 Requires:       (libsecret or libsecret-1-0)
@@ -103,18 +102,14 @@ cd %{_builddir}
 rm -rf %{launcher}
 mkdir -p %{launcher}
 
-# Work around a build bug: it requires an active git repo.
+# We need to pass two extra -p switches to dotnet publish. The first sets the version of wine to download, and the second sets
+# the build hash and prevents the compiler from trying to do a git describe to create or find one. This eliminates git as a
+# build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
 cd %{_builddir}/%{repo0}
-git init
-git config user.name "COPRBuildUser"
-git config user.email "COPRBuildUser@gmail.com"
-git add .
-git commit -m "Working around build bug"
-
-# Now initialize dotnet publish to make the launcher.
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{launcher}" --configuration Release -p:DefineConstants=WINE_XIV_FEDORA_LINUX
+dotnet publish -r linux-x64 --sc -o "%{launcher}" --configuration Release -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash=%{UpstreamTag}
 cp ../../misc/linux_distrib/512.png %{launcher}/xivlauncher.png
+cp ../../misc/header.png %{launcher}/xivlogo.png
 cd %{_builddir}/%{repo1}
 cp openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop COPYING %{launcher}/
 
@@ -147,19 +142,30 @@ rm -rf %{_builddir}/*
 /opt/XIVLauncher/openssl_fix.cnf
 /opt/XIVLauncher/xivlauncher.sh
 /opt/XIVLauncher/xivlauncher.png
+/opt/XIVLauncher/XIVLauncher.Common.pdb
+/opt/XIVLauncher/XIVLauncher.Common.Unix.pdb
+/opt/XIVLauncher/XIVLauncher.Common.Unix.xml
 /opt/XIVLauncher/XIVLauncher.Common.Windows.pdb
 /opt/XIVLauncher/XIVLauncher.Common.Windows.xml
 /opt/XIVLauncher/XIVLauncher.Common.xml
-/opt/XIVLauncher/XIVLauncher.Common.Unix.pdb
-/opt/XIVLauncher/XIVLauncher.Common.Unix.xml
-/opt/XIVLauncher/XIVLauncher.Common.pdb
 /opt/XIVLauncher/XIVLauncher.Core
 /opt/XIVLauncher/XIVLauncher.Core.pdb
 /opt/XIVLauncher/XIVLauncher.Core.xml
 /opt/XIVLauncher/XIVLauncher.desktop
+/opt/XIVLauncher/xivlogo.png
 %license /usr/share/doc/xivlauncher/COPYING
 
 %changelog
+* Sun Sep 04 2022 Rankyn Bass <rankyn@proton.me>
+- Bump version-release to 1.0.1.0-3a
+- Modify Makefile, getsources.sh
+    - Remove wget, replace with curl
+- Modify spec file
+    - Add -p:BuildHash=UpstreamTag to prevent git describe.
+    - Drop unneeded git build dependency
+    - Drop git init section
+    - Add xivlogo.png to install directory (from misc/header.png)
+
 * Fri Sep 02 2022 Rankyn Bass <rankyn@proton.me>
 - Bump version-release to 1.0.1.0-3
 - Modify Makefile, add getsources script
