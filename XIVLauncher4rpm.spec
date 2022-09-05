@@ -14,12 +14,14 @@
 # OpenSuse - Leap 15.4 and Tumbleweed
 
 # SOURCES
+# I've put them up here because I need them one of them declared before it's used in some definitions.
 Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
 Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 Source2:        _version
 
 # DEFINITIONS
 # Repo tags are now pulled from the _version file, so it only has to be changed in one place.
+# This is why sources were declared above.
 %define UpstreamTag %(awk 'NR==2 {print; exit}' < %{SOURCE2} )
 %define xlversion %(awk 'NR==3 {print; exit}' < %{SOURCE2} )
 %define xlrelease %(awk 'NR==4 {print; exit}' < %{SOURCE2} )
@@ -163,6 +165,7 @@ rm -rf %{_builddir}/*
     - Now gets UpstreamTag, DownstreamTag from _version file.
 - Modify spec file
     - Now gets UpstreamTag, xlversion, and xlrelease from _version file.
+    - Moved sources up above definitions, because I need them declared before using them in %%define tags.
 
 * Sun Sep 04 2022 Rankyn Bass <rankyn@proton.me>
 - Bump version-release to 1.0.1.0-3a
