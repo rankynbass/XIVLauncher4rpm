@@ -24,7 +24,8 @@
 # You can use any tag, branch, or commit. master is primary branch for UpstreamTag, and main for DownstreamTag.
 # Default for DownstreamTag should be %%{xlversion}-%%{xlrelease}
 %define UpstreamTag 6246fde
-%define DownstreamTag no-git # %{xlversion}-%{xlrelease}
+%define DownstreamTag no-git
+# %{xlversion}-%{xlrelease}
 
 Name:           XIVLauncher
 Version:        %{xlversion}
