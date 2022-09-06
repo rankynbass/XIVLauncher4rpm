@@ -3,7 +3,8 @@
 XIVLauncher (abbreviated as XL) is a faster launcher for our favorite critically acclaimed MMO, with various available addons and enhancements to the game!
 
 ### Repos
-[ XIVLauncher git: **[goatcorp/FFXIVQuickLauncher](https://github.com/goatcorp/FFXIVQuickLauncher/)** ]
+[ FFXIVQuickLauncher git: **[goatcorp/FFXIVQuickLauncher](https://github.com/goatcorp/FFXIVQuickLauncher/)** ]
+[ XIVLauncher4rpm git: **[rankynbass/XIVLauncher4rpm](https://github.com/rankynbass/XIVLauncher4rpm)** ]
 [ COPR Repo: **[rankyn/xivlauncher](https://copr.fedorainfracloud.org/coprs/rankyn/xivlauncher/)** ]
 
 ## Installation and Removal
@@ -82,7 +83,7 @@ You can find more information about the official (flatpak) version of XIVLaunche
 
 ## Building it yourself
 
-### Fedora 35 setup
+### Fedora setup
 
 By default, Fedora will want to build in `~/rpmbuild`. If it's somewhere different for your setup, replace ~/rpmbuild with your own build directory. When you clone the git repository from github, DO NOT clone it into this folder, do it somewhere else.
 
@@ -111,7 +112,7 @@ After that, install rpm build packages with `sudo zypper in rpm-build rpmdevtool
 
 ### Compiling the code
 
-Now pull the source code. I use a folder called `~/build` for compiling various git repos, so that's what I'll do here. But you can use any folder you have read/write access to.
+Use `git clone` to grab the source code. I use a folder called `~/build` for compiling various git repos, so that's what I'll do here. But you can use any folder you have read/write access to.
 
 ```
 mkdir -p ~/build
@@ -120,20 +121,24 @@ git clone https://github.com/rankynbass/XIVLauncher4rpm.git
 cd XIVLauncher4rpm
 ```
 
-Now you can build the rpms. First, download the tarballs by using the included script, then build with rpmbuild. The third option is actually what the COPR build system does. It uses .copr/Makefile to install dependencies for making the binary, then calls the getsources script, then executes rpmbuild -bs. It then passes the src.rpm off to the various build environments for different distros. However, even if you have src.rpms, you still need to have internet access. The dotnet publish command needs to grab some remote packages. For manual builds, thats obviously not an issue, since you just cloned the repo. But for remote builds with copr, or with opensuse's OBS (I haven't tried this one yet), you'll need to make sure the builder has internet access.
+Now you can build the rpms. First, download the tarballs by using the included script, then build with rpmbuild. The third option is actually what the COPR build system does. It uses .copr/Makefile to install dependencies for making the binary, then calls the getsources script, then executes rpmbuild -bs. It then passes the src.rpm off to the various build environments for different distros. However, even if you have src.rpms, you still need to have internet access. The dotnet publish command needs to grab some remote packages. For manual builds, thats obviously not an issue, since you just cloned the repo. But for remote builds with copr, or with opensuse's OBS (I haven't tried this one yet), you'll need to make sure the builder has internet access. (version and release are listed in the _version file in lines 3 and 4. As of Sep 5, 2022, these are 1.0.1.0 and 4.)
 
+Run the script `.copr/getsources.sh` and then do one of the following:
 ```
-.copr/getsources.sh
-rpmbuild -ba XIVLauncher4rpm.spec   # Build binary and source rpms
-#   OR
-rpmbuild -bb XIVLauncher4rpm.spec   # Build binary only
-#   OR
-rpmbuild -bs XIVLauncher4rpm.spec   # Build source rpm
-rpmbuild -rb ~/rpmbuild/SRPMS/XIVLauncher-<version>-<release>.<distro>.src.rpm   # Build binary from source rpm.
+rpmbuild -ba --undefine='dist' XIVLauncher4rpm.spec   # Build binary and source rpms
+```
+OR
+```
+rpmbuild -bb --undefine='dist' XIVLauncher4rpm.spec   # Build binary only
+```
+OR
+```
+rpmbuild -bs --undefine='dist' XIVLauncher4rpm.spec   # Build source rpm
+rpmbuild -rb --undefine='dist' ~/rpmbuild/SRPMS/XIVLauncher-version-release.src.rpm   # Build binary from source rpm.
 ```
 
-`.<distro>` will be `,f##` for fedora (or `.rawhide` if you're doing it on fedora rawhide). OpenSUSE does't recognize the tag, and will leave it blank.
+By default, Fedora will put a .f36 or similar after the version-release for both the rpm and src.rpm. OpenSUSE may add something like .opensuse.tw, but did not do so during my testing. The COPR build system *does* put the distro in the rpm name. If you want to edit this macro definition yourself, you can pass `--define='dist .mydistro'`. The "." is important, as otherwise you'll get something like `XIVLauncher-1.0.1.0-4mydistro.x86_64.rpm`. Or you can pass `--undefine='dist'` (as above) to make it blank.
 
-In the end you should have an rpm file in `~/rpmbuild/RPMS/x86_64/` called `XIVLauncher-<version>-<release>.<distro>.x86_64.rpm`. If you build sources as well, that will be in `~/rpmbuild/SRPMS/`.
+In the end you should have an rpm file in `~/rpmbuild/RPMS/x86_64/` called `XIVLauncher-version-release.x86_64.rpm`. If you build sources as well, that will be in `~/rpmbuild/SRPMS/`.
 
-Install as mentioned above in the "Installing" section.
+Install with `sudo rpm -i ~/rpmbuild/RPMS/x86_64/XIVLauncher-version-release.rpm`.
