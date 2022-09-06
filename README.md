@@ -132,7 +132,7 @@ rpmbuild -bs XIVLauncher4rpm.spec   # Build source rpm
 rpmbuild -rb ~/rpmbuild/SRPMS/XIVLauncher-<version>-<release>.<distro>.src.rpm   # Build binary from source rpm.
 ```
 
-<distro> will be `,f##` for fedora (or `.rawhide` if you're doing it on fedora rawhide). OpenSUSE does't recognize the tag, and will leave it blank.
+`.<distro>` will be `,f##` for fedora (or `.rawhide` if you're doing it on fedora rawhide). OpenSUSE does't recognize the tag, and will leave it blank.
 
 In the end you should have an rpm file in `~/rpmbuild/RPMS/x86_64/` called `XIVLauncher-<version>-<release>.<distro>.x86_64.rpm`. If you build sources as well, that will be in `~/rpmbuild/SRPMS/`.
 
