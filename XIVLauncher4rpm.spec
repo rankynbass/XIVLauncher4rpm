@@ -100,28 +100,24 @@ cd %{_builddir}
 
 ### BUILD SECTION
 %build
-rm -rf %{launcher}
-mkdir -p %{launcher}
-
 # We need to pass two extra -p switches to dotnet publish. The first sets the version of wine to download, and the second sets
 # the build hash and prevents the compiler from trying to do a git describe to create or find one. This eliminates git as a
 # build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
 cd %{_builddir}/%{repo0}
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{launcher}" --configuration Release -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash=%{UpstreamTag}
-cp ../../misc/linux_distrib/512.png %{launcher}/xivlauncher.png
-cp ../../misc/header.png %{launcher}/xivlogo.png
+dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash=%{UpstreamTag}
+cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
+cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
 cd %{_builddir}/%{repo1}
-cp openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop COPYING %{launcher}/
 
 ### INSTALL SECTION
 %install
 install -d "%{buildroot}/usr/bin"
 install -d "%{buildroot}/opt/XIVLauncher"
 install -d "%{buildroot}/usr/share/doc/xivlauncher"
-install -D -m 644 "%{launcher}/XIVLauncher.desktop" "%{buildroot}/usr/share/applications/XIVLauncher.desktop"
-install -D -m 644 "%{launcher}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher.png"
-cp -r "%{launcher}"/* "%{buildroot}/opt/XIVLauncher"
+install -D -m 644 "%{_builddir}/%{repo1}/XIVLauncher.desktop" "%{buildroot}/usr/share/applications/XIVLauncher.desktop"
+install -D -m 644 "%{_builddir}/%{repo1}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher.png"
+cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/XIVLauncher"
 cp %{buildroot}/opt/XIVLauncher/COPYING %{buildroot}/usr/share/doc/xivlauncher/COPYING
 cd %{buildroot}
 ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
