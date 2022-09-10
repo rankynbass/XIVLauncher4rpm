@@ -15,10 +15,10 @@ fi
 if [ ! -f "$source1" ];
 then
     # We could download the correct git tag as a tar.gz file, but we already have all the files here! Why do that?
-    # Make a directory, copy the files of the repo into the directory, then tar the results, excluding the .git folder.
+    # Make a directory, copy the needed files of the repo into the directory, then tar the results.
     mkdir -p XIVLauncher4rpm-$DownstreamTag
-    cp -r `ls -A | grep -v "XIVLauncher4rpm-$DownstreamTag"` XIVLauncher4rpm-$DownstreamTag
-    tar --exclude '.git' -czf $source1 XIVLauncher4rpm-$DownstreamTag
+    cp cleanupprofile.sh openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop COPYING XIVLauncher4rpm-$DownstreamTag/
+    tar -czf $source1 XIVLauncher4rpm-$DownstreamTag
     # Delete the temp folder we just made.
     rm -rf XIVLauncher4rpm-$DownstreamTag
 fi

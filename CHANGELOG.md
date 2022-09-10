@@ -1,5 +1,22 @@
 # Changelog
 
+### Sat Sep 10 2022 Rankyn Bass <rankyn@proton.me>
+Bump version-release to 1.0.1.0-5
+
+Added cleanupprofile.sh
+
+- Moves compatibilitytool, dalamud, dalamudAssets, devPlugins folders to _old_compat
+- Must be run by user. Can't run as part of install, since that is run as root, not as user.
+
+Modified spec file
+
+- Added %post and %postun macros.
+- Added reference to cleanupprofile.sh
+
+Modified getsources.sh to include cleanupprofile.sh
+
+Modified README.md to include cleanupprofile.sh
+
 ### Sun Sep 04 2022 Rankyn Bass <rankyn@proton.me>
 Bump version-release to 1.0.1.0-4, because 3a is not > 3
 

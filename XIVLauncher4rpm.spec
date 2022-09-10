@@ -8,10 +8,11 @@
 # https://docs.fedoraproject.org/en-US/legal/license-field/
 
 # COMPATABILITY
-# I've tested on the following distros. It will at least install and launch, although I haven't installed
-# or played on all of them.
+# I've tested on the following distros. It will at least install, launch, and log in, although I haven't installed
+# or played FFXIV on all of them.
 # Fedora - 35 and 36
-# OpenSuse - Leap 15.4 and Tumbleweed
+# OpenSuse - Leap 15.3 and 15.4, and Tumbleweed
+# Rocky Linux 9 - Requires out-of-tree packages. Get here: https://copr.fedorainfracloud.org/coprs/rankyn/xl-deps-el9/
 
 # Version File Source
 # I've put it here because I need it declared before it's used in some definitions. And it's Source2 because I'm
@@ -35,7 +36,6 @@ License:        GPL-3.0-only
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
 Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
 Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
-
 
 # These package names are from the fedora / redhat repos. Other rpm distros might
 # have different names for these.
@@ -100,33 +100,41 @@ cd %{_builddir}
 
 ### BUILD SECTION
 %build
-rm -rf %{launcher}
-mkdir -p %{launcher}
-
 # We need to pass two extra -p switches to dotnet publish. The first sets the version of wine to download, and the second sets
 # the build hash and prevents the compiler from trying to do a git describe to create or find one. This eliminates git as a
 # build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
 cd %{_builddir}/%{repo0}
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{launcher}" --configuration Release -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash=%{UpstreamTag}
-cp ../../misc/linux_distrib/512.png %{launcher}/xivlauncher.png
-cp ../../misc/header.png %{launcher}/xivlogo.png
+dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash=%{UpstreamTag}
+cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
+cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
 cd %{_builddir}/%{repo1}
-cp openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop COPYING %{launcher}/
 
 ### INSTALL SECTION
 %install
 install -d "%{buildroot}/usr/bin"
 install -d "%{buildroot}/opt/XIVLauncher"
 install -d "%{buildroot}/usr/share/doc/xivlauncher"
-install -D -m 644 "%{launcher}/XIVLauncher.desktop" "%{buildroot}/usr/share/applications/XIVLauncher.desktop"
-install -D -m 644 "%{launcher}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher.png"
-cp -r "%{launcher}"/* "%{buildroot}/opt/XIVLauncher"
+install -D -m 644 "%{_builddir}/%{repo1}/XIVLauncher.desktop" "%{buildroot}/usr/share/applications/XIVLauncher.desktop"
+install -D -m 644 "%{_builddir}/%{repo1}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher.png"
+cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/XIVLauncher"
 cp %{buildroot}/opt/XIVLauncher/COPYING %{buildroot}/usr/share/doc/xivlauncher/COPYING
 cd %{buildroot}
 ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
 
+%pre
+
+%post
+echo "To clean your .xlcore profile when switching from flatpak to native XIVLauncher, you should run the script /opt/XIVLauncher/cleanupprofile.sh. Do not run with sudo."
+echo "This should *not* be done if you are using a custom wine install."
+
+%preun
+
+%postun
+echo "If you are planning to use the flatpak version of XIVLauncher, you should delete the '~/.xlcore/compatibilitytool' folder. You can also safely remove '~/.xlcore/_old_compat'."
+
 ### CLEAN SECTION
+# This is mostly for local builds. chroot build environments usually just destroy all the extra files when done.
 %clean
 rm -rf %{buildroot}
 rm -rf %{_builddir}/*
@@ -136,6 +144,7 @@ rm -rf %{_builddir}/*
 /usr/bin/xivlauncher
 /usr/share/applications/XIVLauncher.desktop
 /usr/share/pixmaps/xivlauncher.png
+/opt/XIVLauncher/cleanupprofile.sh
 /opt/XIVLauncher/COPYING
 /opt/XIVLauncher/libcimgui.so
 /opt/XIVLauncher/libskeychain.so
