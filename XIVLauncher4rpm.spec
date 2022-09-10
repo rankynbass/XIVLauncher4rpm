@@ -8,10 +8,11 @@
 # https://docs.fedoraproject.org/en-US/legal/license-field/
 
 # COMPATABILITY
-# I've tested on the following distros. It will at least install and launch, although I haven't installed
-# or played on all of them.
+# I've tested on the following distros. It will at least install, launch, and log in, although I haven't installed
+# or played FFXIV on all of them.
 # Fedora - 35 and 36
-# OpenSuse - Leap 15.4 and Tumbleweed
+# OpenSuse - Leap 15.3 and 15.4, and Tumbleweed
+# Rocky Linux 9 - Requires out-of-tree packages. Get here: https://copr.fedorainfracloud.org/coprs/rankyn/xl-deps-el9/
 
 # Version File Source
 # I've put it here because I need it declared before it's used in some definitions. And it's Source2 because I'm
@@ -35,7 +36,6 @@ License:        GPL-3.0-only
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
 Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
 Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
-
 
 # These package names are from the fedora / redhat repos. Other rpm distros might
 # have different names for these.
@@ -122,7 +122,19 @@ cp %{buildroot}/opt/XIVLauncher/COPYING %{buildroot}/usr/share/doc/xivlauncher/C
 cd %{buildroot}
 ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
 
+%pre
+
+%post
+echo "To clean your .xlcore profile when switching from flatpak to native XIVLauncher, you should run the script /opt/XIVLauncher/cleanupprofile.sh. Do not run with sudo."
+echo "This should *not* be done if you are using a custom wine install."
+
+%preun
+
+%postun
+echo "If you are planning to use the flatpak version of XIVLauncher, you should delete the '~/.xlcore/compatibilitytool' folder. You can also safely remove '~/.xlcore/_old_compat'."
+
 ### CLEAN SECTION
+# This is mostly for local builds. chroot build environments usually just destroy all the extra files when done.
 %clean
 rm -rf %{buildroot}
 rm -rf %{_builddir}/*
@@ -132,6 +144,7 @@ rm -rf %{_builddir}/*
 /usr/bin/xivlauncher
 /usr/share/applications/XIVLauncher.desktop
 /usr/share/pixmaps/xivlauncher.png
+/opt/XIVLauncher/cleanupprofile.sh
 /opt/XIVLauncher/COPYING
 /opt/XIVLauncher/libcimgui.so
 /opt/XIVLauncher/libskeychain.so
