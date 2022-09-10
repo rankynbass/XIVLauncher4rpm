@@ -59,7 +59,7 @@ sudo dnf copr remove rankyn/xl-deps-el9
 ```
 ## Configuration Info
 
-If you are upgrading from the previously released 1.0.1.0-1 rpms or from flatpak, you need to delete the folder `~/.xlcore/compatibilitytool`. This is to ensure that the proper version of wine gets downloaded. Previous releases just used the default, which targeted Ubuntu. It *probably* won't cause problems, but you should do this just in case. *This will break the flatpak install!* If you are trying to switch back and forth between native and flatpak, you'll have to delete it every time you switch. Alternately, use a custom version of wine and you can switch between the two without issue.
+A script is included at `/opt/XIVLauncher/cleanupprofile.sh` which can clean up your .xlcore folder and improve performance/compatibility with the native XIVLauncher install. If you are upgrading from 1.0.1.0-2 or earlier, or moving from the flatpak install, you should run this. Running this script will move a few folders to `~/.xlcore/_old_compat/`. When you run XIVLauncher those folders will be recreated with fresh versions. *This may break the flatpak install!* If you are trying to switch back and forth between native and flatpak, you'll have to run this script each time you switch. If you are running a custom version of wine, this script is not necessary.
 
 ### Non-Steam Configuration
 

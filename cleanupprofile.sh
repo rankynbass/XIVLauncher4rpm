@@ -1,4 +1,8 @@
 #!/bin/bash
+# This script is for cleaning out some of the old wine and dalamud assets used by
+# XIVLauncher. These will be rebuild when you next log in, and are thus safe to delete.
+# Cleaning these up when switching between native and flatpak versions is advised.
+
 BACKUPFOLDER="$HOME/.xlcore/_old_compat/$(date +"%Y-%m-%d_%H:%M:%S")"
 echo "Checking for existing .xlcore folder..."
 # Check to see if the .xlcore directory even exists
@@ -7,8 +11,8 @@ if [ ! -d "$HOME/.xlcore" ]; then
 else
     echo "Folder $HOME/.xlcore found."
 
-    # List of folders to attempt to backup. This is case sensative.
-    TOOLLIST="compatibilitytool dalamud dalamudAssets devPlugins wineprefix runtime"
+    # List of files and folders to attempt to backup. This is case sensative.
+    TOOLLIST="compatibilitytool dalamud dalamudAssets devPlugins"
     TOOLLISTBAK=""
   
     # Check for folders. If they exist, back them up.
