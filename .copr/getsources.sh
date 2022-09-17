@@ -12,14 +12,11 @@ if [ ! -f "$source0" ];
 then
     curl -L https://github.com/goatcorp/FFXIVQuickLauncher/archive/$UpstreamTag.tar.gz -o $source0
 fi
-if [ ! -f "$source1" ];
-then
-    # We could download the correct git tag as a tar.gz file, but we already have all the files here! Why do that?
-    # Make a directory, copy the needed files of the repo into the directory, then tar the results.
-    mkdir -p XIVLauncher4rpm-$DownstreamTag
-    cp cleanupprofile.sh openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop COPYING XIVLauncher4rpm-$DownstreamTag/
-    tar -czf $source1 XIVLauncher4rpm-$DownstreamTag
-    # Delete the temp folder we just made.
-    rm -rf XIVLauncher4rpm-$DownstreamTag
-fi
+# We could download the correct git tag as a tar.gz file, but we already have all the files here! Why do that?
+# Make a directory, copy the needed files of the repo into the directory, then tar the results.
+mkdir -p XIVLauncher4rpm-$DownstreamTag
+cp cleanupprofile.sh openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop COPYING XIVLauncher4rpm-$DownstreamTag/
+tar -czf $source1 XIVLauncher4rpm-$DownstreamTag
+# Delete the temp folder we just made.
+rm -rf XIVLauncher4rpm-$DownstreamTag
 cp _version $xlsource
