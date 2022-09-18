@@ -18,7 +18,6 @@
 # I've put it here because I need it declared before it's used in some definitions. And it's Source2 because I'm
 # not going to renumber them.
 Source2:        _version
-Source3:        _timestamp
 
 # DEFINITIONS
 # Repo tags are now pulled from the _version file, so it only has to be changed in one place.
@@ -27,7 +26,7 @@ Source3:        _timestamp
 %define xlversion %(awk 'NR==3 {print; exit}' < %{SOURCE2} )
 %define xlrelease %(awk 'NR==4 {print; exit}' < %{SOURCE2} )
 %define DownstreamTag %{xlversion}-%{xlrelease}
-%define xldatetime %(awk 'NR==1 {print; exit}' < %{SOURCE3} )
+%define xldatetime %(awk 'NR==5 {print; exit}' < %{SOURCE2} )
 
 Name:           XIVLauncher-git
 Version:        %{xldatetime}
