@@ -1,5 +1,12 @@
 # Changelog
 
+### Sat Sep 17 2022 Rankyn Bass <rankyn@proton.me>
+Bump version-release to 1.0.1.0-6
+
+Slight modifications to getsources.sh. No functional changes.
+
+Updated to latest pre-release from git: commit 5ae95b6
+
 ### Sat Sep 10 2022 Rankyn Bass <rankyn@proton.me>
 Bump version-release to 1.0.1.0-5
 
