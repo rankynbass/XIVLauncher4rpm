@@ -26,11 +26,11 @@ Source2:        _version
 %define xlversion %(awk 'NR==3 {print; exit}' < %{SOURCE2} )
 %define xlrelease %(awk 'NR==4 {print; exit}' < %{SOURCE2} )
 %define DownstreamTag %{xlversion}-%{xlrelease}
-%define xldatetime %(date -u +"utc.%y%m%d.%H%M")
+%define xldatetime %(date -u +"%y.%m.%d.%H%M")
 
 Name:           XIVLauncher
-Version:        git
-Release:        %{xldatetime}%{?dist}
+Version:        %{xldatetime}
+Release:        git%{?dist}
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM package)
 Group:          Applications/Games
 License:        GPL-3.0-only
