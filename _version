@@ -1,4 +1,4 @@
 # Line 2: UpstreamTag, Line 3: Version, Line 4: Release. DO NOT DELETE THIS COMMENT LINE 
 master
-9.9.9.9
-1
+git
+canary
