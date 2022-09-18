@@ -1,11 +1,14 @@
 # Changelog
 
 ### Sat Sep 17 2022 Rankyn Bass <rankyn@proton.me>
-Bump version-release to 1.0.1.0-6
+Make canary branch.
 
-Slight modifications to getsources.sh. No functional changes.
+Slight modifications to spec file
 
-Updated to latest pre-release from git: commit 5ae95b6
+- Use date command to generate version %yy.%mm.%dd.%HHmm (UTC)
+- release is set to "utc" so that the filename pattern will be XIVLauncher-git-<datetime>-utc
+
+Pointed _version file to FFXIVQuickLauncher master branch
 
 ### Sat Sep 10 2022 Rankyn Bass <rankyn@proton.me>
 Bump version-release to 1.0.1.0-5

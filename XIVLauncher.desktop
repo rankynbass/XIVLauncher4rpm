@@ -1,9 +1,9 @@
 #!/usr/bin/env xdg-open
 [Desktop Entry]
-Name=XIVLauncher
+Name=XIVLauncher-git
 Comment=Custom launcher for Final Fantasy XIV. Native version from copr or rpm.
-Exec=/usr/bin/xivlauncher
-Icon=xivlauncher
+Exec=/usr/bin/xivlauncher-git
+Icon=xivlauncher-git
 Terminal=false
 Type=Application
 Categories=Game;

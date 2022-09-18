@@ -18,6 +18,7 @@
 # I've put it here because I need it declared before it's used in some definitions. And it's Source2 because I'm
 # not going to renumber them.
 Source2:        _version
+Source3:        _timestamp
 
 # DEFINITIONS
 # Repo tags are now pulled from the _version file, so it only has to be changed in one place.
@@ -26,11 +27,11 @@ Source2:        _version
 %define xlversion %(awk 'NR==3 {print; exit}' < %{SOURCE2} )
 %define xlrelease %(awk 'NR==4 {print; exit}' < %{SOURCE2} )
 %define DownstreamTag %{xlversion}-%{xlrelease}
-%define xldatetime %(date -u +"%y.%m.%d.%H%M")
+%define xldatetime %(awk 'NR==1 {print; exit}' < %{SOURCE3} )
 
-Name:           XIVLauncher
+Name:           XIVLauncher-git
 Version:        %{xldatetime}
-Release:        git%{?dist}
+Release:        utc%{?dist}
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM package)
 Group:          Applications/Games
 License:        GPL-3.0-only
@@ -71,6 +72,9 @@ Requires:       jxrlib
 # Binaries will be deposited into this directory. Macro'd for convenience.
 %define launcher %{_builddir}/XIVLauncher
 
+# Turn off .build-id links so it doesn't conflict with the main package.
+%global _build_id_links none
+
 %description
 Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This is a native build for fedora 36 and several other rpm based distos.
 
@@ -106,7 +110,7 @@ cd %{_builddir}
 # build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
 cd %{_builddir}/%{repo0}
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash=%{UpstreamTag}
+dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash=git-%{xldatetime}
 cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
 cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
 cd %{_builddir}/%{repo1}
@@ -114,19 +118,19 @@ cd %{_builddir}/%{repo1}
 ### INSTALL SECTION
 %install
 install -d "%{buildroot}/usr/bin"
-install -d "%{buildroot}/opt/XIVLauncher"
-install -d "%{buildroot}/usr/share/doc/xivlauncher"
-install -D -m 644 "%{_builddir}/%{repo1}/XIVLauncher.desktop" "%{buildroot}/usr/share/applications/XIVLauncher.desktop"
-install -D -m 644 "%{_builddir}/%{repo1}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher.png"
-cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/XIVLauncher"
-cp %{buildroot}/opt/XIVLauncher/COPYING %{buildroot}/usr/share/doc/xivlauncher/COPYING
+install -d "%{buildroot}/opt/XIVLauncher-git"
+install -d "%{buildroot}/usr/share/doc/xivlauncher-git"
+install -D -m 644 "%{_builddir}/%{repo1}/XIVLauncher.desktop" "%{buildroot}/usr/share/applications/XIVLauncher-git.desktop"
+install -D -m 644 "%{_builddir}/%{repo1}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher-git.png"
+cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/XIVLauncher-git"
+cp %{buildroot}/opt/XIVLauncher-git/COPYING %{buildroot}/usr/share/doc/xivlauncher-git/COPYING
 cd %{buildroot}
-ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
+ln -sr "opt/XIVLauncher-git/xivlauncher.sh" "usr/bin/xivlauncher-git"
 
 %pre
 
 %post
-echo "To clean your .xlcore profile when switching from flatpak to native XIVLauncher, you should run the script /opt/XIVLauncher/cleanupprofile.sh. Do not run with sudo."
+echo "To clean your .xlcore profile when switching from flatpak to native XIVLauncher, you should run the script /opt/XIVLauncher-git/cleanupprofile.sh. Do not run with sudo."
 echo "This should *not* be done if you are using a custom wine install."
 
 %preun
@@ -142,29 +146,29 @@ rm -rf %{_builddir}/*
 
 ### FILES SECTION
 %files
-/usr/bin/xivlauncher
-/usr/share/applications/XIVLauncher.desktop
-/usr/share/pixmaps/xivlauncher.png
-/opt/XIVLauncher/cleanupprofile.sh
-/opt/XIVLauncher/COPYING
-/opt/XIVLauncher/libcimgui.so
-/opt/XIVLauncher/libskeychain.so
-/opt/XIVLauncher/libsteam_api64.so
-/opt/XIVLauncher/openssl_fix.cnf
-/opt/XIVLauncher/xivlauncher.sh
-/opt/XIVLauncher/xivlauncher.png
-/opt/XIVLauncher/XIVLauncher.Common.pdb
-/opt/XIVLauncher/XIVLauncher.Common.Unix.pdb
-/opt/XIVLauncher/XIVLauncher.Common.Unix.xml
-/opt/XIVLauncher/XIVLauncher.Common.Windows.pdb
-/opt/XIVLauncher/XIVLauncher.Common.Windows.xml
-/opt/XIVLauncher/XIVLauncher.Common.xml
-/opt/XIVLauncher/XIVLauncher.Core
-/opt/XIVLauncher/XIVLauncher.Core.pdb
-/opt/XIVLauncher/XIVLauncher.Core.xml
-/opt/XIVLauncher/XIVLauncher.desktop
-/opt/XIVLauncher/xivlogo.png
-%license /usr/share/doc/xivlauncher/COPYING
+/usr/bin/xivlauncher-git
+/usr/share/applications/XIVLauncher-git.desktop
+/usr/share/pixmaps/xivlauncher-git.png
+/opt/XIVLauncher-git/cleanupprofile.sh
+/opt/XIVLauncher-git/COPYING
+/opt/XIVLauncher-git/libcimgui.so
+/opt/XIVLauncher-git/libskeychain.so
+/opt/XIVLauncher-git/libsteam_api64.so
+/opt/XIVLauncher-git/openssl_fix.cnf
+/opt/XIVLauncher-git/xivlauncher.sh
+/opt/XIVLauncher-git/xivlauncher.png
+/opt/XIVLauncher-git/XIVLauncher.Common.pdb
+/opt/XIVLauncher-git/XIVLauncher.Common.Unix.pdb
+/opt/XIVLauncher-git/XIVLauncher.Common.Unix.xml
+/opt/XIVLauncher-git/XIVLauncher.Common.Windows.pdb
+/opt/XIVLauncher-git/XIVLauncher.Common.Windows.xml
+/opt/XIVLauncher-git/XIVLauncher.Common.xml
+/opt/XIVLauncher-git/XIVLauncher.Core
+/opt/XIVLauncher-git/XIVLauncher.Core.pdb
+/opt/XIVLauncher-git/XIVLauncher.Core.xml
+/opt/XIVLauncher-git/XIVLauncher.desktop
+/opt/XIVLauncher-git/xivlogo.png
+%license /usr/share/doc/xivlauncher-git/COPYING
 
 %changelog
 # See CHANGELOG.md

@@ -20,3 +20,5 @@ tar -czf $source1 XIVLauncher4rpm-$DownstreamTag
 # Delete the temp folder we just made.
 rm -rf XIVLauncher4rpm-$DownstreamTag
 cp _version $xlsource
+# Get the timestamp for the FFXIVQuickLauncher tarball.
+echo "$(date -u -r $source0 +'%y.%m.%d.%H%M')" > $xlsource/_timestamp
