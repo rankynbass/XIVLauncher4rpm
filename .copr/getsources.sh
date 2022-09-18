@@ -5,7 +5,9 @@ repodir="$(realpath "$(dirname "${BASH_SOURCE[0]}")/../")"
 cd "$repodir" || exit
 
 UpstreamTag=$(awk 'NR==2 {print; exit}' < _version)
-DownstreamTag=$(awk 'NR==3 {print; exit}' < _version)-$(awk 'NR==4 {print; exit}' < _version)
+xlver=$(awk 'NR==3 {print; exit}' < _version)
+xlrel=$(awk 'NR==4 {print; exit}' < _version)
+DownstreamTag=$xlver-$xlrel
 xlsource=$(rpmbuild --eval='%_sourcedir')
 source0=$xlsource/FFXIVQuickLauncher-$UpstreamTag.tar.gz
 source1=$xlsource/XIVLauncher4rpm-$DownstreamTag.tar.gz
@@ -18,8 +20,12 @@ tar -czf "$source1" "XIVLauncher4rpm-$DownstreamTag"
 # Delete the temp folder we just made.
 rm -rf "XIVLauncher4rpm-$DownstreamTag"
 
-# Copy the _version file over.
-cp _version "$xlsource"
+# Build the _version file. Make sure all lines are correct.
+# This is a "safe" way to do it. This makes sure the version file didn't get any added lines at the end.
+echo "# Line 2: UpstreamTag, Line 3: Version, Line 4: Release. DO NOT DELETE THIS COMMENT LINE" > $xlsource/_version
+echo "$UpstreamTag" >> $xlsource/_version
+echo "$xlver" >> $xlsource/_version
+echo "$xlrel" >> $xlsource/_version
 
 # Now get the latest git from upstream.
 rm -rf FFXIVQuickLauncher
@@ -27,7 +33,7 @@ git clone https://github.com/goatcorp/FFXIVQuickLauncher.git
 cd FFXIVQuickLauncher || exit
 # Get timestamp of current commit.
 xltimestamp="$(date -u -d "@$(git show -s --format=%ct)" +'%y.%m.%d.%H%M')"
-echo $'\n'"$xltimestamp" >> "$xlsource/_version"
+echo "$xltimestamp" >> "$xlsource/_version"
 git archive --format=tar.gz -o "$source0" --prefix=FFXIVQuickLauncher/ HEAD
 # Delete the repo.
 cd "$repodir" || exit
