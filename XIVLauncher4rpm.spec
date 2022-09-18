@@ -29,7 +29,7 @@ Source2:        _version
 %define xldatetime %(date -u +"utc.%y%m%d.%H%M")
 
 Name:           XIVLauncher
-Version:        %{xlversion}
+Version:        git
 Release:        %{xldatetime}%{?dist}
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM package)
 Group:          Applications/Games
