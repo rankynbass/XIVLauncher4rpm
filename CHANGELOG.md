@@ -1,7 +1,7 @@
 # Changelog
 
 ### Sun Sep 25 2022 Rankyn Bass <rankyn@proton.me>
-Bump version-release to 1.0.1.0-5
+Bump version-release to 1.0.1.0-6
 
 Update to latest git commit.
 
