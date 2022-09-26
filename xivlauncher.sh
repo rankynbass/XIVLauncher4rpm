@@ -6,7 +6,4 @@ export OPENSSL_CONF=/opt/XIVLauncher/openssl_fix.cnf
 # export MANGOHUD=1
 # export MANGOHUD_CONFIGFILE=~/.config/MangoHud/MangoHud.conf
 
-# Steam overlay (doesn't work yet)
-# export LD_PRELOAD="$HOME/.local/share/Steam/ubuntu12_64/gameoverlayrenderer.so"
-
 /opt/XIVLauncher/XIVLauncher.Core &
