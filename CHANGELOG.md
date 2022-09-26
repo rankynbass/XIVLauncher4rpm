@@ -1,5 +1,16 @@
 # Changelog
 
+### Sun Sep 25 2022 Rankyn Bass <rankyn@proton.me>
+Bump version-release to 1.0.1.0-5
+
+Update to latest git commit.
+
+Modified xivlauncher.sh to indicate how to add env variables.
+
+Modified spec file so titlebar will show "1.0.1.0 (hashnum) (rpm)"
+
+Modified .desktop file to include (rpm) in the title, so it's different from flatpak install.
+
 ### Sat Sep 10 2022 Rankyn Bass <rankyn@proton.me>
 Bump version-release to 1.0.1.0-5
 
