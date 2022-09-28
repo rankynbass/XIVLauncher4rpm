@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# Github repo to use. Can use this to point to a fork for testing purposes.
+gitrepo="https://github.com/rankynbass/FFXIVQuickLauncher.git"
+
 # Make sure the script can run properly no matter where it's called from
 # The below lines will always point to the repo's root directory.
 repodir="$(realpath "$(dirname "${BASH_SOURCE[0]}")/../")"
@@ -8,7 +12,7 @@ xlsource="$(rpmbuild --eval='%_sourcedir')"
 
 # Get the latest git from upstream.
 rm -rf FFXIVQuickLauncher
-git clone https://github.com/goatcorp/FFXIVQuickLauncher.git
+git clone $gitrepo
 cd FFXIVQuickLauncher || exit
 # Get timestamp of current commit.
 xlgitshow=($(git show -s --format='%h %ct'))
