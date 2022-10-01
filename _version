@@ -1,4 +1,5 @@
-# Line 2: UpstreamTag, Line 3: Version, Line 4: Release. DO NOT DELETE THIS COMMENT LINE 
-9a93fe4
+# Line 1: This comment. Line 2: UpstreamTag. Line 3: Version. Line 4: Release. Line 5: Github repo
+fc7f1b8
 1.0.1.0
 6
+https://github.com/rankynbass/FFXIVQuickLauncher
