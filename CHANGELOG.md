@@ -1,5 +1,12 @@
 # Changelog
 
+### Sat Oct 01 2022 Rankyn Bass <rankyn@proton.me>
+Modified getsources.sh and version file to allow alternate forks of FFXIVQuickLauncher
+
+Pointed to my fork, with tspack commit used for upstream tag.
+
+Changed title bar from rpm to native.
+
 ### Sun Sep 25 2022 Rankyn Bass <rankyn@proton.me>
 Bump version-release to 1.0.1.0-6
 
