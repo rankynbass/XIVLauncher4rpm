@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Github repo to use. Can use this to point to a fork for testing purposes.
+# Can also set different branches/commits for checkout. Use master for main branch.
 gitrepo="https://github.com/rankynbass/FFXIVQuickLauncher.git"
+checkout="xlcore-tspack"
 
 # Make sure the script can run properly no matter where it's called from
 # The below lines will always point to the repo's root directory.
@@ -14,6 +16,7 @@ xlsource="$(rpmbuild --eval='%_sourcedir')"
 rm -rf FFXIVQuickLauncher
 git clone $gitrepo
 cd FFXIVQuickLauncher || exit
+git checkout $checkout
 # Get timestamp of current commit.
 xlgitshow=($(git show -s --format='%h %ct'))
 xlcommit=${xlgitshow[0]}

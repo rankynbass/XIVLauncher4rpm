@@ -1,5 +1,13 @@
 # Changelog
 
+### Sat Oct 01 2022 Rankyn Bass <rankyn@proton.me>
+Modified getsources.sh
+
+- Added variable for git repo. This allows the use of various forks for testing.
+- Added variable for checkout. Can checkout branches other than master.
+
+Added local.sh to allow testing based on local upstream repo, so we can test without pushing any commits to github.
+
 ### Sat Sep 17 2022 Rankyn Bass <rankyn@proton.me>
 Make canary branch.
 
