@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 # Define env variables. Top one is mandatory. 
 export OPENSSL_CONF=/opt/XIVLauncher-git/openssl_fix.cnf
