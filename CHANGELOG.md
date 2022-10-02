@@ -1,22 +1,16 @@
 # Changelog
-
-### Sat Oct 01 2022 Rankyn Bass <rankyn@proton.me>
-Modified getsources.sh and version file to allow alternate forks of FFXIVQuickLauncher
-
-Pointed to my fork, with tspack commit used for upstream tag.
-
-Changed title bar from rpm to native.
-
-### Sun Sep 25 2022 Rankyn Bass <rankyn@proton.me>
+### Sun Oct 2 2022 Rankyn Bass <rankyn@proton.me>
 Bump version-release to 1.0.1.0-6
 
-Update to latest git commit.
+Modified getsources.sh and version file to allow alternate forks of FFXIVQuickLauncher
+
+Added local.sh to make it easier to test new builds without doing commits or git pushes.
 
 Modified xivlauncher.sh to indicate how to add env variables.
 
-Modified spec file so titlebar will show "1.0.1.0 (hashnum) (rpm)"
+Modified spec file so titlebar will show "1.0.1.0 (native) (hashnum)"
 
-Modified .desktop file to include (rpm) in the title, so it's different from flatpak install.
+Modified .desktop file to include (native) in the title, so it's different from flatpak install.
 
 ### Sat Sep 10 2022 Rankyn Bass <rankyn@proton.me>
 Bump version-release to 1.0.1.0-5
