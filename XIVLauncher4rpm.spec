@@ -60,6 +60,7 @@ Requires:       (libpcap or libpcap1)
 Requires:       (libFAudio or libFAudio0)
 Requires:       desktop-file-utils
 Requires:       jxrlib
+Provides:       xivlauncher
 
 # There isn't any linux / rpm debug info available with the source git
 %global debug_package %{nil}
@@ -105,7 +106,7 @@ cd %{_builddir}
 # build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
 cd %{_builddir}/%{repo0}
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash=%{UpstreamTag}
+dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash="native) (%{UpstreamTag}"
 cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
 cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
 cd %{_builddir}/%{repo1}
@@ -115,12 +116,13 @@ cd %{_builddir}/%{repo1}
 install -d "%{buildroot}/usr/bin"
 install -d "%{buildroot}/opt/XIVLauncher"
 install -d "%{buildroot}/usr/share/doc/xivlauncher"
-install -D -m 644 "%{_builddir}/%{repo1}/XIVLauncher.desktop" "%{buildroot}/usr/share/applications/XIVLauncher.desktop"
+install -d "%{buildroot}/usr/share/applications"
 install -D -m 644 "%{_builddir}/%{repo1}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher.png"
 cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/XIVLauncher"
 cp %{buildroot}/opt/XIVLauncher/COPYING %{buildroot}/usr/share/doc/xivlauncher/COPYING
 cd %{buildroot}
 ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
+ln -sr "opt/XIVLauncher/XIVLauncher.desktop" "usr/share/applications/XIVLauncher-native.desktop"
 
 %pre
 
@@ -142,7 +144,7 @@ rm -rf %{_builddir}/*
 ### FILES SECTION
 %files
 /usr/bin/xivlauncher
-/usr/share/applications/XIVLauncher.desktop
+/usr/share/applications/XIVLauncher-native.desktop
 /usr/share/pixmaps/xivlauncher.png
 /opt/XIVLauncher/cleanupprofile.sh
 /opt/XIVLauncher/COPYING

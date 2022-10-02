@@ -1,4 +1,16 @@
 # Changelog
+### Sun Oct 2 2022 Rankyn Bass <rankyn@proton.me>
+Bump version-release to 1.0.1.0-6
+
+Modified getsources.sh and version file to allow alternate forks of FFXIVQuickLauncher
+
+Added local.sh to make it easier to test new builds without doing commits or git pushes.
+
+Modified xivlauncher.sh to indicate how to add env variables.
+
+Modified spec file so titlebar will show "1.0.1.0 (native) (hashnum)"
+
+Modified .desktop file to include (native) in the title, so it's different from flatpak install.
 
 ### Sat Sep 10 2022 Rankyn Bass <rankyn@proton.me>
 Bump version-release to 1.0.1.0-5
