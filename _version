@@ -1,4 +1,5 @@
-# Line 2: UpstreamTag, Line 3: Version, Line 4: Release. DO NOT DELETE THIS COMMENT LINE 
-master
+# Line 2: UpstreamTag. Line 3: not used. Line 4: not used. Line 5: Github repo 
+xlcore-tspack
 git
 canary
+https://github.com/rankynbass/FFXIVQuickLauncher

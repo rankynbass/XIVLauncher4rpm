@@ -1,9 +1,7 @@
 #!/bin/bash
 
-# Github repo to use. Can use this to point to a fork for testing purposes.
-# Can also set different branches/commits for checkout. Use master for main branch.
-gitrepo="https://github.com/rankynbass/FFXIVQuickLauncher.git"
-checkout="xlcore-tspack"
+gitrepo=$(awk 'NR==5 {print; exit}' < _version).git
+checkout=$(awk 'NR==2 {print; exit}' < _version)
 
 # Make sure the script can run properly no matter where it's called from
 # The below lines will always point to the repo's root directory.

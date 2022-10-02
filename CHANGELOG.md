@@ -1,10 +1,12 @@
 # Changelog
 
 ### Sat Oct 01 2022 Rankyn Bass <rankyn@proton.me>
+Modified _version to add github repo to line 5
+
 Modified getsources.sh
 
-- Added variable for git repo. This allows the use of various forks for testing.
-- Added variable for checkout. Can checkout branches other than master.
+- Grab github repo from _version, line 5. This allows the use of various forks for testing.
+- Grab UpstreamTag for doing checkout. Can checkout branches other than master.
 
 Added local.sh to allow testing based on local upstream repo, so we can test without pushing any commits to github.
 
