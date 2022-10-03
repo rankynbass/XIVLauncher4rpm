@@ -60,6 +60,7 @@ Requires:       (libpcap or libpcap1)
 Requires:       (libFAudio or libFAudio0)
 Requires:       desktop-file-utils
 Requires:       jxrlib
+Provides:       xivlauncher-git
 
 # There isn't any linux / rpm debug info available with the source git
 %global debug_package %{nil}
@@ -118,12 +119,13 @@ cd %{_builddir}/%{repo1}
 install -d "%{buildroot}/usr/bin"
 install -d "%{buildroot}/opt/XIVLauncher-git"
 install -d "%{buildroot}/usr/share/doc/xivlauncher-git"
-install -D -m 644 "%{_builddir}/%{repo1}/XIVLauncher.desktop" "%{buildroot}/usr/share/applications/XIVLauncher-git.desktop"
+install -d "%{buildroot}/usr/share/applications"
 install -D -m 644 "%{_builddir}/%{repo1}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher-git.png"
 cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/XIVLauncher-git"
 cp %{buildroot}/opt/XIVLauncher-git/COPYING %{buildroot}/usr/share/doc/xivlauncher-git/COPYING
 cd %{buildroot}
 ln -sr "opt/XIVLauncher-git/xivlauncher.sh" "usr/bin/xivlauncher-git"
+ln -sr "opt/XIVLauncher-git/XIVLauncher.desktop" "usr/share/applications/XIVLauncher-git.desktop"
 
 %pre
 
