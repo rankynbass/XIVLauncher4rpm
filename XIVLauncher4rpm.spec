@@ -22,12 +22,13 @@ Source2:        _version
 # DEFINITIONS
 # Repo tags are now pulled from the _version file, so it only has to be changed in one place.
 # This is why sources were declared above.
+%define xlname %(awk 'NR==1 {print; exit}' < %{SOURCE2} )
 %define UpstreamTag %(awk 'NR==2 {print; exit}' < %{SOURCE2} )
 %define xlversion %(awk 'NR==3 {print; exit}' < %{SOURCE2} )
 %define xlrelease %(awk 'NR==4 {print; exit}' < %{SOURCE2} )
 %define DownstreamTag %{xlversion}-%{xlrelease}
 
-Name:           XIVLauncher
+Name:           %{xlname}
 Version:        %{xlversion}
 Release:        %{xlrelease}%{?dist}
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM package)
@@ -60,7 +61,9 @@ Requires:       (libpcap or libpcap1)
 Requires:       (libFAudio or libFAudio0)
 Requires:       desktop-file-utils
 Requires:       jxrlib
-Provides:       xivlauncher
+Provides:       %{xlname}
+# Use ridiculous version number to always work and avoid rpm build warning.
+Obsoletes:      XIVLauncher-testing < 10.0.0.0
 
 # There isn't any linux / rpm debug info available with the source git
 %global debug_package %{nil}
