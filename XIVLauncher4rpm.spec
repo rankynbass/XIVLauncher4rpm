@@ -30,7 +30,6 @@ Source2:        _version
 Name:           XIVLauncher-git
 Version:        %{xlversion}
 Release:        %{xlrelease}%{?dist}
-Epoch:          1
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM package)
 Group:          Applications/Games
 License:        GPL-3.0-only
