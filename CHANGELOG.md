@@ -1,5 +1,15 @@
 # Changelog
 
+### Wed Oct 05 2022 Rankyn Bass <rankyn@proton.me>
+Switched UpstreamTag to testing
+
+Changed version-release generation. Changed Epoch to 1.
+
+Updated to xlcore-tspack + wineD3D patch
+
+- Can now use the env variable USE_WINED3D=1 to use wineD3D instead of DXVK.
+- There is a button to generate tspack files for debugging in the About tab.
+
 ### Sat Oct 01 2022 Rankyn Bass <rankyn@proton.me>
 Modified _version to add github repo to line 5
 
