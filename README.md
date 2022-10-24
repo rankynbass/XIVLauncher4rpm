@@ -4,6 +4,7 @@ XIVLauncher (abbreviated as XL) is a faster launcher for our favorite critically
 
 ### Repos
 [ FFXIVQuickLauncher git: **[goatcorp/FFXIVQuickLauncher](https://github.com/goatcorp/FFXIVQuickLauncher/)** ]
+[ XIVLauncher.Core git: **[goatcorp/XIVLauncher.Core] (https://github.com/goatcorp/XIVLauncher.Core/)** ]
 [ XIVLauncher4rpm git: **[rankynbass/XIVLauncher4rpm](https://github.com/rankynbass/XIVLauncher4rpm)** ]
 [ COPR Repo: **[rankyn/xivlauncher](https://copr.fedorainfracloud.org/coprs/rankyn/xivlauncher/)** ]
 
@@ -121,7 +122,7 @@ git clone https://github.com/rankynbass/XIVLauncher4rpm.git
 cd XIVLauncher4rpm
 ```
 
-Now you can build the rpms. First, download the tarballs by using the included script, then build with rpmbuild. The third option is actually what the COPR build system does. It uses .copr/Makefile to install dependencies for making the binary, then calls the getsources script, then executes rpmbuild -bs. It then passes the src.rpm off to the various build environments for different distros. However, even if you have src.rpms, you still need to have internet access. The dotnet publish command needs to grab some remote packages. For manual builds, thats obviously not an issue, since you just cloned the repo. But for remote builds with copr, or with opensuse's OBS (I haven't tried this one yet), you'll need to make sure the builder has internet access. (version and release are listed in the _version file in lines 3 and 4. As of Sep 5, 2022, these are 1.0.1.0 and 4.)
+Now you can build the rpms. First, download the tarballs by using the included script, then build with rpmbuild. The third option is actually what the COPR build system does. It uses .copr/Makefile to install dependencies for making the binary, then calls the getsources script, then executes rpmbuild -bs. It then passes the src.rpm off to the various build environments for different distros. However, even if you have src.rpms, you still need to have internet access. The dotnet publish command needs to grab some remote packages. For manual builds, thats obviously not an issue, since you just cloned the repo. But for remote builds with copr, or with opensuse's OBS (I haven't tried this one yet), you'll need to make sure the builder has internet access. (version and release are listed in the _version file in lines 3 and 4. As of October 23, 2022, these are 1.0.2.0 and 1.)
 
 Run the script `.copr/getsources.sh` and then do one of the following:
 ```

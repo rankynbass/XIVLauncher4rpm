@@ -17,15 +17,16 @@
 # Version File Source
 # I've put it here because I need it declared before it's used in some definitions. And it's Source2 because I'm
 # not going to renumber them.
-Source2:        _version
+Source3:        _version
 
 # DEFINITIONS
 # Repo tags are now pulled from the _version file, so it only has to be changed in one place.
 # This is why sources were declared above.
-%define xlname %(awk 'NR==1 {print; exit}' < %{SOURCE2} )
-%define UpstreamTag %(awk 'NR==2 {print; exit}' < %{SOURCE2} )
-%define xlversion %(awk 'NR==3 {print; exit}' < %{SOURCE2} )
-%define xlrelease %(awk 'NR==4 {print; exit}' < %{SOURCE2} )
+%define xlname %(awk 'NR==1 {print; exit}' < %{SOURCE3} )
+%define CoreTag %(awk 'NR==3 {print; exit}' < %{SOURCE3} )
+%define LauncherTag %(awk 'NR==5 {print; exit}' < %{SOURCE3} )
+%define xlversion %(awk 'NR==6 {print; exit}' < %{SOURCE3} )
+%define xlrelease %(awk 'NR==7 {print; exit}' < %{SOURCE3} )
 %define DownstreamTag %{xlversion}-%{xlrelease}
 
 Name:           %{xlname}
@@ -35,8 +36,9 @@ Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM pac
 Group:          Applications/Games
 License:        GPL-3.0-only
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
-Source0:        FFXIVQuickLauncher-%{UpstreamTag}.tar.gz
-Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
+Source0:        XIVLauncher.Core-%{CoreTag}.tar.gz
+Source1:        FFXIVQuickLauncher-%{LauncherTag}.tar.gz
+Source2:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 
 # These package names are from the fedora / redhat repos. Other rpm distros might
 # have different names for these.
@@ -81,8 +83,9 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # Run the script .copr/getsources.sh to download tarballs to the appropriate locations. 
 %prep
 # Set some short names for convenience.
-%define repo0 FFXIVQuickLauncher-%{UpstreamTag}
-%define repo1 XIVLauncher4rpm-%{DownstreamTag}
+%define repo0 XIVLauncher.Core-%{CoreTag}
+%define repo1 FFXIVQuickLauncher-%{LauncherTag}
+%define repo2 XIVLauncher4rpm-%{DownstreamTag}
 
 # All setup macro calls will first unpack source0. That's not what we want. So we use -T to supress that.
 # Next, -a 0 tells it to unpack source 0 after changing directory, -c tells it
@@ -94,11 +97,17 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # about hidden (dot) files, so we wont do anything to grab them.
 longtag=$(find -mindepth 1 -maxdepth 1 -type d)
 mv $longtag/* .
+mkdir -p lib/FFXIVQuickLauncher
 cd %{_builddir}
+
+# Do it again for the second source. Move into the lib/FFXIVQuickLauncher folder
+%setup -T -a 1 -c -n %{repo1}
+longtag2=$(find -mindepth 1 -maxdepth 1 -type d)
+mv $longtag2/* %{_builddir}/XIVLauncher.Core-%{CoreTag}/lib/FFXIVQuickLauncher/
 
 # Now unpack the files from the second source into a folder. Again, -T to prevend source0 from unpacking.
 # -b 1 tells it to unpack source1, and -n tells it the name of the folder.
-%setup -T -b 1 -n %{repo1}
+%setup -T -b 2 -n %{repo2}
 
 
 ### BUILD SECTION
@@ -108,10 +117,10 @@ cd %{_builddir}
 # build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
 cd %{_builddir}/%{repo0}
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash="rpm-%{UpstreamTag}"
-cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
-cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
-cd %{_builddir}/%{repo1}
+dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo2}" --configuration Release -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash="rpm-%{CoreTag}"
+cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo2}/xivlauncher.png
+cp ../../misc/header.png %{_builddir}/%{repo2}/xivlogo.png
+cd %{_builddir}/%{repo2}
 
 ### INSTALL SECTION
 %install
@@ -119,8 +128,8 @@ install -d "%{buildroot}/usr/bin"
 install -d "%{buildroot}/opt/XIVLauncher"
 install -d "%{buildroot}/usr/share/doc/xivlauncher"
 install -d "%{buildroot}/usr/share/applications"
-install -D -m 644 "%{_builddir}/%{repo1}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher.png"
-cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/XIVLauncher"
+install -D -m 644 "%{_builddir}/%{repo2}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher.png"
+cp -r "%{_builddir}/%{repo2}"/* "%{buildroot}/opt/XIVLauncher"
 cp %{buildroot}/opt/XIVLauncher/COPYING %{buildroot}/usr/share/doc/xivlauncher/COPYING
 cd %{buildroot}
 ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
