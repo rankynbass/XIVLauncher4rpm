@@ -1,4 +1,17 @@
 # Changelog
+### Sun Oct 23 2022 Rankyn Bass <rankyn@proton.me>
+New version! 1.0.2.0-1
+
+Now uses a new repo. _version file, scripts, and spec file adjusted to work with it.
+- pull tarballs from XIVLauncher.Core repo and FFXIVQuickLauncher repo
+- using build hash from XIVLauncher.Core repo for BuildHash
+
+You can now generate a tspack for debugging. It's in the Settings > About tab.
+
+You can now press enter while in the user or password fields and log in.
+
+Update without starting should now actually not start the game.
+
 ### Sun Oct 2 2022 Rankyn Bass <rankyn@proton.me>
 Bump version-release to 1.0.1.0-6
 
