@@ -17,16 +17,16 @@
 # Version File Source
 # I've put it here because I need it declared before it's used in some definitions. And it's Source2 because I'm
 # not going to renumber them.
-Source3:        _version
+Source2:        _version
 
 # DEFINITIONS
 # Repo tags are now pulled from the _version file, so it only has to be changed in one place.
 # This is why sources were declared above.
-%define xlname %(awk 'NR==1 {print; exit}' < %{SOURCE3} )
-%define CoreTag %(awk 'NR==3 {print; exit}' < %{SOURCE3} )
-%define LauncherTag %(awk 'NR==5 {print; exit}' < %{SOURCE3} )
-%define xlversion %(awk 'NR==6 {print; exit}' < %{SOURCE3} )
-%define xlrelease %(awk 'NR==7 {print; exit}' < %{SOURCE3} )
+%define xlname %(awk 'NR==1 {print; exit}' < %{SOURCE2} )
+%define CoreTag %(awk 'NR==3 {print; exit}' < %{SOURCE2} )
+%define LauncherTag %(awk 'NR==5 {print; exit}' < %{SOURCE2} )
+%define xlversion %(awk 'NR==6 {print; exit}' < %{SOURCE2} )
+%define xlrelease %(awk 'NR==7 {print; exit}' < %{SOURCE2} )
 %define DownstreamTag %{xlversion}-%{xlrelease}
 
 Name:           %{xlname}
@@ -37,8 +37,7 @@ Group:          Applications/Games
 License:        GPL-3.0-only
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
 Source0:        XIVLauncher.Core-%{CoreTag}.tar.gz
-Source1:        FFXIVQuickLauncher-%{LauncherTag}.tar.gz
-Source2:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
+Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 
 # These package names are from the fedora / redhat repos. Other rpm distros might
 # have different names for these.
@@ -83,31 +82,14 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # Run the script .copr/getsources.sh to download tarballs to the appropriate locations. 
 %prep
 # Set some short names for convenience.
-%define repo0 XIVLauncher.Core-%{CoreTag}
-%define repo1 FFXIVQuickLauncher-%{LauncherTag}
-%define repo2 XIVLauncher4rpm-%{DownstreamTag}
+%define repo0 XIVLauncher.Core
+%define repo1 XIVLauncher4rpm-%{DownstreamTag}
 
-# All setup macro calls will first unpack source0. That's not what we want. So we use -T to supress that.
-# Next, -a 0 tells it to unpack source 0 after changing directory, -c tells it
-# to unpack as if there is no base directory in the tarball, and -n sets the name of the directory to unpack into.     
-%setup -T -a 0 -c -n %{repo0}
-
-# The tarball has the full commit hash as part of the path, which we have now unpacked into FFXIVQuickLauncher-<UpstreamTag>.
-# So we're going to find this messy directory and then move its contents into the parent directory. We don't care
-# about hidden (dot) files, so we wont do anything to grab them.
-longtag=$(find -mindepth 1 -maxdepth 1 -type d)
-mv $longtag/* .
-mkdir -p lib/FFXIVQuickLauncher
-cd %{_builddir}
-
-# Do it again for the second source. Move into the lib/FFXIVQuickLauncher folder
-%setup -T -a 1 -c -n %{repo1}
-longtag2=$(find -mindepth 1 -maxdepth 1 -type d)
-mv $longtag2/* %{_builddir}/XIVLauncher.Core-%{CoreTag}/lib/FFXIVQuickLauncher/
-
-# Now unpack the files from the second source into a folder. Again, -T to prevend source0 from unpacking.
+# Unpack source0. -n tells the macro the name of the folder.
+%setup -n XIVLauncher.Core
+# Now unpack the files from the second source into a folder. -T to prevent source0 from unpacking.
 # -b 1 tells it to unpack source1, and -n tells it the name of the folder.
-%setup -T -b 2 -n %{repo2}
+%setup -T -b 1 -n %{repo1}
 
 
 ### BUILD SECTION
@@ -117,10 +99,10 @@ mv $longtag2/* %{_builddir}/XIVLauncher.Core-%{CoreTag}/lib/FFXIVQuickLauncher/
 # build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
 cd %{_builddir}/%{repo0}
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo2}" --configuration Release -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash="rpm-%{CoreTag}"
-cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo2}/xivlauncher.png
-cp ../../misc/header.png %{_builddir}/%{repo2}/xivlogo.png
-cd %{_builddir}/%{repo2}
+dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash="r%{xlrelease}-%{CoreTag}-rpm"
+cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
+cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
+cd %{_builddir}/%{repo1}
 
 ### INSTALL SECTION
 %install
@@ -128,8 +110,8 @@ install -d "%{buildroot}/usr/bin"
 install -d "%{buildroot}/opt/XIVLauncher"
 install -d "%{buildroot}/usr/share/doc/xivlauncher"
 install -d "%{buildroot}/usr/share/applications"
-install -D -m 644 "%{_builddir}/%{repo2}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher.png"
-cp -r "%{_builddir}/%{repo2}"/* "%{buildroot}/opt/XIVLauncher"
+install -D -m 644 "%{_builddir}/%{repo1}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher.png"
+cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/XIVLauncher"
 cp %{buildroot}/opt/XIVLauncher/COPYING %{buildroot}/usr/share/doc/xivlauncher/COPYING
 cd %{buildroot}
 ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
@@ -145,12 +127,6 @@ echo "This should *not* be done if you are using a custom wine install."
 
 %postun
 echo "If you are planning to use the flatpak version of XIVLauncher, you should delete the '~/.xlcore/compatibilitytool' folder. You can also safely remove '~/.xlcore/_old_compat'."
-
-### CLEAN SECTION
-# This is mostly for local builds. chroot build environments usually just destroy all the extra files when done.
-%clean
-rm -rf %{buildroot}
-rm -rf %{_builddir}/*
 
 ### FILES SECTION
 %files
