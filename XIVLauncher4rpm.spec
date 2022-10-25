@@ -32,6 +32,9 @@ Source2:        _version
 Name:           %{xlname}
 Version:        %{xlversion}
 Release:        %{xlrelease}%{?dist}
+# Original Versioning: a.b.c.d-r
+# Epoch 1  Versioning: a.b.c-r
+Epoch:          1
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM package)
 Group:          Applications/Games
 License:        GPL-3.0-only
@@ -86,7 +89,7 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 %define repo1 XIVLauncher4rpm-%{DownstreamTag}
 
 # Unpack source0. -n tells the macro the name of the folder.
-%setup -n XIVLauncher.Core
+%setup -n %{repo0}
 # Now unpack the files from the second source into a folder. -T to prevent source0 from unpacking.
 # -b 1 tells it to unpack source1, and -n tells it the name of the folder.
 %setup -T -b 1 -n %{repo1}
@@ -99,7 +102,7 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
 cd %{_builddir}/%{repo0}
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash="r%{xlrelease}-%{CoreTag}-rpm"
+dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash="rpm-%{CoreTag}-r%{xlrelease}"
 cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
 cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
 cd %{_builddir}/%{repo1}

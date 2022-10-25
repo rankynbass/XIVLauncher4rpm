@@ -2,6 +2,7 @@
 DownstreamTag=$(awk 'NR==6 {print; exit}' < _version)-$(awk 'NR==7 {print; exit}' < _version)
 repodir="$(realpath "$(dirname "${BASH_SOURCE[0]}")/../")"
 
+# Change color to red for broken builds
 cd "$repodir" || exit
 {
     printf '%s\n' "{"
