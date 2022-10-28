@@ -3,7 +3,6 @@
 # XIVLauncher. These will be rebuild when you next log in, and are thus safe to delete.
 # Cleaning these up when switching between native and flatpak versions is advised.
 
-BACKUPFOLDER="$HOME/.xlcore/_old_compat/$(date +"%Y-%m-%d_%H:%M:%S")"
 echo "Checking for existing .xlcore folder..."
 # Check to see if the .xlcore directory even exists
 if [ ! -d "$HOME/.xlcore" ]; then
@@ -15,14 +14,13 @@ else
     TOOLLIST="compatibilitytool dalamud dalamudAssets devPlugins"
     TOOLLISTBAK=""
   
-    # Check for folders. If they exist, back them up.
+    # Check for folders. If they exist, delete them
     for TOOL in $TOOLLIST
       do
         if [ -d "$HOME/.xlcore/$TOOL" ]; then
             TOOLLISTBAK="$TOOLLISTBAK $TOOL"
-            echo "Checking for $TOOL folder... Found. Backing up."
-            mkdir -p $BACKUPFOLDER
-            mv $HOME/.xlcore/$TOOL $BACKUPFOLDER
+            echo "Checking for $TOOL folder... Found. Deleting..."
+            rm -rf $HOME/.xlcore/$TOOL
         else
             echo "Checking for $TOOL folder... Not Found."
         fi
@@ -30,14 +28,12 @@ else
 
     # List assembled. If $TOOLLISTBAK is empty, there was nothing to backup.
     if [ ! -z "$TOOLLISTBAK" ]; then
-        echo "The following folders were moved from $HOME/.xlcore:"
+        echo "The following folders were removed from $HOME/.xlcore:"
         echo "  $TOOLLISTBAK"
-        echo "The backup is located at:"
-        echo "  $BACKUPFOLDER"
         echo "Your game files and settings are unaffected, but wine and dalamud will be redownloaded on next start to ensure compatability."
         echo "The version of wine used by this native XIVLauncher install may not be compatible with the flatpak version. Don't use them together, or you may end up with odd bugs or crashes."
     else
-        echo "Nothing to backup. If you ran this script previously, your backups are at $HOME/.xlcore/_old_compat/"
+        echo "Nothing to backup."
     fi
     echo "Your .xlcore folder is clean."
 fi

@@ -1,4 +1,15 @@
 # Changelog
+### Thu Oct 27 2022 Rankyn Bass <rankyn@proton.me>
+Minor packaging update to 1.0.2-2
+
+The last number has been dropped from the versioning. As a result, I had to add an Epoch entry to the .spec file.
+
+The `/usr/bin/xivlauncher` script has been modified. It now calls a custom script from `~/.local/bin/xivlauncher-custom.sh`, and creates it first if it doesn't already exist. This will allow the user to maintain their own edits to the launch script that won't be overwritten with each update. the README.md and install script output have been updated accordingly.
+
+Steam users should now be able to just safely reference the `xivlauncher` script or the .desktop file.
+
+The `cleanupprofile.sh` script now just deletes folders instead of backing them up. There wasn't really a point to that.
+
 ### Sun Oct 23 2022 Rankyn Bass <rankyn@proton.me>
 New version! 1.0.2.0-1
 
@@ -29,12 +40,10 @@ Modified .desktop file to include (native) in the title, so it's different from 
 Bump version-release to 1.0.1.0-5
 
 Added cleanupprofile.sh
-
 - Moves compatibilitytool, dalamud, dalamudAssets, devPlugins folders to _old_compat
 - Must be run by user. Can't run as part of install, since that is run as root, not as user.
 
 Modified spec file
-
 - Added %post and %postun macros.
 - Added reference to cleanupprofile.sh
 
@@ -48,13 +57,11 @@ Bump version-release to 1.0.1.0-4, because 3a is not > 3
 Added _version file. This contains UpstreamTag, Version, and Release.
 
 Modify getsources.sh
-
 - Build XIVLauncher4rpm tarball from local git clone.
 - Put in if statements for local builds.
 - Now gets UpstreamTag, DownstreamTag from _version file.
 
 Modify spec file
-
 - Now gets UpstreamTag, xlversion, and xlrelease from _version file.
 - Moved source2 up above definitions, because I need it declared before using it in %define tags.
 
@@ -62,11 +69,9 @@ Modify spec file
 Bump version-release to 1.0.1.0-3a
 
 Modify Makefile, getsources.sh
-
 - Remove wget, replace with curl
 
 Modify spec file
-
 - Add -p:BuildHash=UpstreamTag to prevent git describe.
 - Drop unneeded git build dependency
 - Drop git init section
@@ -76,14 +81,12 @@ Modify spec file
 Bump version-release to 1.0.1.0-3
 
 Modify Makefile, add getsources script
-
 - No longer requires git. Now just needs wget.
 - Makefile now calls getsources.sh, which uses wget to download sources
 - getsources.sh MUST have matching UpstreamTag and DownstreamTag in spec file.
 - No longer call rpmbuild -bp, which should fix problems with building srpm.
 
 Modify spec file
-
 - Now works with downloaded sources instead of downloading with git during prep stage.
 - Reorganized importand definitions (%define) to the top of the script
 - Worked out a method to deal with ugly long hash name in upstream tarball
@@ -92,9 +95,8 @@ Modify spec file
 - Fixed warnings about macros expanding in comments.
 
 Modify README.md
-
-    - Updated build instructions.
-    - Included install instructions for openSUSE.
+- Updated build instructions.
+- Included install instructions for openSUSE.
 
 ### Mon Aug 29 2022 Rankyn Bass <rankyn@proton.me>
 First changelog entry for setting up for COPR.
