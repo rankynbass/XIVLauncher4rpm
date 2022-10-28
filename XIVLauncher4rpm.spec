@@ -125,11 +125,12 @@ ln -sr "opt/XIVLauncher/XIVLauncher.desktop" "usr/share/applications/XIVLauncher
 %post
 echo "To clean your .xlcore profile when switching from flatpak to native XIVLauncher, you should run the script /opt/XIVLauncher/cleanupprofile.sh. Do not run with sudo."
 echo "This should *not* be done if you are using a custom wine install."
+echo "By default, the /usr/bin/xivlauncher script will create a script at ~/.local/bin/xivlauncher-custom.sh if it doesn't already exist. You can edit this script to add environment variables and call other programs. For example, you could use it to call gamescope or launch an IPC bridge for discord. This script file will not be changed when you upgrade, so your changes will be saved."
 
 %preun
 
 %postun
-echo "If you are planning to use the flatpak version of XIVLauncher, you should delete the '~/.xlcore/compatibilitytool' folder. You can also safely remove '~/.xlcore/_old_compat'."
+echo "If you are planning to use the flatpak version of XIVLauncher, you should delete the '~/.xlcore/compatibilitytool' folder."
 
 ### FILES SECTION
 %files
