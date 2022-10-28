@@ -3,8 +3,8 @@
 XIVLauncher (abbreviated as XL) is a faster launcher for our favorite critically acclaimed MMO, with various available addons and enhancements to the game!
 
 ### Repos
-[ FFXIVQuickLauncher git: **[goatcorp/FFXIVQuickLauncher](https://github.com/goatcorp/FFXIVQuickLauncher/)** ]
 [ XIVLauncher.Core git: **[goatcorp/XIVLauncher.Core] (https://github.com/goatcorp/XIVLauncher.Core/)** ]
+[ FFXIVQuickLauncher git: **[goatcorp/FFXIVQuickLauncher](https://github.com/goatcorp/FFXIVQuickLauncher/)** ]
 [ XIVLauncher4rpm git: **[rankynbass/XIVLauncher4rpm](https://github.com/rankynbass/XIVLauncher4rpm)** ]
 [ COPR Repo: **[rankyn/xivlauncher](https://copr.fedorainfracloud.org/coprs/rankyn/xivlauncher/)** ]
 
@@ -60,19 +60,23 @@ sudo dnf copr remove rankyn/xl-deps-el9
 ```
 ## Configuration Info
 
-A script is included at `/opt/XIVLauncher/cleanupprofile.sh` which can clean up your .xlcore folder and improve performance/compatibility with the native XIVLauncher install. If you are upgrading from 1.0.1.0-2 or earlier, or moving from the flatpak install, you should run this. Running this script will move a few folders to `~/.xlcore/_old_compat/`. When you run XIVLauncher those folders will be recreated with fresh versions. *This may break the flatpak install!* If you are trying to switch back and forth between native and flatpak, you'll have to run this script each time you switch. If you are running a custom version of wine, this script is not necessary.
+### First run
+
+After install, you should run the `/usr/bin/xivlauncher` script, either from the terminal or from the .desktop file (which should show up in your desktop menu as "XIVLauncher (native)"). This will create another script at `~/.local/bin/xivlauncher-custom.sh` if it doesn't already exist. You can edit `xivlauncher-custom.sh` to add environment variables and call other programs. For example, you could use it to call gamescope or launch an IPC bridge for discord, as well as simpler things like turning on MANGOHUD or a frame rate limit. This script file will not be changed when you upgrade, so your changes will be saved.
+
+A script is included at `/opt/XIVLauncher/cleanupprofile.sh` which can clean up your .xlcore folder and improve performance/compatibility with the native XIVLauncher install. If you are upgrading from 1.0.1.0-2 or earlier, or moving from the flatpak install, you should run this. Running this script will delete a few of the folders in ~/.xlcore. When you run XIVLauncher those folders will be recreated with fresh versions. *This may break the flatpak install!* If you are trying to switch back and forth between native and flatpak, you'll have to run this script each time you switch. If you are running a custom version of wine, this script is not necessary.
 
 ### Non-Steam Configuration
 
-The program installs to `/opt/XIVLauncher`. A .desktop file is included at `/usr/share/applications/XIVLauncher.desktop`, but it might need to be tweaked for your installation, and shouldn't be used with steam. You can also launch it with `/usr/bin/xivlauncher`. If you have a non-steam account and you'd like to still launch with steam, follow the instructions below, but leave off the stuff after `%command` in the launch options, and make sure Use Steam Service is *unchecked* in the launcher.
+The program installs to `/opt/XIVLauncher`. A .desktop file is included at `/usr/share/applications/XIVLauncher.desktop`, but it might need to be tweaked for your installation. You can also launch it from the terminal with `/usr/bin/xivlauncher`. If you have a non-steam account and you'd like to still launch with steam, follow the instructions below, but leave off the stuff after `%command%` in the launch options, and make sure Use Steam Service is *unchecked* in the launcher.
 
 ### Steam Configuration
 
-If you are using steam, you can add a non-Steam game and browse to `/opt/XIVLauncher/`. Change File type to All FIles and select `XIVLauncher.Core`. You then need to add `OPENSSL_CONF=/opt/XIVLauncher/openssl_fix.cnf %command% --parent-expose-pids --parent-share-pids --parent-pid=1` to the launch options. Alternately, you can use `/usr/bin/xivlauncher`instead of `/opt/XIVLauncher/XIVLauncher.Core`. This is a script file that already includes the OPENSSL_CONF line, so you don't need to include it in the launch options. I've found that using the script file causes the game to sometimes hang when closing, so I recommend the first option.
+If you are using steam, you can add a non-Steam game and find "XIVLauncher (native)", or browse to `/usr/bin/xivlauncher`. Then add this to the launch options: `--parent-expose-pids --parent-share-pids --parent-pid=1`. If you want to add environment variables or make other changes to the command line, consider editing the `~/.local/bin/xivlauncher-custom.sh script instead of the Steam launch options, since that's the script being called anyway.
 
-Finally, make sure Use Steam Service" is checked in the launcher. Also, the launcher does not properly close, and will show itself as still running after you exit the game. You can just click the STOP button to fix it, though.
+Start the launcher, and on the main page, make sure "Use Steam Service" is checked. Also, the launcher sometimes does not properly close, and will show itself as still running after you exit the game. You can just click the STOP button to fix it, or right-click and STOP.
 
-If you want an icon by XIVLauncher in the library list, you can find one at `/opt/XIVLauncher/xivlauncher.png`.
+If you want an icon for XIVLauncher in the library list, you can find one at `/opt/XIVLauncher/xivlauncher.png`, and a custom logo at `/opt/XIVLauncher/xivlogo.png`
 
 ### Notes on switching from Lutris or traditional Steam installation
 
@@ -122,7 +126,7 @@ git clone https://github.com/rankynbass/XIVLauncher4rpm.git
 cd XIVLauncher4rpm
 ```
 
-Now you can build the rpms. First, download the tarballs by using the included script, then build with rpmbuild. The third option is actually what the COPR build system does. It uses .copr/Makefile to install dependencies for making the binary, then calls the getsources script, then executes rpmbuild -bs. It then passes the src.rpm off to the various build environments for different distros. However, even if you have src.rpms, you still need to have internet access. The dotnet publish command needs to grab some remote packages. For manual builds, thats obviously not an issue, since you just cloned the repo. But for remote builds with copr, or with opensuse's OBS (I haven't tried this one yet), you'll need to make sure the builder has internet access. (version and release are listed in the _version file in lines 3 and 4. As of October 23, 2022, these are 1.0.2.0 and 1.)
+Now you can build the rpms. First, download the tarballs by using the included script, then build with rpmbuild. The third option is actually what the COPR build system does. It uses .copr/Makefile to install dependencies for making the binary, then calls the getsources script, then executes rpmbuild -bs. It then passes the src.rpm off to the various build environments for different distros. However, even if you have src.rpms, you still need to have internet access. The dotnet publish command needs to grab some remote packages. For manual builds, thats obviously not an issue, since you just cloned the repo. But for remote builds with copr, or with opensuse's OBS (I haven't tried this one yet), you'll need to make sure the builder has internet access. (version and release are listed in the _version file in lines 3 and 4. As of October 28, 2022, these are 1.0.2 and 2.)
 
 Run the script `.copr/getsources.sh` and then do one of the following:
 ```

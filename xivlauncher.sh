@@ -1,9 +1,22 @@
-#!/usr/bin/bash
-
-# Define env variables. Top one is mandatory. 
+#!/bin/bash
+xlpath=$HOME/.local/bin/xivlauncher-custom.sh
 export OPENSSL_CONF=/opt/XIVLauncher/openssl_fix.cnf
-# export DXVK_FRAME_RATE=60
-# export MANGOHUD=1
-# export MANGOHUD_CONFIGFILE=~/.config/MangoHud/MangoHud.conf
-
-/opt/XIVLauncher/XIVLauncher.Core &
+# Check to see if $HOME/.local/bin/xivlauncher exists
+if [ ! -x "$xlpath" ];
+then
+    {
+        echo '#!/bin/bash'
+        echo '# Edit this file for custom launch options.'
+        echo '# For example, add "export MANGOHUD=1" to enable mangohud'
+        echo '# You can also call other programs, like gamescope'
+        echo '# See https://github.com/Plagman/gamescope for more info'
+        echo '# Gamescope example, upscale from 720p to 1080p with FSR 1.0 and fullscreen:'
+        echo '#'
+        echo '# export SDL_VIDEODRIVER=x11 # work around a fedora bug with gamescope'
+        echo '# gamescope -w 1280 -h 720 -W 1920 -H 1440 -U -f -- /opt/XIVLauncher/XIVLauncher.Core'
+        echo ''
+        echo '/opt/XIVLauncher/XIVLauncher.Core'
+    } > $xlpath
+    chmod +x $xlpath
+fi
+$xlpath
