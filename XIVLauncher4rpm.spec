@@ -76,6 +76,9 @@ Provides:       %{xlname}
 # Binaries will be deposited into this directory. Macro'd for convenience.
 %define launcher %{_builddir}/XIVLauncher
 
+# Turn off .build-id links so it doesn't conflict with the main package.
+%global _build_id_links none
+
 %description
 Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This is a native build for fedora 36 and several other rpm based distos.
 
