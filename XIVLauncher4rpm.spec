@@ -66,7 +66,6 @@ Requires:       (libFAudio or libFAudio0)
 Requires:       desktop-file-utils
 Requires:       jxrlib
 Provides:       %{xlname}
-Conflicts:      XIVLauncher
 
 # There isn't any linux / rpm debug info available with the source git
 %global debug_package %{nil}
@@ -110,22 +109,22 @@ cd %{_builddir}/%{repo1}
 ### INSTALL SECTION
 %install
 install -d "%{buildroot}/usr/bin"
-install -d "%{buildroot}/opt/XIVLauncher"
-install -d "%{buildroot}/usr/share/doc/xivlauncher"
+install -d "%{buildroot}/opt/XIVLauncher-git"
+install -d "%{buildroot}/usr/share/doc/xivlauncher-git"
 install -d "%{buildroot}/usr/share/applications"
-install -D -m 644 "%{_builddir}/%{repo1}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher.png"
-cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/XIVLauncher"
-cp %{buildroot}/opt/XIVLauncher/COPYING %{buildroot}/usr/share/doc/xivlauncher/COPYING
+install -D -m 644 "%{_builddir}/%{repo1}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher-git.png"
+cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/XIVLauncher-git"
+cp %{buildroot}/opt/XIVLauncher-git/COPYING %{buildroot}/usr/share/doc/xivlauncher-git/COPYING
 cd %{buildroot}
-ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
-ln -sr "opt/XIVLauncher/XIVLauncher.desktop" "usr/share/applications/XIVLauncher-native.desktop"
+ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher-git"
+ln -sr "opt/XIVLauncher-git/XIVLauncher.desktop" "usr/share/applications/XIVLauncher-git.desktop"
 
 %pre
 
 %post
-echo "To clean your .xlcore profile when switching from flatpak to native XIVLauncher, you should run the script /opt/XIVLauncher/cleanupprofile.sh. Do not run with sudo."
+echo "To clean your .xlcore profile when switching from flatpak to native XIVLauncher, you should run the script /opt/XIVLauncher-git/cleanupprofile.sh. Do not run with sudo."
 echo "This should *not* be done if you are using a custom wine install."
-echo "By default, the /usr/bin/xivlauncher script will create a script at ~/.local/bin/xivlauncher-custom.sh if it doesn't already exist. You can edit this script to add environment variables and call other programs. For example, you could use it to call gamescope or launch an IPC bridge for discord. This script file will not be changed when you upgrade, so your changes will be saved."
+echo "By default, the /usr/bin/xivlauncher-git script will create a script at ~/.local/bin/xivlauncher-custom.sh if it doesn't already exist. You can edit this script to add environment variables and call other programs. For example, you could use it to call gamescope or launch an IPC bridge for discord. This script file will not be changed when you upgrade, so your changes will be saved."
 
 %preun
 
@@ -134,29 +133,29 @@ echo "If you are planning to use the flatpak version of XIVLauncher, you should 
 
 ### FILES SECTION
 %files
-/usr/bin/xivlauncher
-/usr/share/applications/XIVLauncher-native.desktop
-/usr/share/pixmaps/xivlauncher.png
-/opt/XIVLauncher/cleanupprofile.sh
-/opt/XIVLauncher/COPYING
-/opt/XIVLauncher/libcimgui.so
-/opt/XIVLauncher/libskeychain.so
-/opt/XIVLauncher/libsteam_api64.so
-/opt/XIVLauncher/openssl_fix.cnf
-/opt/XIVLauncher/xivlauncher.sh
-/opt/XIVLauncher/xivlauncher.png
-/opt/XIVLauncher/XIVLauncher.Common.pdb
-/opt/XIVLauncher/XIVLauncher.Common.Unix.pdb
-/opt/XIVLauncher/XIVLauncher.Common.Unix.xml
-/opt/XIVLauncher/XIVLauncher.Common.Windows.pdb
-/opt/XIVLauncher/XIVLauncher.Common.Windows.xml
-/opt/XIVLauncher/XIVLauncher.Common.xml
-/opt/XIVLauncher/XIVLauncher.Core
-/opt/XIVLauncher/XIVLauncher.Core.pdb
-/opt/XIVLauncher/XIVLauncher.Core.xml
-/opt/XIVLauncher/XIVLauncher.desktop
-/opt/XIVLauncher/xivlogo.png
-%license /usr/share/doc/xivlauncher/COPYING
+/usr/bin/xivlauncher-git
+/usr/share/applications/XIVLauncher-git.desktop
+/usr/share/pixmaps/xivlauncher-git.png
+/opt/XIVLauncher-git/cleanupprofile.sh
+/opt/XIVLauncher-git/COPYING
+/opt/XIVLauncher-git/libcimgui.so
+/opt/XIVLauncher-git/libskeychain.so
+/opt/XIVLauncher-git/libsteam_api64.so
+/opt/XIVLauncher-git/openssl_fix.cnf
+/opt/XIVLauncher-git/xivlauncher.sh
+/opt/XIVLauncher-git/xivlauncher.png
+/opt/XIVLauncher-git/XIVLauncher.Common.pdb
+/opt/XIVLauncher-git/XIVLauncher.Common.Unix.pdb
+/opt/XIVLauncher-git/XIVLauncher.Common.Unix.xml
+/opt/XIVLauncher-git/XIVLauncher.Common.Windows.pdb
+/opt/XIVLauncher-git/XIVLauncher.Common.Windows.xml
+/opt/XIVLauncher-git/XIVLauncher.Common.xml
+/opt/XIVLauncher-git/XIVLauncher.Core
+/opt/XIVLauncher-git/XIVLauncher.Core.pdb
+/opt/XIVLauncher-git/XIVLauncher.Core.xml
+/opt/XIVLauncher-git/XIVLauncher.desktop
+/opt/XIVLauncher-git/xivlogo.png
+%license /usr/share/doc/xivlauncher-git/COPYING
 
 %changelog
 # See CHANGELOG.md

@@ -1,6 +1,6 @@
 #!/bin/bash
 xlpath=$HOME/.local/bin/xivlauncher-custom.sh
-export OPENSSL_CONF=/opt/XIVLauncher/openssl_fix.cnf
+export OPENSSL_CONF=/opt/XIVLauncher-git/openssl_fix.cnf
 # Check to see if $HOME/.local/bin/xivlauncher exists
 if [ ! -x "$xlpath" ];
 then
@@ -13,9 +13,9 @@ then
         echo '# Gamescope example, upscale from 720p to 1080p with FSR 1.0 and fullscreen:'
         echo '#'
         echo '# export SDL_VIDEODRIVER=x11 # work around a fedora bug with gamescope'
-        echo '# gamescope -w 1280 -h 720 -W 1920 -H 1440 -U -f -- /opt/XIVLauncher/XIVLauncher.Core'
+        echo '# gamescope -w 1280 -h 720 -W 1920 -H 1440 -U -f -- /opt/XIVLauncher-git/XIVLauncher.Core'
         echo ''
-        echo '/opt/XIVLauncher/XIVLauncher.Core'
+        echo '/opt/XIVLauncher-git/XIVLauncher.Core'
     } > $xlpath
     chmod +x $xlpath
 fi
