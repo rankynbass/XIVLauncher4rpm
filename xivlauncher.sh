@@ -1,5 +1,5 @@
 #!/bin/bash
-xlpath=$HOME/.local/bin/xivlauncher-custom.sh
+xlpath=$HOME/.local/bin/xivlauncher-git-custom.sh
 export OPENSSL_CONF=/opt/XIVLauncher-git/openssl_fix.cnf
 # Check to see if $HOME/.local/bin/xivlauncher exists
 if [ ! -x "$xlpath" ];

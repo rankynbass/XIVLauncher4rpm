@@ -32,9 +32,6 @@ Source2:        _version
 Name:           %{xlname}
 Version:        %{xlversion}
 Release:        %{xlrelease}%{?dist}
-# Original Versioning: a.b.c.d-r
-# Epoch 1  Versioning: a.b.c-r
-Epoch:          1
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM package)
 Group:          Applications/Games
 License:        GPL-3.0-only
@@ -104,7 +101,7 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
 cd %{_builddir}/%{repo0}
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash="rpm-%{CoreTag}-r%{xlrelease}"
+dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash="git-%{CoreTag}"
 cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
 cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
 cd %{_builddir}/%{repo1}
@@ -127,7 +124,7 @@ ln -sr "opt/XIVLauncher-git/XIVLauncher.desktop" "usr/share/applications/XIVLaun
 %post
 echo "To clean your .xlcore profile when switching from flatpak to native XIVLauncher, you should run the script /opt/XIVLauncher-git/cleanupprofile.sh. Do not run with sudo."
 echo "This should *not* be done if you are using a custom wine install."
-echo "By default, the /usr/bin/xivlauncher-git script will create a script at ~/.local/bin/xivlauncher-custom.sh if it doesn't already exist. You can edit this script to add environment variables and call other programs. For example, you could use it to call gamescope or launch an IPC bridge for discord. This script file will not be changed when you upgrade, so your changes will be saved."
+echo "By default, the /usr/bin/xivlauncher-git script will create a script at ~/.local/bin/xivlauncher-git-custom.sh if it doesn't already exist. You can edit this script to add environment variables and call other programs. For example, you could use it to call gamescope or launch an IPC bridge for discord. This script file will not be changed when you upgrade, so your changes will be saved."
 
 %preun
 
