@@ -39,8 +39,8 @@ Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM pac
 Group:          Applications/Games
 License:        GPL-3.0-only
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
-Source0:        XIVLauncher.Core-%{CoreTag}.tar.gz
-Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
+Source0:        XIVLauncher.Core-%{CoreTag}.tar.xz
+Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.xz
 
 # These package names are from the fedora / redhat repos. Other rpm distros might
 # have different names for these.
