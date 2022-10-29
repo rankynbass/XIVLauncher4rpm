@@ -116,7 +116,7 @@ install -D -m 644 "%{_builddir}/%{repo1}/xivlauncher.png" "%{buildroot}/usr/shar
 cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/XIVLauncher-git"
 cp %{buildroot}/opt/XIVLauncher-git/COPYING %{buildroot}/usr/share/doc/xivlauncher-git/COPYING
 cd %{buildroot}
-ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher-git"
+ln -sr "opt/XIVLauncher-git/xivlauncher.sh" "usr/bin/xivlauncher-git"
 ln -sr "opt/XIVLauncher-git/XIVLauncher.desktop" "usr/share/applications/XIVLauncher-git.desktop"
 
 %pre
