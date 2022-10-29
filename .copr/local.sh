@@ -4,7 +4,7 @@ DownstreamTag=$(awk 'NR==6 {print; exit}' < _version)-$(awk 'NR==7 {print; exit}
 xlsource=$(rpmbuild --eval='%_sourcedir')
 CoreRepo="$HOME/COPR/XIVLauncher.Core"
 # Uncomment next line for different submodule version
-# LauncherRepo="$HOME/COPR/FFXIVQuickLauncher"
+LauncherRepo="$HOME/COPR/FFXIVQuickLauncher"
 xlsource="$(rpmbuild --eval='%_sourcedir')"
 
 # Make sure the script can run properly no matter where it's called from
@@ -15,8 +15,8 @@ cd "$repodir" || exit
 mkdir -p tbz
 cp -r $CoreRepo tbz/
 # Uncomment next two lines to use different submodule version
-# rm -rf tbz/XIVLauncher.Core/lib/FFXIVQuickLauncher
-# cp -r $LauncherRepo tbz/XIVLauncher.Core/lib/
+rm -rf tbz/XIVLauncher.Core/lib/FFXIVQuickLauncher
+cp -r $LauncherRepo tbz/XIVLauncher.Core/lib/
 cd tbz || exit
 tar -czf "$xlsource/XIVLauncher.Core-$CoreTag.tar.gz" --exclude="XIVLauncher.Core/.git" --exclude="XIVLauncher.Core/lib/FFXIVQuickLauncher/.git" "XIVLauncher.Core"
 cd "$repodir" || exit

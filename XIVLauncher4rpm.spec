@@ -66,7 +66,7 @@ Requires:       (libFAudio or libFAudio0)
 Requires:       desktop-file-utils
 Requires:       jxrlib
 Provides:       %{xlname}
-Conflicts:      XIVLauncher-testing
+Conflicts:      XIVLauncher
 
 # There isn't any linux / rpm debug info available with the source git
 %global debug_package %{nil}
