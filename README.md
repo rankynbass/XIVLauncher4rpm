@@ -3,7 +3,7 @@
 XIVLauncher (abbreviated as XL) is a faster launcher for our favorite critically acclaimed MMO, with various available addons and enhancements to the game!
 
 ### Repos
-[ XIVLauncher.Core git: **[goatcorp/XIVLauncher.Core] (https://github.com/goatcorp/XIVLauncher.Core/)** ]
+[ XIVLauncher.Core git: **[goatcorp/XIVLauncher.Core](https://github.com/goatcorp/XIVLauncher.Core/)** ]
 [ FFXIVQuickLauncher git: **[goatcorp/FFXIVQuickLauncher](https://github.com/goatcorp/FFXIVQuickLauncher/)** ]
 [ XIVLauncher4rpm git: **[rankynbass/XIVLauncher4rpm](https://github.com/rankynbass/XIVLauncher4rpm)** ]
 [ COPR Repo: **[rankyn/xivlauncher](https://copr.fedorainfracloud.org/coprs/rankyn/xivlauncher/)** ]
