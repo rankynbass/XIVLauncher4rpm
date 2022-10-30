@@ -1,17 +1,17 @@
 #!/bin/bash
-CoreRepo=$(awk 'NR==2 {print; exit}' < _version)
-CoreTag=$(awk 'NR==3 {print; exit}' < _version)
-LauncherRepo=$(awk 'NR==4 {print; exit}' < _version)
-LauncherTag=$(awk 'NR==5 {print; exit}' < _version)
-DownstreamTag=$(awk 'NR==6 {print; exit}' < _version)-$(awk 'NR==7 {print; exit}' < _version)
+# Make sure the script can run properly no matter where it's called from
+# The below line will always point to the repo's root directory.
+repodir="$(realpath "$(dirname "${BASH_SOURCE[0]}")/../")"
+CoreRepo=$(awk 'NR==2 {print; exit}' < "$repodir/_version")
+CoreTag=$(awk 'NR==3 {print; exit}' < "$repodir/_version")
+LauncherRepo=$(awk 'NR==4 {print; exit}' < "$repodir/_version")
+LauncherTag=$(awk 'NR==5 {print; exit}' < "$repodir/_version")
+DownstreamTag=$(awk 'NR==6 {print; exit}' < "$repodir/_version")-$(awk 'NR==7 {print; exit}' < "$repodir/_version")
 xlsource=$(rpmbuild --eval='%_sourcedir')
 source0=$xlsource/XIVLauncher.Core-$CoreTag.tar.xz
 source1=$xlsource/XIVLauncher4rpm-$DownstreamTag.tar.xz
 workingdir=/tmp/xivlauncher
 
-# Make sure the script can run properly no matter where it's called from
-# The below line will always point to the repo's root directory.
-repodir="$(realpath "$(dirname "${BASH_SOURCE[0]}")/../")"
 cd "$repodir" || exit
 mkdir -p "$workingdir"
 if [ ! -f "$source0" ];

@@ -1,6 +1,9 @@
 #!/bin/bash
-CoreTag=$(awk 'NR==3 {print; exit}' < _version)
-DownstreamTag=$(awk 'NR==6 {print; exit}' < _version)-$(awk 'NR==7 {print; exit}' < _version)
+# Make sure the script can run properly no matter where it's called from
+# The below lines will always point to the repo's root directory.
+repodir="$(realpath "$(dirname "${BASH_SOURCE[0]}")/../")"
+CoreTag=$(awk 'NR==3 {print; exit}' < "$repodir/_version")
+DownstreamTag=$(awk 'NR==6 {print; exit}' < "$repodir/_version")-$(awk 'NR==7 {print; exit}' < "$repodir/_version")
 xlsource=$(rpmbuild --eval='%_sourcedir')
 CoreRepo="$HOME/COPR/XIVLauncher.Core"
 # Uncomment next line for different submodule version
@@ -8,9 +11,7 @@ CoreRepo="$HOME/COPR/XIVLauncher.Core"
 xlsource="$(rpmbuild --eval='%_sourcedir')"
 workingdir=/tmp/xivlauncher-local
 mkdir -p "$workingdir"
-# Make sure the script can run properly no matter where it's called from
-# The below lines will always point to the repo's root directory.
-repodir="$(realpath "$(dirname "${BASH_SOURCE[0]}")/../")"
+
 cd "$repodir" || exit
 cp -r $CoreRepo "$workingdir/"
 # Uncomment next two lines to use different submodule version
