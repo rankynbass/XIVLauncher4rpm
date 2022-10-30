@@ -1,4 +1,11 @@
 # Changelog
+### Sat Oct 29 2022 Rankyn Bass <rankyn@proton.me>
+Minor update to launcher scripts
+- The `/usr/bin/xivlauncher` script now checks `~/.local/bin/xivlauncher-custom.sh` for an openssl config line
+- If it doesn't find one, it adds it to the top of the file (just under `#!/bin/bash`)
+- If it's creating the file for the first time, the line is included.
+- The `/usr/bin/xivlauncher` script no longer has the openssl config line. Users can just directly execute the xivlauncher-custom script with no problems now. Calling the main xivlauncher script will still work as well.
+
 ### Thu Oct 27 2022 Rankyn Bass <rankyn@proton.me>
 Minor packaging update to 1.0.2-2
 
