@@ -1,4 +1,9 @@
 # Changelog
+### Sun Oct 30 2022 Rankyn Bass <rankyn@proton.me>
+Fixed an error in the xivlauncher.sh script
+- The xivlauncher-custom.sh script being created was malformed, resulting in a crash.
+- The xivlauncher script now checks it for syntax errors, and backs it up and creates a new one if there are problems. This should fix it for people who got a poorly formed script file.
+
 ### Sat Oct 29 2022 Rankyn Bass <rankyn@proton.me>
 Minor update to launcher scripts
 - The `/usr/bin/xivlauncher` script now checks `~/.local/bin/xivlauncher-custom.sh` for an openssl config line
