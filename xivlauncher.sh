@@ -8,7 +8,7 @@ then
     echo "File $xlpath doesn't exist or can't be executed. Creating..."
     {
         echo '#!/bin/bash'
-        echo "Always keep the next line. It works around an ssl bug on Square's end"
+        echo "# Always keep the next line. It works around an ssl bug on Square's end"
         echo 'export OPENSSL_CONF=/opt/XIVLauncher/openssl_fix.cnf'
         echo '# Edit this file for custom launch options.'
         echo '# For example, add "export MANGOHUD=1" to enable mangohud'
