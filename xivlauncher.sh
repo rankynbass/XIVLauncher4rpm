@@ -6,7 +6,6 @@ makeCustomScript () {
     echo "Creating new file $xlpath."
     {
         echo '#!/bin/bash'
-        echo "# Always keep the next line. It works around an ssl bug on Square's end"
         echo 'export OPENSSL_CONF=/opt/XIVLauncher/openssl_fix.cnf'
         echo '# Edit this file for custom launch options.'
         echo '# For example, add "export MANGOHUD=1" to enable mangohud'
