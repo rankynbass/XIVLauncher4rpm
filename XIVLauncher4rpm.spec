@@ -119,6 +119,7 @@ cp %{buildroot}/opt/XIVLauncher/COPYING %{buildroot}/usr/share/doc/xivlauncher/C
 cd %{buildroot}
 ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
 ln -sr "opt/XIVLauncher/XIVLauncher.desktop" "usr/share/applications/XIVLauncher-native.desktop"
+ln -sr "opt/XIVLauncher/XIVLauncher-custom.desktop" "usr/share/applications/XIVLauncher-custom.desktop"
 
 %pre
 
@@ -136,6 +137,7 @@ echo "If you are planning to use the flatpak version of XIVLauncher, you should 
 %files
 /usr/bin/xivlauncher
 /usr/share/applications/XIVLauncher-native.desktop
+/usr/share/applications/XIVLauncher-custom.desktop
 /usr/share/pixmaps/xivlauncher.png
 /opt/XIVLauncher/cleanupprofile.sh
 /opt/XIVLauncher/COPYING
@@ -155,6 +157,7 @@ echo "If you are planning to use the flatpak version of XIVLauncher, you should 
 /opt/XIVLauncher/XIVLauncher.Core.pdb
 /opt/XIVLauncher/XIVLauncher.Core.xml
 /opt/XIVLauncher/XIVLauncher.desktop
+/opt/XIVLauncher/XIVLauncher-custom.desktop
 /opt/XIVLauncher/xivlogo.png
 %license /usr/share/doc/xivlauncher/COPYING
 

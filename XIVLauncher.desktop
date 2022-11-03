@@ -1,6 +1,5 @@
-#!/usr/bin/env xdg-open
 [Desktop Entry]
-Name=XIVLauncher (native)
+Name=XIVLauncher Native
 Comment=Custom launcher for Final Fantasy XIV. Native version from copr or rpm.
 Exec=/usr/bin/xivlauncher
 Icon=xivlauncher
