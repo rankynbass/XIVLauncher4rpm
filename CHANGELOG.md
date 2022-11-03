@@ -3,8 +3,8 @@
 Release bumped to 5
 
 Redid the xivlauncher script
-- calling `/usr/bin/xivlauncher` with no arguements just launches XIVLauncher.
-- calling `/usr/bin/xivlauncher custom` will check for `$HOME/.local/bin/xivlauncher-custom.sh`, and launch it if it's found and has valid bash syntax.
+- Running `/usr/bin/xivlauncher` with no arguements just launches XIVLauncher.
+- Running `/usr/bin/xivlauncher custom` will check for `$HOME/.local/bin/xivlauncher-custom.sh`, and launch it if it's found and has valid bash syntax.
     - If the script is found, but is broken, it'll back it up and create a new one.
     - If it doesn't find the custom script, it will created it.
     - If the path `$HOME/.local/bin` doesn't exist, it will be created first. This fixes an error that was reported. This path is *not* part of the XDG basedir specs, but it *is* part of the systemd file heirarchy, and Fedora, openSUSE, Enterprise Linux, and most distros with systemd use it. 
