@@ -22,7 +22,7 @@ sudo dnf remove XIVLauncher
 sudo dnf copr remove rankyn/xivlauncher
 ```
 ### openSUSE
-The repo is built for tumbleweed, but works with LEAP 15.3 and 15.4 as well. It's possible anything from the 15.x family will work, but 15.2 hit end-of-life on 2021-12-31, so I won't bother testing it. If you ever have problems with the repo not refreshing properly (not seeing a new update, for example), just uninstall and reinstall the repo.
+The repo is built for tumbleweed, but works with LEAP 15.4 as well. It's possible anything from the 15.x family will work, but 15.2 hit end-of-life on 2021-12-31 and 15.3 will hit EOL on 2022-11-30, so I won't bother testing them. If you ever have problems with the repo not refreshing properly (not seeing a new update, for example), just uninstall and reinstall the repo.
 
 *Install*
 ```
@@ -33,7 +33,6 @@ sudo zypper install XIVLauncher
 ```
 sudo zypper remove XIVLauncher
 sudo zypper removerepo copr:copr.fedorainfracloud.org:rankyn:xivlauncher
-
 ```
 ### Enterprise Linux (EL9 Only)
 Red Hat, Rocky Linux, AlmaLinux, etc.
@@ -62,13 +61,13 @@ sudo dnf copr remove rankyn/xl-deps-el9
 
 ### First run
 
-After install, you should run the `/usr/bin/xivlauncher` script, either from the terminal or from the .desktop file (which should show up in your desktop menu as "XIVLauncher (native)"). This will create another script at `~/.local/bin/xivlauncher-custom.sh` if it doesn't already exist. You can edit `xivlauncher-custom.sh` to add environment variables and call other programs. For example, you could use it to call gamescope or launch an IPC bridge for discord, as well as simpler things like turning on MANGOHUD or a frame rate limit. This script file will not be changed when you upgrade, so your changes will be saved.
+After install, you should can the `/usr/bin/xivlauncher` script, either from the terminal or from the .desktop file (which should show up in your desktop menu as "XIVLauncher Native"). This will launch XIVLauncher.Core. Alternativly, you can run `/usr/bin/xivlauncher custom` (or desktop menu item "XIVLauncher Custom"), which will create run a user-modifiable script at `~/.local/bin/xivlauncher-custom.sh`, creating it first if it doesn't already exist. You can edit `xivlauncher-custom.sh` to add environment variables and call other programs. For example, you could use it to call gamescope or launch an IPC bridge for discord, as well as simpler things like turning on MANGOHUD or adding a frame rate limit. This script file will not be changed when you upgrade, so your changes will be saved.
 
-A script is included at `/opt/XIVLauncher/cleanupprofile.sh` which can clean up your .xlcore folder and improve performance/compatibility with the native XIVLauncher install. If you are upgrading from 1.0.1.0-2 or earlier, or moving from the flatpak install, you should run this. Running this script will delete a few of the folders in ~/.xlcore. When you run XIVLauncher those folders will be recreated with fresh versions. *This may break the flatpak install!* If you are trying to switch back and forth between native and flatpak, you'll have to run this script each time you switch. If you are running a custom version of wine, this script is not necessary.
+Another script is included at `/opt/XIVLauncher/cleanupprofile.sh` which can clean up your `~.xlcore` folder and improve performance/compatibility with the native XIVLauncher install. If you are upgrading from 1.0.1.0-2 or earlier, or moving from the flatpak install, you should run this. Running this script will delete a few of the folders in ~/.xlcore. When you run XIVLauncher those folders will be recreated with fresh versions. *This may break the flatpak install!* If you are trying to switch back and forth between native and flatpak, you may have to run this script each time you switch. If you are running a custom version of wine, this script is not necessary.
 
 ### Non-Steam Configuration
 
-The program installs to `/opt/XIVLauncher`. A .desktop file is included at `/usr/share/applications/XIVLauncher.desktop`, but it might need to be tweaked for your installation. You can also launch it from the terminal with `/usr/bin/xivlauncher`. If you have a non-steam account and you'd like to still launch with steam, follow the instructions below, but leave off the stuff after `%command%` in the launch options, and make sure Use Steam Service is *unchecked* in the launcher.
+The program installs to `/opt/XIVLauncher`. Two .desktop files are included at `/usr/share/applications/XIVLauncher-native.desktop` and `XIVLauncher-custom.desktop`. You can also launch it from the terminal with `/usr/bin/xivlauncher`. If you have a non-steam account and you'd like to still launch with steam, follow the instructions below, but leave off the stuff after `%command%` in the launch options, and make sure Use Steam Service is *unchecked* in the launcher.
 
 ### Steam Configuration
 
