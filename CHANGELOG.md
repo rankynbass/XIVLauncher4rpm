@@ -1,10 +1,24 @@
 # Changelog
+### Wed Nov 02 2022 Rankyn Bass <rankyn@proton.me>
+Release bumped to 5
+
+Redid the xivlauncher script
+- calling `/usr/bin/xivlauncher` with no arguements just launches XIVLauncher.
+- calling `/usr/bin/xivlauncher custom` will check for `$HOME/.local/bin/xivlauncher-custom.sh`, and launch it if it's found and has valid bash syntax.
+    - If the script is found, but is broken, it'll back it up and create a new one.
+    - If it doesn't find the custom script, it will created it.
+    - If the path `$HOME/.local/bin` doesn't exist, it will be created first. This fixes an error that was reported. This path is *not* part of the XDG basedir specs, but it *is* part of the systemd file heirarchy, and Fedora, openSUSE, Enterprise Linux, and most distros with systemd use it. 
+
 ### Sun Oct 30 2022 Rankyn Bass <rankyn@proton.me>
+Release bumped to 4
+
 Fixed an error in the xivlauncher.sh script
 - The xivlauncher-custom.sh script being created was malformed, resulting in a crash.
 - The xivlauncher script now checks it for syntax errors, and backs it up and creates a new one if there are problems. This should fix it for people who got a poorly formed script file.
 
 ### Sat Oct 29 2022 Rankyn Bass <rankyn@proton.me>
+Release bumped to 3
+
 Minor update to launcher scripts
 - The `/usr/bin/xivlauncher` script now checks `~/.local/bin/xivlauncher-custom.sh` for an openssl config line
 - If it doesn't find one, it adds it to the top of the file (just under `#!/bin/bash`)
