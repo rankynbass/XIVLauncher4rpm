@@ -8,8 +8,8 @@ LauncherRepo=$(awk 'NR==4 {print; exit}' < "$repodir/_version")
 LauncherTag=$(awk 'NR==5 {print; exit}' < "$repodir/_version")
 DownstreamTag=$(awk 'NR==6 {print; exit}' < "$repodir/_version")-$(awk 'NR==7 {print; exit}' < "$repodir/_version")
 xlsource=$(rpmbuild --eval='%_sourcedir')
-source0=$xlsource/XIVLauncher.Core-$CoreTag.tar.xz
-source1=$xlsource/XIVLauncher4rpm-$DownstreamTag.tar.xz
+source0=$xlsource/XIVLauncher.Core-$CoreTag.tar.gz
+source1=$xlsource/XIVLauncher4rpm-$DownstreamTag.tar.gz
 workingdir=/tmp/xivlauncher
 
 cd "$repodir" || exit
@@ -35,7 +35,7 @@ then
     mv "XIVLauncher.Core/lib/$LauncherDir" "XIVLauncher.Core/lib/FFXIVQuickLauncher"
     # Create a new, complete tarball.
     echo "Making tarball for XIVLauncher.Core"
-    tar --totals -I 'xz -v -9' -cf "$source0" XIVLauncher.Core
+    tar -czf "$source0" XIVLauncher.Core
 fi
 cd "$repodir" || exit
 if [ ! -f "$source1" ];
@@ -46,7 +46,7 @@ then
     cp cleanupprofile.sh openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop XIVLauncher-custom.desktop COPYING "$workingdir/XIVLauncher4rpm-$DownstreamTag/"
     cd "$workingdir" || exit
     echo "Making tarball for XIVLauncher4rpm"
-    tar --totals -I 'xz -v -9' -cf "$source1" "XIVLauncher4rpm-$DownstreamTag"
+    tar -czf "$source1" "XIVLauncher4rpm-$DownstreamTag"
 fi
 cp "$repodir/_version" "$xlsource"
 rm -rf "$workingdir"

@@ -1,4 +1,12 @@
 # Changelog
+### Wed Nov 09 2022 Rankyn Bass <rankyn@proton.me>
+Release bumped to 6
+
+Changed back to tar.gz files for faster testing. Size saving isn't worth it.
+- Changed FFXIVQuickLauncher commit to 261464a. This is only one commit off the offical xlcore 1.0.2 commit, but has the XIVLauncher.Core stuff moved out of the repo. This prevents a bunch of duplicates in the tar.gz / SRPM.
+- XIVLauncher.Core is now on commit ad6b701 (it actually has been for a few releases). This commit skips version checking for non-flatpak releases. The version check function can sometimes take up to 5 seconds to execute (at which point it times out and gives up), and the window contents won't load until it's finished.
+
+
 ### Wed Nov 02 2022 Rankyn Bass <rankyn@proton.me>
 Release bumped to 5
 
