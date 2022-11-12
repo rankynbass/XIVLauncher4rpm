@@ -32,10 +32,7 @@ Source2:        _version
 Name:           %{xlname}
 Version:        %{xlversion}
 Release:        %{xlrelease}%{?dist}
-# Original Versioning: a.b.c.d-r
-# Epoch 1  Versioning: a.b.c-r
-Epoch:          1
-Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM package)
+Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Rankyn Bass's custom patches applied)
 Group:          Applications/Games
 License:        GPL-3.0-only
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
@@ -66,7 +63,7 @@ Requires:       (libFAudio or libFAudio0)
 Requires:       desktop-file-utils
 Requires:       jxrlib
 Provides:       %{xlname}
-Conflicts:      XIVLauncher-testing
+Conflicts:      XIVLauncher XIVLauncher-testing
 
 # There isn't any linux / rpm debug info available with the source git
 %global debug_package %{nil}
@@ -79,6 +76,8 @@ Conflicts:      XIVLauncher-testing
 
 %description
 Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This is a native build for fedora 36 and several other rpm based distos.
+This version includes custom patches by Rankyn Bass. The variable XL_PATH allows you to use directories other than ~/.xlcore for installing. The latest
+version of DXVK is used. Wine-GE is used instead of the default wine-xiv-staging.
 
 ### PREP SECTION
 # Be aware that rpmbuild DOES NOT download sources from urls. It expects the source files to be in the %%{_sourcedir} directory.
@@ -102,7 +101,7 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
 cd %{_builddir}/%{repo0}
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash="rpm-%{CoreTag}-r%{xlrelease}"
+dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:BuildHash="r%{xlrelease}-%{CoreTag}"
 cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
 cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
 cd %{_builddir}/%{repo1}
