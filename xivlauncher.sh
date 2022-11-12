@@ -2,7 +2,6 @@
 
 # ~/.local/bin is part of the systemd file hierarchy. Fedora and openSUSE both use it.
 bindir=$HOME/.local/bin
-script=xivlauncher-custom.sh
 
 # Function to make a new custom script
 makeCustomScript ()
@@ -45,7 +44,7 @@ runDefault()
 checkCustom()
 {
     echo "Checking $bindir/$script"
-    # Code to check for bad or missing $HOME/.local/bin/xivlauncher-custom.sh
+    # Code to check for bad or missing custom script
     if [ -f "$bindir/$script" ];
     then
         # Make it executable if it isn't
@@ -79,7 +78,7 @@ checkCustom()
             fi   
         fi
     else
-        # xivlauncher-custom.sh wasn't found, so create it.
+        # custom script wasn't found, so create it.
         makeCustomScript
     fi
 }
@@ -87,13 +86,13 @@ checkCustom()
 # Function to run with script
 runCustom()
 {
-    echo "===================== /usr/bin/xivlauncher custom ====================="
-    echo "Running script ~/.local/bin/xivlauncher-custom.sh"
-    echo "If it crashes, please delete it, and run /usr/bin/xivlauncher custom"
+    echo "===================== /usr/bin/xivlauncher $1 ====================="
+    echo "Running script ~/.local/bin/$script"
+    echo "If it crashes, please delete it, and run /usr/bin/xivlauncher $1"
     echo "again. If the problem persists, please file a ticket on"
     echo "https://github.com/rankynbass/XIVLauncher4rpm describing the error,"
-    echo "along with the contents of ~/.local/bin/xivlauncher-custom.sh"
-    echo "===================== /usr/bin/xivlauncher custom ====================="
+    echo "along with the contents of ~/.local/bin/$script.sh"
+    echo "===================== /usr/bin/xivlauncher $1 ====================="
     "$bindir/$script"
 }
 
@@ -102,14 +101,7 @@ if [ -z "$1" ];
 then
     runDefault
 else
-    case $1 in
-        "CUSTOM" | "custom" | "Custom" )
-            checkCustom
-            runCustom
-        ;;
-        * )
-            echo "Error: Option '$1' is not valid."
-            runDefault
-        ;;
-    esac
+    script=xivlauncher-$1.sh
+    checkCustom
+    runCustom "$@"
 fi
