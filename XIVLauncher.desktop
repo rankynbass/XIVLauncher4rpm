@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=XIVLauncher Native
-Comment=Custom launcher for Final Fantasy XIV. Native version from copr or rpm.
+Name=XIVLauncher-RB
+Comment=Custom launcher for Final Fantasy XIV. Includes Rankyn Bass's patches.
 Exec=/usr/bin/xivlauncher
 Icon=xivlauncher
 Terminal=false

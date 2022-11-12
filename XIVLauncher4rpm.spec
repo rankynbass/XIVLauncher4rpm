@@ -138,12 +138,14 @@ echo "If you are planning to use the flatpak version of XIVLauncher, you should 
 /usr/share/applications/XIVLauncher-native.desktop
 /usr/share/applications/XIVLauncher-custom.desktop
 /usr/share/pixmaps/xivlauncher.png
+/opt/XIVLauncher/CHANGELOG.md
 /opt/XIVLauncher/cleanupprofile.sh
 /opt/XIVLauncher/COPYING
 /opt/XIVLauncher/libcimgui.so
 /opt/XIVLauncher/libskeychain.so
 /opt/XIVLauncher/libsteam_api64.so
 /opt/XIVLauncher/openssl_fix.cnf
+/opt/XIVLauncher/README.md
 /opt/XIVLauncher/xivlauncher.sh
 /opt/XIVLauncher/xivlauncher.png
 /opt/XIVLauncher/XIVLauncher.Common.pdb
