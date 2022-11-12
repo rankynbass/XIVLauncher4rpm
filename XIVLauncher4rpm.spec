@@ -77,7 +77,7 @@ Conflicts:      XIVLauncher XIVLauncher-testing
 %description
 Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This is a native build for fedora 36 and several other rpm based distos.
 This version includes custom patches by Rankyn Bass. The variable XL_PATH allows you to use directories other than ~/.xlcore for installing. The latest
-version of DXVK is used. Wine-GE is used instead of the default wine-xiv-staging.
+version of DXVK is used.
 
 ### PREP SECTION
 # Be aware that rpmbuild DOES NOT download sources from urls. It expects the source files to be in the %%{_sourcedir} directory.

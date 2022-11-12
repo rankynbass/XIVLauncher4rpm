@@ -1,4 +1,12 @@
 # Changelog
+### Sat Nov 12 2022 Rankyn Bass <rankyn@proton.me>
+New build! XIVLauncher-RB 1.0.2-1 with custom patches:
+- XL_PATH patch - You can now use the environment variable XL_PATH to set a path for the xlcore directory. For example, `XL_PATH=$HOME/.local/share/xlcore` to conform with XDG directory structure.
+- DXVK v2 - upgraded to the latest version of DXVK
+- The titlebar now says "XIVLauncher-RB" to indicate that you're not running the default launcher.
+
+You must uninstall XIVLauncher, and install XIVLauncher-RB. The two versions cannot coexist.
+
 ### Wed Nov 09 2022 Rankyn Bass <rankyn@proton.me>
 Release bumped to 6
 
