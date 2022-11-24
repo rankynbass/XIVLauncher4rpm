@@ -8,17 +8,26 @@ XIVLauncher (abbreviated as XL) is a faster launcher for our favorite critically
 [ XIVLauncher4rpm git: **[rankynbass/XIVLauncher4rpm](https://github.com/rankynbass/XIVLauncher4rpm)** ]
 [ COPR Repo: **[rankyn/xivlauncher](https://copr.fedorainfracloud.org/coprs/rankyn/xivlauncher/)** ]
 
+## Custom Patches XL.Core
+
+This is a custom patched version of XIVLauncher.Core. It has some minor quality of life improvements that will hopefully get added upstream at some point.
+- Added `XL_PATH` environment variable. This will let you specify an alternate directory for the xlcore folder. So instead of using the default `~/.xlcore`, you can use `XL_PATH=~/.local/share/xlcore`, for example. This will create a completely new folder, so you'll need to configure it to point to the correct ffxiv game and config folders. This *may* help with multiboxing, since you can run multiple copies of the game from different prefixes / wine installs.
+- Added a dropdown list in the Wine tab for DXVK version. Default is 1.10.1, but you can try out .2, .3, or even the new 2.0 version. Be aware that Reshade, GShade, and Dalamud may all have issues with the other versions, especially 2.0. I haven't had issues in my testing with GShade, but use at your own risk. If the game doesn't launch, or is glitchy, change this back to the default.
+- The `/usr/bin/xivlauncher` script comes with some basic script management features, so you can easily keep custom launch scripts when updating. Launching with `xivlauncher <custom>` will create a script in `~/.local/bin` called `xivlauncher-<custom>.sh`, which you can use to run other programs or set different environment variables. You can create as many as you like. When used in conjunction with the `XL_PATH` variable, you can easily manage multiple accounts or different Dalamud plugin sets, for example.
+- There is an extra .desktop file in the /opt/XIVLauncher.Core folder, which you can copy to `~/.local/share/applications` and modify to launch different custom scripts.
+- The titlebar of the launcher is changed to XIVLauncher-RB, to indicate you are *not* running the standard flatpak or supported rpm version.
+
 ## Installation and Removal
 
 ### Fedora
 *Install*
 ```
 sudo dnf copr enable rankyn/xivlauncher
-sudo dnf install XIVLauncher
+sudo dnf install XIVLauncher-RB
 ```
 *Uninstall*
 ```
-sudo dnf remove XIVLauncher
+sudo dnf remove XIVLauncher-RB
 sudo dnf copr remove rankyn/xivlauncher
 ```
 ### openSUSE
@@ -27,11 +36,11 @@ The repo is built for tumbleweed, but works with LEAP 15.4 as well. It's possibl
 *Install*
 ```
 sudo zypper addrepo -r https://copr.fedorainfracloud.org/coprs/rankyn/xivlauncher/repo/opensuse-tumbleweed/rankyn-xivlauncher-opensuse-tumbleweed.repo
-sudo zypper install XIVLauncher
+sudo zypper install XIVLauncher-RB
 ```
 *Uninstall*
 ```
-sudo zypper remove XIVLauncher
+sudo zypper remove XIVLauncher-RB
 sudo zypper removerepo copr:copr.fedorainfracloud.org:rankyn:xivlauncher
 ```
 ### Enterprise Linux (EL9 Only)
@@ -45,11 +54,11 @@ First enable the EPEL repository. Instructions: **[[Red Hat](https://www.tecmint
 ```
 sudo dnf copr enable rankyn/xl-deps-el9
 sudo dnf copr enable rankyn/xivlauncher
-sudo dnf install XIVLauncher
+sudo dnf install XIVLauncher-RB
 ```
 *Uninstall*
 ```
-sudo dnf remove XIVLauncher
+sudo dnf remove XIVLauncher-RB
 sudo dnf copr remove rankyn/xivlauncher
 ```
 If you wish to remove the dependencies as well, you can do this:

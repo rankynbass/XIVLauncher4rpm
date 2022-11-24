@@ -1,4 +1,11 @@
 # Changelog
+### Thu Nov 24 2022 Rankyn Bass <rankyn@proton.me>
+XIVLauncher-RB now has a DXVK version switcher!
+- It's in the Wine tab.
+- Default version is 1.10.1. But you can chose .2, .3, or 2.0.
+
+My fork of the XIVLauncher.Core repo now points to my fork of the FFXIVQuickLauncher repo, at least for this set of branches. 
+
 ### Sat Nov 12 2022 Rankyn Bass <rankyn@proton.me>
 New build! XIVLauncher-RB 1.0.2-1 with custom patches:
 - XL_PATH patch - You can now use the environment variable XL_PATH to set a path for the xlcore directory. For example, `XL_PATH=$HOME/.local/share/xlcore` to conform with XDG directory structure.
