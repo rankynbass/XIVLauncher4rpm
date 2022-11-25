@@ -154,6 +154,7 @@ echo "If you are planning to use the flatpak version of XIVLauncher, you should 
 /opt/XIVLauncher-git/XIVLauncher.Core.pdb
 /opt/XIVLauncher-git/XIVLauncher.Core.xml
 /opt/XIVLauncher-git/XIVLauncher.desktop
+/opt/XIVLauncher-git/XIVLauncher-git-custom.desktop
 /opt/XIVLauncher-git/xivlogo.png
 %license /usr/share/doc/xivlauncher-git/COPYING
 

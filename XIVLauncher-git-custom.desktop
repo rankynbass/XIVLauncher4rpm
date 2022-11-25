@@ -1,0 +1,10 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=XIVLauncher (git) Custom
+Comment=XIVLauncher-git custom script (~/.local/bin/xivlauncher-git-custom.sh)
+Exec=/usr/bin/xivlauncher-git custom
+Icon=xivlauncher-git
+Terminal=true
+Type=Application
+Categories=Game;
+StartupWMClass=XIVLauncher.Coreq
