@@ -136,12 +136,14 @@ echo "If you are planning to use the flatpak version of XIVLauncher, you should 
 /usr/bin/xivlauncher-git
 /usr/share/applications/XIVLauncher-git.desktop
 /usr/share/pixmaps/xivlauncher-git.png
+/opt/XIVLauncher-git/CHANGELOG.md
 /opt/XIVLauncher-git/cleanupprofile.sh
 /opt/XIVLauncher-git/COPYING
 /opt/XIVLauncher-git/libcimgui.so
 /opt/XIVLauncher-git/libskeychain.so
 /opt/XIVLauncher-git/libsteam_api64.so
 /opt/XIVLauncher-git/openssl_fix.cnf
+/opt/XIVLauncher-git/README.md
 /opt/XIVLauncher-git/xivlauncher.sh
 /opt/XIVLauncher-git/xivlauncher.png
 /opt/XIVLauncher-git/XIVLauncher.Common.pdb
