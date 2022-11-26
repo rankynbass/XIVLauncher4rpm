@@ -1,7 +1,7 @@
 XIVLauncher-git
 https://github.com/rankynbass/XIVLauncher.Core
-use-altpath
+RB-1.0.2-3
 https://github.com/rankynbass/FFXIVQuickLauncher
-force_wined3d
-22.11.06.0438
+remove-common-unix
+22.11.25.1742
 utc
