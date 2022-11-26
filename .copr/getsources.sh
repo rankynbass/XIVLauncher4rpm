@@ -34,7 +34,7 @@ then
     tar -C XIVLauncher.Core/lib -xf "$LauncherTag.tar.gz"
     mv "XIVLauncher.Core/lib/$LauncherDir" "XIVLauncher.Core/lib/FFXIVQuickLauncher"
     # Create a new, complete tarball.
-    echo "Making tarball for XIVLauncher.Core"
+    echo "Making tarball XIVLauncher.Core-$CoreTag.tar.gz"
     tar -czf "$source0" XIVLauncher.Core
 fi
 cd "$repodir" || exit
@@ -45,7 +45,7 @@ then
     mkdir -p "$workingdir/XIVLauncher4rpm-$DownstreamTag"
     cp CHANGELOG.md cleanupprofile.sh openssl_fix.cnf README.md xivlauncher.sh XIVLauncher.desktop XIVLauncher-custom.desktop COPYING "$workingdir/XIVLauncher4rpm-$DownstreamTag/"
     cd "$workingdir" || exit
-    echo "Making tarball for XIVLauncher4rpm"
+    echo "Making tarball XIVLauncher4rpm-$DownstreamTag.tar.gz"
     tar -czf "$source1" "XIVLauncher4rpm-$DownstreamTag"
 fi
 cp "$repodir/_version" "$xlsource"

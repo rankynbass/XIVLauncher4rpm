@@ -1,10 +1,21 @@
 # Changelog
+### Sat Nov 26 2022 Rankyn Bass <rankyn@proton.me>
+Added the `XL_FORCE_WINED3D` environment variable. Forces use of WineD3D instead of DXVK
+
+Moved a bunch of code around for ease of management. The XIVLauncher.Common.Unix folder was moved from the FFXIVQuickLauncher repo to the XIVLauncher.Core repo.
+
+The titlebar now has RB-Unofficial at the end to remind you this is not a default build.
+
+Bump release to 3.
+
 ### Thu Nov 24 2022 Rankyn Bass <rankyn@proton.me>
 XIVLauncher-RB now has a DXVK version switcher!
 - It's in the Wine tab.
 - Default version is 1.10.1. But you can chose .2, .3, or 2.0.
 
-My fork of the XIVLauncher.Core repo now points to my fork of the FFXIVQuickLauncher repo, at least for this set of branches. 
+My fork of the XIVLauncher.Core repo now points to my fork of the FFXIVQuickLauncher repo, at least for this set of branches.
+
+Bump release to 2.
 
 ### Sat Nov 12 2022 Rankyn Bass <rankyn@proton.me>
 New build! XIVLauncher-RB 1.0.2-1 with custom patches:
