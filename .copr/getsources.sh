@@ -20,18 +20,18 @@ then
     # So we'll do a little bash magic to get the folder names. Then we'll extract everything, rename as appropriate,
     # and rebuild a full source tarball that includes the submodule.
     cd "$workingdir" || exit
-    curl -L "$CoreRepo/archive/$CoreTag.tar.gz" -o "$CoreTag.tar.gz"
-    curl -L "$LauncherRepo/archive/$LauncherTag.tar.gz" -o "$LauncherTag.tar.gz"
+    curl -L "$CoreRepo/archive/$CoreTag.tar.gz" -o "XLCore-$CoreTag.tar.gz"
+    curl -L "$LauncherRepo/archive/$LauncherTag.tar.gz" -o "FFXIVQL-$LauncherTag.tar.gz"
     # These next two lines will get the folder names at the top of the tarball
-    CoreDir=$(tar -tf "$CoreTag.tar.gz" | head -n 1)
-    LauncherDir=$(tar -tf "$LauncherTag.tar.gz" | head -n 1)
+    CoreDir=$(tar -tf "XLCore-$CoreTag.tar.gz" | head -n 1)
+    LauncherDir=$(tar -tf "FFXIVQL-$LauncherTag.tar.gz" | head -n 1)
     # Extract XIVLauncher.Core tarball and then rename the folder to XIVLauncher.Core
-    tar -xf "$CoreTag.tar.gz"
+    tar -xf "XLCore-$CoreTag.tar.gz"
     mv "$CoreDir" XIVLauncher.Core
     # Remove an empty directory that will get in our way
     rmdir XIVLauncher.Core/lib/FFXIVQuickLauncher
     # Extract the FFXIVQuickLauncher tarball to XIVLauncher.Core/lib/, then rename to FFXIVQuickLauncher
-    tar -C XIVLauncher.Core/lib -xf "$LauncherTag.tar.gz"
+    tar -C XIVLauncher.Core/lib -xf "FFXIVQL-$LauncherTag.tar.gz"
     mv "XIVLauncher.Core/lib/$LauncherDir" "XIVLauncher.Core/lib/FFXIVQuickLauncher"
     # Create a new, complete tarball.
     echo "Making tarball for XIVLauncher.Core"
