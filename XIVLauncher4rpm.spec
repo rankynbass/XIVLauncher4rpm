@@ -133,7 +133,7 @@ if [ "$1" = "0" ]; then
     echo -e "\nRunning post uninstall script"
     echo -e "====================\nReminder: Removing this package does not remove your ~/.xlcore folder or uninstall the FFXIV game files.\n"
     echo -e "There may also be xivlauncher-*.sh scripts in ~/.local/bin and XIVLauncher-*.desktop files in ~/.local/share/applications that you will have to remove manually.\n"
-    echo "If you are planning to use the flatpak version of XIVLauncher, you should delete the '~/.xlcore/compatibilitytool' folder.\n===================="
+    echo -e "If you are planning to use the flatpak version of XIVLauncher, you should delete the '~/.xlcore/compatibilitytool' folder.\n===================="
 else
     echo -e "\nRunning upgrade script"
     echo -e "====================\nUpgrading %{xlname}\n===================="
