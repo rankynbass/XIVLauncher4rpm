@@ -1,4 +1,9 @@
 # Changelog
+### Sun Nov 27 2022 Rankyn Bass <rankyn@proton.me>
+Moved a bunch of code back since the XIVLauncher.Common.Unix pull request got rejected.
+
+Bump release to 4.
+
 ### Sat Nov 26 2022 Rankyn Bass <rankyn@proton.me>
 Added the `XL_FORCE_WINED3D` environment variable. Forces use of WineD3D instead of DXVK
 
