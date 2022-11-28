@@ -1,7 +1,8 @@
 #!/bin/bash
-
 # ~/.local/bin is part of the systemd file hierarchy. Fedora and openSUSE both use it.
 bindir=$HOME/.local/bin
+# Make sure XDG_DATA_HOME is set
+if [[ -z "$XDG_DATA_HOME" ]]; then XDG_DATA_HOME=$HOME/.local/share; fi
 
 # Function to make a new custom script
 makeCustomScript ()
@@ -71,7 +72,7 @@ checkCustom()
             if [ "$sslfix" -eq 0 ];
             then
                 # If the OPENSSL_CONF line is not found, insert it.
-                echo "Updating xivlauncher-custom.sh with SSL fix."
+                echo "Updating $script with SSL fix."
                 sed -i '2i\export OPENSSL_CONF=/opt/XIVLauncher/openssl_fix.cnf\' "$bindir/$script"
             else
                 echo "SSL config found."
@@ -80,6 +81,23 @@ checkCustom()
     else
         # custom script wasn't found, so create it.
         makeCustomScript
+    fi
+}
+
+# Function to make .desktop file
+checkDesktop()
+{
+    desktop=$XDG_DATA_HOME/applications/XIVLauncher-$1.desktop
+    echo "Checking for XIVLauncher-$1.desktop file"
+    if [ ! -f "$desktop" ];
+    then
+        echo "Desktop file not found. Creating in $XDG_DATA_HOME/applications"
+        cp /opt/XIVLauncher/XIVLauncher-custom.desktop "$desktop"
+        sed -i "s/RPM Custom/RPM $1/g" "$desktop"
+        sed -i "s/xivlauncher-custom.sh/xivlauncher-$1.sh/g" "$desktop"
+        sed -i "s/xivlauncher custom/xivlauncher $1/g" "$desktop"
+    else
+        echo "Desktop file found."
     fi
 }
 
@@ -103,5 +121,6 @@ then
 else
     script=xivlauncher-$1.sh
     checkCustom
+    checkDesktop "$@"
     runCustom "$@"
 fi

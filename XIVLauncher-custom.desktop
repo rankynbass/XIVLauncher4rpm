@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=XIVLauncher-RB Custom
-Comment=XIVLauncher custom script (~/.local/bin/xivlauncher-custom.sh)
+Name=XIVLauncher RPM Custom
+Comment=XIVLauncher RPM Custom script (~/.local/bin/xivlauncher-custom.sh)
 Exec=/usr/bin/xivlauncher custom
 Icon=xivlauncher
 Terminal=true

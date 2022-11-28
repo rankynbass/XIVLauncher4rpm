@@ -2,6 +2,11 @@
 ### Sun Nov 27 2022 Rankyn Bass <rankyn@proton.me>
 Moved a bunch of code back since the XIVLauncher.Common.Unix pull request got rejected.
 
+Fixed a few minor scripting errors
+- getsources.sh will no longer fail if the CoreTag and LauncherTag are the same
+- xivlauncher.sh had a minor typo that probably would never have been encountered, but it's fixed anyway.
+- xivlauncher.sh now installs a .desktop file to `~/.local/share/applications` when you use a custom arguement.
+
 Bump release to 4.
 
 ### Sat Nov 26 2022 Rankyn Bass <rankyn@proton.me>
