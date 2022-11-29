@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=XIVLauncher Native
-Comment=Custom launcher for Final Fantasy XIV. Native version from copr or rpm.
+Name=XIVLauncher RPM
+Comment=Custom launcher for Final Fantasy XIV. RPM (non-flatpak) version.
 Exec=/usr/bin/xivlauncher
 Icon=xivlauncher
 Terminal=false

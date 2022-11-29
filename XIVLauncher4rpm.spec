@@ -39,8 +39,8 @@ Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM pac
 Group:          Applications/Games
 License:        GPL-3.0-only
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
-Source0:        XIVLauncher.Core-%{CoreTag}.tar.xz
-Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.xz
+Source0:        XIVLauncher.Core-%{CoreTag}.tar.gz
+Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 
 # These package names are from the fedora / redhat repos. Other rpm distros might
 # have different names for these.
@@ -118,33 +118,49 @@ cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/XIVLauncher"
 cp %{buildroot}/opt/XIVLauncher/COPYING %{buildroot}/usr/share/doc/xivlauncher/COPYING
 cd %{buildroot}
 ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
-ln -sr "opt/XIVLauncher/XIVLauncher.desktop" "usr/share/applications/XIVLauncher-native.desktop"
-ln -sr "opt/XIVLauncher/XIVLauncher-custom.desktop" "usr/share/applications/XIVLauncher-custom.desktop"
+ln -sr "opt/XIVLauncher/XIVLauncher.desktop" "usr/share/applications/XIVLauncher.desktop"
 
 %pre
 
 %post
-echo "To clean your .xlcore profile when switching from flatpak to native XIVLauncher, you should run the script /opt/XIVLauncher/cleanupprofile.sh. Do not run with sudo."
-echo "This should *not* be done if you are using a custom wine install."
-echo "By default, the /usr/bin/xivlauncher script will create a script at ~/.local/bin/xivlauncher-custom.sh if it doesn't already exist. You can edit this script to add environment variables and call other programs. For example, you could use it to call gamescope or launch an IPC bridge for discord. This script file will not be changed when you upgrade, so your changes will be saved."
+echo -e "To clean your .xlcore profile when switching from flatpak to native XIVLauncher,"
+echo -e "you should run the script /opt/XIVLauncher/cleanupprofile.sh. Do not run with"
+echo -e "sudo. This should *not* be done if you are using a custom wine install.\n"
+echo -e "The /usr/bin/xivlauncher script will simply launch XIVLauncher.Core with the"
+echo -e "proper SSL settings. It can be also be used to create custom scripts by using it"
+echo -e "like so:\n"
+echo -e "    xivlauncher <script>\n"
+echo -e "The custom script will be named ~/.local/bin/xivlauncher-<script>.sh. You can"
+echo -e "edit this script to add environment variables and call other programs. For"
+echo -e "example, you could use it to call gamescope or launch an IPC bridge for discord."
+echo -e "This script file will not be changed when you upgrade, so your changes will be"
+echo -e "saved. This will also create a .desktop file in ~/.local/share/applications."
 
 %preun
 
 %postun
-echo "If you are planning to use the flatpak version of XIVLauncher, you should delete the '~/.xlcore/compatibilitytool' folder."
+if [ "$1" = "0" ]; then
+    echo -e "Reminder: Removing this package does not remove your ~/.xlcore folder or"
+    echo -e "uninstall the FFXIV game files. There may also be xivlauncher-*.sh scripts in"
+    echo -e "~/.local/bin and XIVLauncher-*.desktop files in ~/.local/share/applications"
+    echo -e "that you will have to remove manually.\n"
+    echo -e "If you are planning to use the flatpak version of XIVLauncher, you should"
+    echo -e "delete the '~/.xlcore/compatibilitytool' folder."
+fi
 
 ### FILES SECTION
 %files
 /usr/bin/xivlauncher
-/usr/share/applications/XIVLauncher-native.desktop
-/usr/share/applications/XIVLauncher-custom.desktop
+/usr/share/applications/XIVLauncher.desktop
 /usr/share/pixmaps/xivlauncher.png
+/opt/XIVLauncher/CHANGELOG.md
 /opt/XIVLauncher/cleanupprofile.sh
 /opt/XIVLauncher/COPYING
 /opt/XIVLauncher/libcimgui.so
 /opt/XIVLauncher/libskeychain.so
 /opt/XIVLauncher/libsteam_api64.so
 /opt/XIVLauncher/openssl_fix.cnf
+/opt/XIVLauncher/README.md
 /opt/XIVLauncher/xivlauncher.sh
 /opt/XIVLauncher/xivlauncher.png
 /opt/XIVLauncher/XIVLauncher.Common.pdb
@@ -157,7 +173,6 @@ echo "If you are planning to use the flatpak version of XIVLauncher, you should 
 /opt/XIVLauncher/XIVLauncher.Core.pdb
 /opt/XIVLauncher/XIVLauncher.Core.xml
 /opt/XIVLauncher/XIVLauncher.desktop
-/opt/XIVLauncher/XIVLauncher-custom.desktop
 /opt/XIVLauncher/xivlogo.png
 %license /usr/share/doc/xivlauncher/COPYING
 

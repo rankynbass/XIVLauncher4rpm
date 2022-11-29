@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=XIVLauncher Custom
-Comment=XIVLauncher custom script (~/.local/bin/xivlauncher-custom.sh)
-Exec=/usr/bin/xivlauncher custom
-Icon=xivlauncher
-Terminal=true
-Type=Application
-Categories=Game;
-StartupWMClass=XIVLauncher.Core

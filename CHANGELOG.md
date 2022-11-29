@@ -1,4 +1,14 @@
 # Changelog
+### Mon Nov 28 2022 Rankyn Bass <rankyn@proton.me>
+Release bumped to 6
+
+Updated the xivlauncher script. It has some management features built in
+- It will create .desktop files for your custom scripts in `~/.local/share/applications` (or the $XDG_DATA_HOME directory if that is set).
+- You can list scripts with -l, delete with -d <script>, and refresh (to default) with -r <script>.
+- There is some basic sanity parsing, but not too much. You can break this if you try. I'm not responsible if you do.
+
+Updated the submodule to the xlcore removed commit. This cuts the source size in half, which means I went back to using tar.gz instead of tar.xz. This doesn't change functionality at all.
+
 ### Wed Nov 02 2022 Rankyn Bass <rankyn@proton.me>
 Release bumped to 5
 
