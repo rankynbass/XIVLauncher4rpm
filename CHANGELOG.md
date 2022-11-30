@@ -1,4 +1,12 @@
 # Changelog
+### Tue Nov 29 2022 Rankyn Bass <rankyn@proton.me>
+Updated the xivlauncher script. It has some management features built in
+- It will create .desktop files for your custom scripts in `~/.local/share/applications` (or the $XDG_DATA_HOME directory if that is set).
+- You can list scripts with -l, delete with -d <script>, and refresh (to default) with -r <script>.
+- There is some basic sanity parsing, but not too much. You can break this if you try. I'm not responsible if you do.
+
+Added support for MangoHud. It needs to be installed to work.
+
 ### Sun Nov 27 2022 Rankyn Bass <rankyn@proton.me>
 Moved a bunch of code back since the XIVLauncher.Common.Unix pull request got rejected.
 
