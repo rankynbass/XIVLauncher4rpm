@@ -47,7 +47,7 @@ then
     # We could download the correct git tag as a tar.gz file, but we already have all the files here! Why do that?
     # Make a directory, copy the needed files of the repo into the directory, then tar the results.
     mkdir -p "$workingdir/XIVLauncher4rpm-$DownstreamTag"
-    cp CHANGELOG.md cleanupprofile.sh openssl_fix.cnf README.md xivlauncher.sh XIVLauncher.desktop XIVLauncher-custom.desktop COPYING "$workingdir/XIVLauncher4rpm-$DownstreamTag/"
+    cp CHANGELOG.md cleanupprofile.sh openssl_fix.cnf README.md xivlauncher.sh XIVLauncher.desktop COPYING "$workingdir/XIVLauncher4rpm-$DownstreamTag/"
     cd "$workingdir" || exit
     echo "Writing XIVLauncher4rpm-$DownstreamTag.tar.gz"
     tar -czf "$source1" "XIVLauncher4rpm-$DownstreamTag"

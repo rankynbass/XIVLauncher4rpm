@@ -32,7 +32,7 @@ Source2:        _version
 Name:           %{xlname}
 Version:        %{xlversion}
 Release:        %{xlrelease}%{?dist}
-Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Rankyn Bass's custom patches applied)
+Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM package)
 Group:          Applications/Games
 License:        GPL-3.0-only
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
@@ -63,7 +63,7 @@ Requires:       (libFAudio or libFAudio0)
 Requires:       desktop-file-utils
 Requires:       jxrlib
 Provides:       %{xlname}
-Conflicts:      XIVLauncher XIVLauncher-testing
+Conflicts:      XIVLauncher-testing
 
 # There isn't any linux / rpm debug info available with the source git
 %global debug_package %{nil}
@@ -76,8 +76,6 @@ Conflicts:      XIVLauncher XIVLauncher-testing
 
 %description
 Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This is a native build for fedora 36 and several other rpm based distos.
-This version includes custom patches by Rankyn Bass. The variable XL_PATH allows you to use directories other than ~/.xlcore for installing. The latest
-version of DXVK is used.
 
 ### PREP SECTION
 # Be aware that rpmbuild DOES NOT download sources from urls. It expects the source files to be in the %%{_sourcedir} directory.
@@ -101,7 +99,7 @@ version of DXVK is used.
 # build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
 cd %{_builddir}/%{repo0}
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:BuildHash="r%{xlrelease}-%{CoreTag}"
+dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash="r%{xlrelease}-%{CoreTag}"
 cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
 cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
 cd %{_builddir}/%{repo1}
@@ -117,32 +115,40 @@ cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/XIVLauncher"
 cp %{buildroot}/opt/XIVLauncher/COPYING %{buildroot}/usr/share/doc/xivlauncher/COPYING
 cd %{buildroot}
 ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
-ln -sr "opt/XIVLauncher/XIVLauncher.desktop" "usr/share/applications/XIVLauncher-native.desktop"
+ln -sr "opt/XIVLauncher/XIVLauncher.desktop" "usr/share/applications/XIVLauncher.desktop"
 
 %pre
 
 %post
-echo "To clean your .xlcore profile when switching from flatpak to native XIVLauncher, you should run the script /opt/XIVLauncher/cleanupprofile.sh. Do not run with sudo."
-echo "This should *not* be done if you are using a custom wine install."
-echo "By default, the /usr/bin/xivlauncher script will create a script at ~/.local/bin/xivlauncher-custom.sh if it doesn't already exist. You can edit this script to add environment variables and call other programs. For example, you could use it to call gamescope or launch an IPC bridge for discord. This script file will not be changed when you upgrade, so your changes will be saved."
+echo -e "To clean your .xlcore profile when switching from flatpak to native XIVLauncher,"
+echo -e "you should run the script /opt/XIVLauncher/cleanupprofile.sh. Do not run with"
+echo -e "sudo. This should *not* be done if you are using a custom wine install.\n"
+echo -e "The /usr/bin/xivlauncher script will simply launch XIVLauncher.Core with the"
+echo -e "proper SSL settings. It can be also be used to create custom scripts by using it"
+echo -e "like so:\n"
+echo -e "    xivlauncher <script>\n"
+echo -e "The custom script will be named ~/.local/bin/xivlauncher-<script>.sh. You can"
+echo -e "edit this script to add environment variables and call other programs. For"
+echo -e "example, you could use it to call gamescope or launch an IPC bridge for discord."
+echo -e "This script file will not be changed when you upgrade, so your changes will be"
+echo -e "saved. This will also create a .desktop file in ~/.local/share/applications."
 
 %preun
 
 %postun
 if [ "$1" = "0" ]; then
-    echo -e "\nRunning post uninstall script"
-    echo -e "====================\nReminder: Removing this package does not remove your ~/.xlcore folder or uninstall the FFXIV game files.\n"
-    echo -e "There may also be xivlauncher-*.sh scripts in ~/.local/bin and XIVLauncher-*.desktop files in ~/.local/share/applications that you will have to remove manually.\n"
-    echo -e "If you are planning to use the flatpak version of XIVLauncher, you should delete the '~/.xlcore/compatibilitytool' folder.\n===================="
-else
-    echo -e "\nRunning upgrade script"
-    echo -e "====================\nUpgrading %{xlname}\n===================="
+    echo -e "Reminder: Removing this package does not remove your ~/.xlcore folder or"
+    echo -e "uninstall the FFXIV game files. There may also be xivlauncher-*.sh scripts in"
+    echo -e "~/.local/bin and XIVLauncher-*.desktop files in ~/.local/share/applications"
+    echo -e "that you will have to remove manually.\n"
+    echo -e "If you are planning to use the flatpak version of XIVLauncher, you should"
+    echo -e "delete the '~/.xlcore/compatibilitytool' folder."
 fi
 
 ### FILES SECTION
 %files
 /usr/bin/xivlauncher
-/usr/share/applications/XIVLauncher-native.desktop
+/usr/share/applications/XIVLauncher.desktop
 /usr/share/pixmaps/xivlauncher.png
 /opt/XIVLauncher/CHANGELOG.md
 /opt/XIVLauncher/cleanupprofile.sh
@@ -164,7 +170,6 @@ fi
 /opt/XIVLauncher/XIVLauncher.Core.pdb
 /opt/XIVLauncher/XIVLauncher.Core.xml
 /opt/XIVLauncher/XIVLauncher.desktop
-/opt/XIVLauncher/XIVLauncher-custom.desktop
 /opt/XIVLauncher/xivlogo.png
 %license /usr/share/doc/xivlauncher/COPYING
 
