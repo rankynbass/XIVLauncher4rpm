@@ -5,6 +5,8 @@ Updated the xivlauncher script. It has some management features built in
 - You can list scripts with -l, delete with -d <script>, and refresh (to default) with -r <script>.
 - There is some basic sanity parsing, but not too much. You can break this if you try. I'm not responsible if you do.
 
+The settings tab has a minor makeover: dropdown menus now show the extended description (previously this was unused in xlcore).
+
 Added support for MangoHud. It needs to be installed to work.
 
 ### Sun Nov 27 2022 Rankyn Bass <rankyn@proton.me>
