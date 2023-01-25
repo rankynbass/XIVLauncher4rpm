@@ -11,7 +11,7 @@ else
     echo "Folder $HOME/.xlcore found."
 
     # List of files and folders to attempt to backup. This is case sensative.
-    TOOLLIST="compatibilitytool dalamud dalamudAssets devPlugins"
+    TOOLLIST="compatibilitytool dalamud dalamudAssets devPlugins runtime wineprefix"
     TOOLLISTBAK=""
   
     # Check for folders. If they exist, delete them

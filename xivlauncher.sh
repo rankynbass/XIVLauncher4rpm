@@ -35,8 +35,8 @@ makeDesktop()
     echo -e "Creating new xivlauncher-$1.desktop file in\n$XDG_DATA_HOME/applications"
     {
         echo "[Desktop Entry]"
-        echo "Name=XIVLauncher RPM $1"
-        echo "Comment=XIVLauncher RPM $1 script (~/.local/bin/xivlauncher-$1.sh)"
+        echo "Name=XIVLauncher-RB RPM $1"
+        echo "Comment=XIVLauncher-RB RPM $1 script (~/.local/bin/xivlauncher-$1.sh)"
         echo "Exec=/usr/bin/xivlauncher $1"
         echo "Icon=xivlauncher"
         echo "Terminal=true"

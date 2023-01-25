@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=XIVLauncher RPM
-Comment=Custom launcher for Final Fantasy XIV. RPM (non-flatpak) version.
+Name=XIVLauncher-RB RPM
+Comment=Custom launcher for Final Fantasy XIV. RPM version with Rankyn Bass's patches.
 Exec=/usr/bin/xivlauncher
 Icon=xivlauncher
 Terminal=false
