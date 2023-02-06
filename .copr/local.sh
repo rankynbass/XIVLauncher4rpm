@@ -5,9 +5,9 @@ repodir="$(realpath "$(dirname "${BASH_SOURCE[0]}")/../")"
 CoreTag=$(awk 'NR==3 {print; exit}' < "$repodir/_version")
 DownstreamTag=$(awk 'NR==6 {print; exit}' < "$repodir/_version")-$(awk 'NR==7 {print; exit}' < "$repodir/_version")
 xlsource=$(rpmbuild --eval='%_sourcedir')
-CoreRepo="$HOME/COPR/XIVLauncher.Core"
+CoreRepo="$HOME/projects/XIVLauncher.Core"
 # Uncomment next line for different submodule version
-LauncherRepo="$HOME/COPR/FFXIVQuickLauncher"
+LauncherRepo="$HOME/projects/FFXIVQuickLauncher"
 xlsource="$(rpmbuild --eval='%_sourcedir')"
 workingdir=/tmp/xivlauncher-local
 mkdir -p "$workingdir"
