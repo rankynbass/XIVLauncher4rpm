@@ -8,7 +8,7 @@ cd "$repodir" || exit
     printf '%s\n' "{"
     printf '\t"%s": %s,\n' "schemaVersion" "1"
     printf '\t"%s": "%s",\n' "label" "copr"
-    printf '\t"%s": "%s",\n' "message" "$DownstreamTag"
+    printf '\t"%s": "%s",\n' "message" "rb-$DownstreamTag"
     printf '\t"%s": "%s"\n' "color" "success"
     printf '%s' "}"
 } > badge.json
