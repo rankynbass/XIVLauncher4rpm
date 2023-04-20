@@ -1,7 +1,7 @@
 #!/bin/bash
 # Version info
 version=0.6
-xlcore=1.0.2
+xlcore=1.0.3
 # ~/.local/bin is part of the systemd file hierarchy. Fedora and openSUSE both use it.
 bindir=$HOME/.local/bin
 # Make sure XDG_DATA_HOME is set
