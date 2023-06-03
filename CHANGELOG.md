@@ -1,4 +1,42 @@
 # Changelog
+### Sat Jun 03 2023 Rankyn Bass <rankyn@proton.me>
+Updated xivlauncher-git to start using my xlcore-testing branch. I'm now using 1.0.3 as a base, with all relevant pull requests to XIVLauncher.Core and FFXIVQuickLauncher repos.
+
+From [XIVLauncher.Core](https://github.com/goatcorp/XIVLauncher.Core)
+
+[PR #17](https://github.com/goatcorp/XIVLauncher.Core/pull/17): add DXVK settings tab
+- Allow switching Dxvk versions from 1.10.1 - 1.10.3 and 2.0 - 2.2. You can also disable Dxvk and use OpenGL instead.
+- Add MangoHud support
+- Allow custom DxvkHud strings
+- Limit frame rate
+
+[PR #28](https://github.com/goatcorp/XIVLauncher.Core/pull/28): Launch without 3rd party plugins
+
+[PR #31](https://github.com/goatcorp/XIVLauncher.Core/pull/31): Implement auto-start for pre- and post-game launch
+- Allows launching of linux programs / shell scripts from pre- and post- options
+- Allows launching of windows programs / scripts from pre-wine and post-wine options
+
+[PR #32](https://github.com/goatcorp/XIVLauncher.Core/pull/32): Add troubleshooting options
+- Add a troubleshooting tab with a bunch of options for clearing parts of the .xlcore folder
+- Add environment variables for troubleshooting (XL_DECK={0 or 1} is probably most useful)
+- Allows environment variables to be passed in the "Additional Arguments" field
+
+[PR #40](https://github.com/goatcorp/XIVLauncher.Core/pull/40): UI/UX Adjustments - featuring a much-improved Debug tab!
+
+[PR #41](https://github.com/goatcorp/XIVLauncher.Core/pull/41): Fix: IsIgnoringSteam problems on Steam Deck
+
+From [FFXIVQuickLauncher](https://github.com/goatcorp/FFXIVQuickLauncher)
+
+[PR #1205](https://github.com/goatcorp/FFXIVQuickLauncher/pull/): Dxvk settings rework
+
+[PR #1257](https://github.com/goatcorp/FFXIVQuickLauncher/pull/1257): Implement Run functions on the runners
+
+[PR #1316](https://github.com/goatcorp/FFXIVQuickLauncher/pull/1316): Allow patched versions of proton-wine to work, and improve compatibility with unpatched wine.
+
+[PR #1332](https://github.com/goatcorp/FFXIVQuickLauncher/pull/1332): Update Mac video patch to 1.1.2, since 1.0.8 has been removed from the CDN.
+
+[PR #1333](https://github.com/goatcorp/FFXIVQuickLauncher/pull/1333): Update the managed wine to the latest from wine-xiv-git (8.5.r4.g4211bac7)
+
 ### Thu Oct 27 2022 Rankyn Bass <rankyn@proton.me>
 Minor packaging update to 1.0.2-2
 
