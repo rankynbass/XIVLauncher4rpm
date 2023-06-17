@@ -2,6 +2,7 @@
 # This script is for cleaning out some of the old wine and dalamud assets used by
 # XIVLauncher. These will be rebuild when you next log in, and are thus safe to delete.
 # Cleaning these up when switching between native and flatpak versions is advised.
+# It shouldn't be needed any more, since there's buttons in the launcher to do this, now.
 
 echo "Checking for existing .xlcore folder..."
 # Check to see if the .xlcore directory even exists

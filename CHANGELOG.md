@@ -1,4 +1,10 @@
 # Changelog
+### Sat Jun 17 2023 Rankyn Bass <rankyn@proton.me>
+Updated to version 1.0.4
+
+### Sat Jan 14 2023 Rankyn Bass <rankyn@proton.me>
+Updated to version 1.0.3
+
 ### Mon Nov 28 2022 Rankyn Bass <rankyn@proton.me>
 Release bumped to 6
 
