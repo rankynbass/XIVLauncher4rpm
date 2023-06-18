@@ -1,5 +1,8 @@
 # Changelog
 ### Sat Jun 17 2023 Rankyn Bass <rankyn@proton.me>
+Updated to 1.0.4-2. There's a few minor fixes. Dalamud plugins might work better, now.
+
+### Sat Jun 17 2023 Rankyn Bass <rankyn@proton.me>
 Updated to version 1.0.4
 
 ### Sat Jan 14 2023 Rankyn Bass <rankyn@proton.me>
