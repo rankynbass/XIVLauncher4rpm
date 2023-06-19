@@ -1,4 +1,7 @@
 # Changelog
+### Sun Jun 18 2023 Rankyn Bass <rankyn@proton.me>
+Updated to 1.0.4-3. Fixed a bug that would prevent launching if wine had not already been downloaded.
+
 ### Sat Jun 17 2023 Rankyn Bass <rankyn@proton.me>
 Updated to 1.0.4-2. There's a few minor fixes. Dalamud plugins might work better, now.
 
