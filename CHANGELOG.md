@@ -1,4 +1,7 @@
 # Changelog
+### Sat Jun 24 2023 Rankyn Bass <rankyn@proton.me>
+Updated to 1.0.4, and added my compatibility rework patch, proton edition. Proton should now be a working option. 
+
 ### Sat Jun 03 2023 Rankyn Bass <rankyn@proton.me>
 Updated xivlauncher-git to start using my xlcore-testing branch. I'm now using 1.0.3 as a base, with all relevant pull requests to XIVLauncher.Core and FFXIVQuickLauncher repos.
 
