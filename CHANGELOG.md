@@ -1,4 +1,11 @@
 # Changelog
+### Thu Jul 13 2023 Rankyn Bass <rankyn@proton.me>
+Updated to 1.0.4 with Proton compatibility patched in.
+- Includes patched wine versions 8.10-12, 8.8, and 7.22
+- Includes patched wine-ge versions
+- Includes dxvk 2.1 and 2.2 with gplasync patches
+- Includes XL_PATH environment variable
+
 ### Tue Nov 29 2022 Rankyn Bass <rankyn@proton.me>
 Updated the xivlauncher script. It has some management features built in
 - It will create .desktop files for your custom scripts in `~/.local/share/applications` (or the $XDG_DATA_HOME directory if that is set).
