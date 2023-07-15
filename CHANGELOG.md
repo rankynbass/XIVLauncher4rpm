@@ -1,4 +1,9 @@
 # Changelog
+### Fri Jul 14 2023 Rankyn Bass <rankyn@proton.me>
+Re-added the Auto-launch feature. Up to 3 Windows exes can be launched with the game. Tested as working with winediscordipcbridge.exe.
+
+Confirmed that launching when using Proton, I can launch with ReShade, Dalamud, and MangoHud enabled and not crash, even after several hours of playtime.
+
 ### Thu Jul 13 2023 Rankyn Bass <rankyn@proton.me>
 Updated to 1.0.4 with Proton compatibility patched in.
 - Includes patched wine versions 8.10-12, 8.8, and 7.22
@@ -9,7 +14,7 @@ Updated to 1.0.4 with Proton compatibility patched in.
 ### Tue Nov 29 2022 Rankyn Bass <rankyn@proton.me>
 Updated the xivlauncher script. It has some management features built in
 - It will create .desktop files for your custom scripts in `~/.local/share/applications` (or the $XDG_DATA_HOME directory if that is set).
-- You can list scripts with -l, delete with -d <script>, and refresh (to default) with -r <script>.
+- You can list scripts with -l, delete with -d <scriptname>, and refresh (to default) with -r <scriptname>.
 - There is some basic sanity parsing, but not too much. You can break this if you try. I'm not responsible if you do.
 
 The settings tab has a minor makeover: dropdown menus now show the extended description (previously this was unused in xlcore).
