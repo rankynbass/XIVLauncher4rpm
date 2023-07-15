@@ -1,4 +1,7 @@
 # Changelog
+### Sat Jul 15 2023 Rankyn Bass <rankyn@proton.me>
+Fixed the "Disabled" option for DXVK. Also prevented DXVK Async from showing when Disabled is selected.
+
 ### Fri Jul 14 2023 Rankyn Bass <rankyn@proton.me>
 Re-added the Auto-launch feature. Up to 3 Windows exes can be launched with the game. Tested as working with winediscordipcbridge.exe.
 
