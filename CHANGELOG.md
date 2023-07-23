@@ -1,4 +1,7 @@
 # Changelog
+### Sat Jul 22 2023 Rankyn Bass <rankyn@proton.me>
+Added a Reshade toggle button at the bottom of the Wine Tab. Also added Unofficial-wine-xiv-proton 8-12, with FSR, and a new valve proton-wine with xiv patches and fsr.
+
 ### Sat Jul 15 2023 Rankyn Bass <rankyn@proton.me>
 Fixed the "Disabled" option for DXVK. Also prevented DXVK Async from showing when Disabled is selected.
 
