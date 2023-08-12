@@ -1,4 +1,13 @@
 # Changelog
+### Sat Aug 12 2023 Rankyn Bass <rankyn@proton.me>
+Added a few new wine versions
+- Wine-GE based 8-13
+- Wine-staging-tkg 8.13
+- proton-wine 8.0.3c (tkg)
+- proton-wine-experimental bleeding edge 8.0.52623 (tkg)
+
+Added the ability to use a custom Dxvk folder
+
 ### Sat Jul 22 2023 Rankyn Bass <rankyn@proton.me>
 Added a Reshade toggle button at the bottom of the Wine Tab. Also added Unofficial-wine-xiv-proton 8-12, with FSR, and a new valve proton-wine with xiv patches and fsr.
 
