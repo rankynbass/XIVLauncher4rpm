@@ -9,7 +9,7 @@ LauncherTag=$(awk 'NR==5 {print; exit}' < "$repodir/_version")
 DownstreamTag=$(date -u -r "$repodir/_version" +'%y.%m.%d.%H%M')
 xlsource=$(rpmbuild --eval='%_sourcedir')
 source0=$xlsource/XIVLauncher.Core-$CoreTag.tar.gz
-source1=$xlsource/XIVLauncher4rpm-$DownstreamTag-git.tar.gz
+source1=$xlsource/XIVLauncher4rpm-$DownstreamTag-utc.tar.gz
 workingdir=/tmp/xivlauncher
 
 cd "$repodir" || exit
@@ -42,11 +42,11 @@ if [ ! -f "$source1" ];
 then
     # We could download the correct git tag as a tar.gz file, but we already have all the files here! Why do that?
     # Make a directory, copy the needed files of the repo into the directory, then tar the results.
-    mkdir -p "$workingdir/XIVLauncher4rpm-$DownstreamTag-git"
-    cp CHANGELOG.md README.md cleanupprofile.sh openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop XIVLauncher-git-custom.desktop COPYING "$workingdir/XIVLauncher4rpm-$DownstreamTag-git/"
+    mkdir -p "$workingdir/XIVLauncher4rpm-$DownstreamTag-utc"
+    cp CHANGELOG.md README.md cleanupprofile.sh openssl_fix.cnf xivlauncher.sh XIVLauncher.desktop XIVLauncher-git-custom.desktop COPYING "$workingdir/XIVLauncher4rpm-$DownstreamTag-utc/"
     cd "$workingdir" || exit
     echo "Making tarball for XIVLauncher4rpm"
-    tar -czf "$source1" "XIVLauncher4rpm-$DownstreamTag-git"
+    tar -czf "$source1" "XIVLauncher4rpm-$DownstreamTag-utc"
 fi
 # Build the _version file. Line 6 will get replaced with the current timestamp.
 {
@@ -56,6 +56,6 @@ fi
     echo "$LauncherRepo"
     echo "$LauncherTag"
     echo "$DownstreamTag"
-    echo "git"
+    echo "utc"
 } > "$xlsource/_version"
 rm -rf "$workingdir"
