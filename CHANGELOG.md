@@ -1,4 +1,7 @@
 # Changelog
+### Sun Sep 03 2023 Rankyn Bass <rankyn@proton.me>
+Updated with latest compatibility-rework-2 patches. No proton. This should be very close to the eventual 1.0.5.
+
 ### Sat Jun 24 2023 Rankyn Bass <rankyn@proton.me>
 Updated to 1.0.4, and added my compatibility rework patch, proton edition. Proton should now be a working option. 
 
