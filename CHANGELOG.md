@@ -1,4 +1,12 @@
 # Changelog
+### Thu Sep 21 2023 Rankyn Bass <rankyn@proton.me>
+Rebased on compatibility-rework-2 branch, which will hopefully be merged in 1.0.5.
+- Pruned Wine and Dxvk lists
+- Added separate download buttons for Wine and Dxvk
+- Reworked scaling. If you were scaling based on Font size, reset font size to 22, and change the scaling factor instead. In the UI, it's shown as a int percentage, but it's stored as a float multiplier (e.g 1.5)
+- You can now extract wine folders into `~/.xlcore/compatibilitytool/wine` and they will show up in the list of Wine versions.
+- You can do the same with Dxvk folders into `~/.xlcore/compatibilitytool/dxvk`
+
 ### Sat Aug 12 2023 Rankyn Bass <rankyn@proton.me>
 Added a few new wine versions
 - Wine-GE based 8-13
