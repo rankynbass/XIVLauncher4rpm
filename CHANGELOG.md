@@ -1,5 +1,10 @@
 # Changelog
 ### Thu Sep 21 2023 Rankyn Bass <rankyn@proton.me>
+1.0.4-7:
+Fixed a minor issue with console spamming gamemodeauto: if gamemode was enabled.
+
+### Thu Sep 21 2023 Rankyn Bass <rankyn@proton.me>
+1.0.4-6:
 Rebased on compatibility-rework-2 branch, which will hopefully be merged in 1.0.5.
 - Pruned Wine and Dxvk lists
 - Added separate download buttons for Wine and Dxvk
