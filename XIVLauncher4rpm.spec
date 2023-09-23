@@ -27,11 +27,12 @@ Source2:        _version
 %define LauncherTag %(awk 'NR==5 {print; exit}' < %{SOURCE2} )
 %define xlversion %(awk 'NR==6 {print; exit}' < %{SOURCE2} )
 %define xlrelease %(awk 'NR==7 {print; exit}' < %{SOURCE2} )
-%define DownstreamTag %{xlversion}-%{xlrelease}
+%define DownstreamTag %{xlversion}
 
 Name:           %{xlname}
 Version:        %{xlversion}
 Release:        %{xlrelease}%{?dist}
+Epoch:          1
 Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM package)
 Group:          Applications/Games
 License:        GPL-3.0-only
@@ -63,7 +64,7 @@ Requires:       (libFAudio or libFAudio0)
 Requires:       desktop-file-utils
 Requires:       jxrlib
 Provides:       %{xlname}
-Conflicts:      XIVLauncher-testing
+Conflicts:      XIVLauncher
 
 # There isn't any linux / rpm debug info available with the source git
 %global debug_package %{nil}
@@ -99,7 +100,7 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
 cd %{_builddir}/%{repo0}
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:DefineConstants="WINE_XIV_FEDORA_LINUX UNOFFICIAL" -p:BuildHash="r%{xlrelease}-%{CoreTag}"
+dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:BuildHash="%{CoreTag}"
 cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
 cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
 cd %{_builddir}/%{repo1}

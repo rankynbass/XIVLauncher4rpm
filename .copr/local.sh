@@ -3,7 +3,7 @@
 # The below lines will always point to the repo's root directory.
 repodir="$(realpath "$(dirname "${BASH_SOURCE[0]}")/../")"
 CoreTag=$(awk 'NR==3 {print; exit}' < "$repodir/_version")
-DownstreamTag=$(awk 'NR==6 {print; exit}' < "$repodir/_version")-$(awk 'NR==7 {print; exit}' < "$repodir/_version")
+DownstreamTag=$(awk 'NR==6 {print; exit}' < "$repodir/_version")
 xlsource=$(rpmbuild --eval='%_sourcedir')
 CoreRepo="$HOME/projects/XIVLauncher.Core"
 # Uncomment next line for different submodule version

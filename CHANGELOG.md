@@ -1,5 +1,9 @@
 # Changelog
 ### Thu Sep 21 2023 Rankyn Bass <rankyn@proton.me>
+1.0.4.7-1:
+Changed the versioning scheme. Updated scripts and added epoch to .spec file.
+
+### Thu Sep 21 2023 Rankyn Bass <rankyn@proton.me>
 1.0.4-7:
 Fixed a minor issue with console spamming gamemodeauto: if gamemode was enabled.
 

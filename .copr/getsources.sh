@@ -6,7 +6,7 @@ CoreRepo=$(awk 'NR==2 {print; exit}' < "$repodir/_version")
 CoreTag=$(awk 'NR==3 {print; exit}' < "$repodir/_version")
 LauncherRepo=$(awk 'NR==4 {print; exit}' < "$repodir/_version")
 LauncherTag=$(awk 'NR==5 {print; exit}' < "$repodir/_version")
-DownstreamTag=$(awk 'NR==6 {print; exit}' < "$repodir/_version")-$(awk 'NR==7 {print; exit}' < "$repodir/_version")
+DownstreamTag=$(awk 'NR==6 {print; exit}' < "$repodir/_version")
 xlsource=$(rpmbuild --eval='%_sourcedir')
 source0=$xlsource/XIVLauncher.Core-$CoreTag.tar.gz
 source1=$xlsource/XIVLauncher4rpm-$DownstreamTag.tar.gz
