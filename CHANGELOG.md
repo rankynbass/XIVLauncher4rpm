@@ -1,4 +1,12 @@
 # Changelog
+### Wed Nov 04 2023 Rankyn Bass <rankyn@proton.me>
+1.0.6.0:
+Purely cosmetic bump to match the official release. The 1.0.6 patches were applied in 1.0.5.1.
+
+### Tue Nov 03 2023 Rankyn Bass <rankyn@proton.me>
+1.0.5.0, 1.0.5.1:
+Update to support patch 6.50. The .1 release fixed the repair game function.
+
 ### Thu Sep 21 2023 Rankyn Bass <rankyn@proton.me>
 1.0.4.7-1:
 Changed the versioning scheme. Updated scripts and added epoch to .spec file.
