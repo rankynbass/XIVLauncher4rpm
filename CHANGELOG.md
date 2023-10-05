@@ -1,4 +1,8 @@
 # Changelog
+### Thu Nov 05 2023 Rankyn Bass <rankyn@proton.me>
+1.0.6.1:
+Fixed a bug where an invalid entry for ProtonVersion or SteamRuntime in the launcher.ini file would cause a crash when going into the Settings -> Wine tab and selecting Proton.
+
 ### Wed Nov 04 2023 Rankyn Bass <rankyn@proton.me>
 1.0.6.0:
 Purely cosmetic bump to match the official release. The 1.0.6 patches were applied in 1.0.5.1.
