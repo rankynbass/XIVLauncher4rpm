@@ -1,27 +1,31 @@
 # Changelog
+### Fri Nov 27 2023 Rankyn Bass <rankyn@proton.me>
+1.0.6.2:
+- Updated Wine-GE version to 8-21.
+- Updated Wine-TKG version to 8.18 staging.
+
 ### Thu Nov 05 2023 Rankyn Bass <rankyn@proton.me>
 1.0.6.1:
-Fixed a bug where an invalid entry for ProtonVersion or SteamRuntime in the launcher.ini file would cause a crash when going into the Settings -> Wine tab and selecting Proton.
+- Fixed a bug where an invalid entry for ProtonVersion or SteamRuntime in the launcher.ini file would cause a crash when going into the Settings -> Wine tab and selecting Proton.
 
 ### Wed Nov 04 2023 Rankyn Bass <rankyn@proton.me>
 1.0.6.0:
-Purely cosmetic bump to match the official release. The 1.0.6 patches were applied in 1.0.5.1.
+- Purely cosmetic bump to match the official release. The 1.0.6 patches were applied in 1.0.5.1.
 
 ### Tue Nov 03 2023 Rankyn Bass <rankyn@proton.me>
 1.0.5.0, 1.0.5.1:
-Update to support patch 6.50. The .1 release fixed the repair game function.
+- Update to support patch 6.50. The .1 release fixed the repair game function.
 
 ### Thu Sep 21 2023 Rankyn Bass <rankyn@proton.me>
 1.0.4.7-1:
-Changed the versioning scheme. Updated scripts and added epoch to .spec file.
+- Changed the versioning scheme. Updated scripts and added epoch to .spec file.
 
 ### Thu Sep 21 2023 Rankyn Bass <rankyn@proton.me>
 1.0.4-7:
-Fixed a minor issue with console spamming gamemodeauto: if gamemode was enabled.
+- Fixed a minor issue with console spamming gamemodeauto: if gamemode was enabled.
 
 ### Thu Sep 21 2023 Rankyn Bass <rankyn@proton.me>
-1.0.4-6:
-Rebased on compatibility-rework-2 branch, which will hopefully be merged in 1.0.5.
+1.0.4-6: Rebased on compatibility-rework-2 branch, which will hopefully be merged in 1.0.5.
 - Pruned Wine and Dxvk lists
 - Added separate download buttons for Wine and Dxvk
 - Reworked scaling. If you were scaling based on Font size, reset font size to 22, and change the scaling factor instead. In the UI, it's shown as a int percentage, but it's stored as a float multiplier (e.g 1.5)
