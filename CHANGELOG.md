@@ -1,5 +1,9 @@
 # Changelog
 ### Fri Nov 27 2023 Rankyn Bass <rankyn@proton.me>
+1.0.6.3:
+- Re-add Dxvk GPLAsync 2.2-4 to fix crashing with ReShade Effects Toggler addon
+- Sort custom wine and dxvk folders by name
+
 1.0.6.2:
 - Updated Wine-GE version to 8-21.
 - Updated Wine-TKG version to 8.18 staging.
