@@ -1,5 +1,24 @@
 # Changelog
-### Fri Nov 27 2023 Rankyn Bass <rankyn@proton.me>
+### Sun Nov 26 2023 Rankyn Bass <rankyn@proton.me>
+Reworked the internal STEAM_COMPAT_MOUNTS handling to include a few extra paths. Not sure why this works, but now steam runtimes work again with proton.
+- Re-enabled steam runtime support
+- Updated tkg-wine version
+- Added a separate Clear Dalamud button that does just that. It leaves plugins installed. Clear Plugins will now only delete installed Plugins.
+
+### Sat Nov 25 2023 Rankyn Bass <rankyn@proton.me>
+Proton+steam runtime has been broken since 1.0.5.0. I'm not sure why, as I didn't change anything in the code between those patches. Disabled for now.
+
+### Fri Nov 24 2023 Rankyn Bass <rankyn@proton.me>
+Big feature added: you can now install this as a steam compatibility tool. Just go into the settings, and you will see a new tab, "Steam Tool." There, you'll find an option to install to Steam as a compatibility tool. This does not work with flatpak Steam; for that, you'll need to grab the .flatpak file from my [XIVLauncher.Core fork](https://github.com/rankynbass/XIVLauncher.Core/releases).
+
+Once installed, you can open steam, right-click on FFXIV, Properties -> Compatibility, and select XIVLauncher.Core as Compatibility Tool.
+
+Other updates:
+- Updated with patches from current main branch (xlcore) and master (submodule)
+- Added async update checks
+- Added version checking against my own git repo instead of official repo
+
+### Fri Nov 10 2023 Rankyn Bass <rankyn@proton.me>
 1.0.6.3:
 - Re-add Dxvk GPLAsync 2.2-4 to fix crashing with ReShade Effects Toggler addon
 - Sort custom wine and dxvk folders by name
