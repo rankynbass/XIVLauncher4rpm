@@ -1,4 +1,8 @@
 # Changelog
+### Wed Nov 29 2023 Rankyn Bass <rankyn@proton.me>
+- Fixed up some problems with detecting XDG_DATA_HOME inside a flatpak.
+- Revised Steam Tool tab to match [PR #99](https://github.com/goatcorp/XIVLauncher.Core/pull/99).
+
 ### Sun Nov 26 2023 Rankyn Bass <rankyn@proton.me>
 Reworked the internal STEAM_COMPAT_MOUNTS handling to include a few extra paths. Not sure why this works, but now steam runtimes work again with proton.
 - Re-enabled steam runtime support
