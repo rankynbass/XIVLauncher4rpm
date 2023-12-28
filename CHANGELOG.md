@@ -1,4 +1,14 @@
 # Changelog
+### Wed Dec 27 2023 Rankyn Bass <rankyn@proton.me>
+1.0.6.9:
+- Added Locale hack for systems with non-utf8 locales
+- Fixed an issue with Auto-launch apps not running if there was a space in the path
+- Added arguments field for Auto-launch apps
+- Code changes:
+  - Added ListSettingsEntry
+  - Fixed DictionarySettingsEntry so that it won't crash with an invalid index lookup
+  - Locale checking now produces a list of utf8 values instead of being a toggle for C.utf8
+
 ### Wed Nov 29 2023 Rankyn Bass <rankyn@proton.me>
 - Fixed up some problems with detecting XDG_DATA_HOME inside a flatpak.
 - Revised Steam Tool tab to match [PR #99](https://github.com/goatcorp/XIVLauncher.Core/pull/99).
