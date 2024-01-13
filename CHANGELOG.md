@@ -1,4 +1,10 @@
 # Changelog
+### Sat Jan 13 2024 Rankyn Bass <rankyn@proton.me>
+1.0.6.10
+- Updated Wine versions. Now includes a version of Wine 9.0-rc5, which has the new wayland driver.
+- Added options in the wine tab to enable wayland. Don't enable wayland on a non-wayland wine build; FFXIV won't launch.
+- Added a patch to work around bad timezone settings. If TZ is set to a non-windows value, it will result in incorrect display of server and local time in game. This patch simply unsets TZ, so the game will check the system clock instead.
+
 ### Wed Dec 27 2023 Rankyn Bass <rankyn@proton.me>
 1.0.6.9:
 - Added Locale hack for systems with non-utf8 locales
