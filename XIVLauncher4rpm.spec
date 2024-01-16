@@ -43,7 +43,7 @@ Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 # These package names are from the fedora / redhat repos. Other rpm distros might
 # have different names for these.
 # (x or y) has been used where fedora and opensuse have different package names (fedora-pkg or opensuse-pkg).
-BuildRequires:  dotnet-sdk-6.0
+BuildRequires:  dotnet-sdk-8.0
 Requires:       aria2
 Requires:       (SDL2 or libSDL2-2_0-0)
 Requires:       (libsecret or libsecret-1-0)
