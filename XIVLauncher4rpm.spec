@@ -124,7 +124,7 @@ ln -sr "opt/xivlauncher-rb/XIVLauncher.desktop" "usr/share/applications/XIVLaunc
 
 %post
 echo -e "To clean your .xlcore profile when switching from flatpak to native XIVLauncher,"
-echo -e "you should run the script /opt/XIVLauncher/cleanupprofile.sh. Do not run with"
+echo -e "you should run the script /opt/xivlauncher-rb/cleanupprofile.sh. Do not run with"
 echo -e "sudo. This should *not* be done if you are using a custom wine install.\n"
 echo -e "The /usr/bin/xivlauncher-rb script will simply launch XIVLauncher.Core with the"
 echo -e "proper SSL settings."
