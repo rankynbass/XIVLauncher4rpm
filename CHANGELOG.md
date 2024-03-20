@@ -1,4 +1,11 @@
 # Changelog
+### Tue Mar 19 2024 Rankyn Bass <rankyn@proton.me>
+1.0.8-2
+- Get rid of overly complicated launcher script.
+- Make it no longer conflict with -RB package.
+- Move to /opt/xivlauncher instead of /opt/XIVLauncher
+- Renamed primary launcher script to /usr/bin/xivlauncher-core to match other distros.
+
 ### Sun Jun 18 2023 Rankyn Bass <rankyn@proton.me>
 Updated to 1.0.4-3. Fixed a bug that would prevent launching if wine had not already been downloaded.
 
