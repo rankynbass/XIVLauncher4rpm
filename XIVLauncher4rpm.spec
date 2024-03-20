@@ -64,13 +64,15 @@ Requires:       (libFAudio or libFAudio0)
 Requires:       desktop-file-utils
 Requires:       jxrlib
 Provides:       %{xlname}
-Conflicts:      XIVLauncher
 
 # There isn't any linux / rpm debug info available with the source git
 %global debug_package %{nil}
 
 # Turn off binary stripping, otherwise the binary breaks.
 %global __os_install_post %{nil}
+
+# Turn off build_id links to prevent conflict with main XIVLauncher package.
+%define _build_id_links none
 
 # Binaries will be deposited into this directory. Macro'd for convenience.
 %define launcher %{_builddir}/XIVLauncher
@@ -108,15 +110,15 @@ cd %{_builddir}/%{repo1}
 ### INSTALL SECTION
 %install
 install -d "%{buildroot}/usr/bin"
-install -d "%{buildroot}/opt/XIVLauncher"
-install -d "%{buildroot}/usr/share/doc/xivlauncher"
+install -d "%{buildroot}/opt/xivlauncher-rb"
+install -d "%{buildroot}/usr/share/doc/xivlauncher-rb"
 install -d "%{buildroot}/usr/share/applications"
-install -D -m 644 "%{_builddir}/%{repo1}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher.png"
-cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/XIVLauncher"
-cp %{buildroot}/opt/XIVLauncher/COPYING %{buildroot}/usr/share/doc/xivlauncher/COPYING
+install -D -m 644 "%{_builddir}/%{repo1}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher-rb.png"
+cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/xivlauncher-rb"
+cp %{buildroot}/opt/xivlauncher-rb/COPYING %{buildroot}/usr/share/doc/xivlauncher-rb/COPYING
 cd %{buildroot}
-ln -sr "opt/XIVLauncher/xivlauncher.sh" "usr/bin/xivlauncher"
-ln -sr "opt/XIVLauncher/XIVLauncher.desktop" "usr/share/applications/XIVLauncher.desktop"
+ln -sr "opt/xivlauncher-rb/xivlauncher.sh" "usr/bin/xivlauncher-rb"
+ln -sr "opt/xivlauncher-rb/XIVLauncher.desktop" "usr/share/applications/XIVLauncher-RB.desktop"
 
 %pre
 
@@ -124,15 +126,8 @@ ln -sr "opt/XIVLauncher/XIVLauncher.desktop" "usr/share/applications/XIVLauncher
 echo -e "To clean your .xlcore profile when switching from flatpak to native XIVLauncher,"
 echo -e "you should run the script /opt/XIVLauncher/cleanupprofile.sh. Do not run with"
 echo -e "sudo. This should *not* be done if you are using a custom wine install.\n"
-echo -e "The /usr/bin/xivlauncher script will simply launch XIVLauncher.Core with the"
-echo -e "proper SSL settings. It can be also be used to create custom scripts by using it"
-echo -e "like so:\n"
-echo -e "    xivlauncher <script>\n"
-echo -e "The custom script will be named ~/.local/bin/xivlauncher-<script>.sh. You can"
-echo -e "edit this script to add environment variables and call other programs. For"
-echo -e "example, you could use it to call gamescope or launch an IPC bridge for discord."
-echo -e "This script file will not be changed when you upgrade, so your changes will be"
-echo -e "saved. This will also create a .desktop file in ~/.local/share/applications."
+echo -e "The /usr/bin/xivlauncher-rb script will simply launch XIVLauncher.Core with the"
+echo -e "proper SSL settings."
 
 %preun
 
@@ -141,38 +136,36 @@ if [ "$1" = "0" ]; then
     echo -e "Reminder: Removing this package does not remove your ~/.xlcore folder or"
     echo -e "uninstall the FFXIV game files. There may also be xivlauncher-*.sh scripts in"
     echo -e "~/.local/bin and XIVLauncher-*.desktop files in ~/.local/share/applications"
-    echo -e "that you will have to remove manually.\n"
-    echo -e "If you are planning to use the flatpak version of XIVLauncher, you should"
-    echo -e "delete the '~/.xlcore/compatibilitytool' folder."
+    echo -e "that you will have to remove manually from older versions of this package.\n"
 fi
 
 ### FILES SECTION
 %files
-/usr/bin/xivlauncher
-/usr/share/applications/XIVLauncher.desktop
-/usr/share/pixmaps/xivlauncher.png
-/opt/XIVLauncher/CHANGELOG.md
-/opt/XIVLauncher/cleanupprofile.sh
-/opt/XIVLauncher/COPYING
-/opt/XIVLauncher/libcimgui.so
-/opt/XIVLauncher/libskeychain.so
-/opt/XIVLauncher/libsteam_api64.so
-/opt/XIVLauncher/openssl_fix.cnf
-/opt/XIVLauncher/README.md
-/opt/XIVLauncher/xivlauncher.sh
-/opt/XIVLauncher/xivlauncher.png
-/opt/XIVLauncher/XIVLauncher.Common.pdb
-/opt/XIVLauncher/XIVLauncher.Common.Unix.pdb
-/opt/XIVLauncher/XIVLauncher.Common.Unix.xml
-/opt/XIVLauncher/XIVLauncher.Common.Windows.pdb
-/opt/XIVLauncher/XIVLauncher.Common.Windows.xml
-/opt/XIVLauncher/XIVLauncher.Common.xml
-/opt/XIVLauncher/XIVLauncher.Core
-/opt/XIVLauncher/XIVLauncher.Core.pdb
-/opt/XIVLauncher/XIVLauncher.Core.xml
-/opt/XIVLauncher/XIVLauncher.desktop
-/opt/XIVLauncher/xivlogo.png
-%license /usr/share/doc/xivlauncher/COPYING
+/usr/bin/xivlauncher-rb
+/usr/share/applications/XIVLauncher-RB.desktop
+/usr/share/pixmaps/xivlauncher-rb.png
+/opt/xivlauncher-rb/CHANGELOG.md
+/opt/xivlauncher-rb/cleanupprofile.sh
+/opt/xivlauncher-rb/COPYING
+/opt/xivlauncher-rb/libcimgui.so
+/opt/xivlauncher-rb/libskeychain.so
+/opt/xivlauncher-rb/libsteam_api64.so
+/opt/xivlauncher-rb/openssl_fix.cnf
+/opt/xivlauncher-rb/README.md
+/opt/xivlauncher-rb/xivlauncher.sh
+/opt/xivlauncher-rb/xivlauncher.png
+/opt/xivlauncher-rb/XIVLauncher.Common.pdb
+/opt/xivlauncher-rb/XIVLauncher.Common.Unix.pdb
+/opt/xivlauncher-rb/XIVLauncher.Common.Unix.xml
+/opt/xivlauncher-rb/XIVLauncher.Common.Windows.pdb
+/opt/xivlauncher-rb/XIVLauncher.Common.Windows.xml
+/opt/xivlauncher-rb/XIVLauncher.Common.xml
+/opt/xivlauncher-rb/XIVLauncher.Core
+/opt/xivlauncher-rb/XIVLauncher.Core.pdb
+/opt/xivlauncher-rb/XIVLauncher.Core.xml
+/opt/xivlauncher-rb/XIVLauncher.desktop
+/opt/xivlauncher-rb/xivlogo.png
+%license /usr/share/doc/xivlauncher-rb/COPYING
 
 %changelog
 # See CHANGELOG.md

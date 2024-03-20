@@ -1,4 +1,13 @@
 # Changelog
+### Tue Mar 19 2024 Rankyn Bass <rankyn@proton.me>
+1.0.8.1
+- Added in upstream changes so we can log in
+- Removed async update patch for now... it's broken with upstream changes.
+- DirectX 9 is now no longer available
+- Updated for patch 6.58
+- Moved into its own directory: /opt/xivlauncher-rb
+- Got rid of the overly-complicated launcher script. Now it just has the SSL fix.
+
 ### Sat Jan 13 2024 Rankyn Bass <rankyn@proton.me>
 1.0.6.10
 - Updated Wine versions. Now includes a version of Wine 9.0-rc5, which has the new wayland driver.
