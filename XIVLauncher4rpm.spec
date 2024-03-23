@@ -55,7 +55,7 @@ Requires:       (libXrandr or libXrandr2)
 Requires:       (libXdamage or libXdamage1)
 Requires:       (libXi or libXi6)
 Requires:       (gettext or gettext-runtime)
-Requires:       freetype
+Requires:       (freetype or libfreetype6)
 Requires:       (mesa-libGLU or libGLU1)
 Requires:       (libSM or libSM6)
 Requires:       (libgcc or libgcc_s1)
