@@ -23,10 +23,9 @@ Source2:        _version
 # Repo tags are now pulled from the _version file, so it only has to be changed in one place.
 # This is why sources were declared above.
 %define xlname %(awk 'NR==1 {print; exit}' < %{SOURCE2} )
-%define CoreTag %(awk 'NR==3 {print; exit}' < %{SOURCE2} )
-%define LauncherTag %(awk 'NR==5 {print; exit}' < %{SOURCE2} )
-%define xlversion %(awk 'NR==6 {print; exit}' < %{SOURCE2} )
-%define xlrelease %(awk 'NR==7 {print; exit}' < %{SOURCE2} )
+%define xlversion %(awk 'NR==3 {print; exit}' < %{SOURCE2} )
+%define xlrelease %(awk 'NR==4 {print; exit}' < %{SOURCE2} )
+%define hash %(awk 'NR==5 {print; exit}' < %{SOURCE2} )
 %define DownstreamTag %{xlversion}-%{xlrelease}
 
 Name:           %{xlname}
@@ -39,7 +38,7 @@ Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM pac
 Group:          Applications/Games
 License:        GPL-3.0-only
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
-Source0:        XIVLauncher.Core-%{CoreTag}.tar.gz
+Source0:        XIVLauncher.Core-%{xlversion}.tar.gz
 Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 
 # These package names are from the fedora / redhat repos. Other rpm distros might
@@ -96,7 +95,6 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # -b 1 tells it to unpack source1, and -n tells it the name of the folder.
 %setup -T -b 1 -n %{repo1}
 
-
 ### BUILD SECTION
 %build
 # We need to pass two extra -p switches to dotnet publish. The first sets the version of wine to download, and the second sets
@@ -104,7 +102,7 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
 cd %{_builddir}/%{repo0}
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash="rpm-%{CoreTag}-r%{xlrelease}"
+dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash=%{hash}
 cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
 cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
 cd %{_builddir}/%{repo1}
@@ -127,11 +125,8 @@ ln -sr "opt/xivlauncher/XIVLauncher.desktop" "usr/share/applications/XIVLauncher
 %post
 echo -e "The primary launcher script is now /usr/bin/xivlauncher-core instead of xivlauncher."
 echo -e "This brings it in line with the naming scheme used in Debian/Ubuntu and Arch."
-echo -e "To clean your .xlcore profile when switching from flatpak to native XIVLauncher,"
-echo -e "you should run the script /opt/xivlauncher/cleanupprofile.sh. Do not run with"
-echo -e "sudo. This should *not* be done if you are using a custom wine install.\n"
-echo -e "The /usr/bin/xivlauncher script will simply launch XIVLauncher.Core with the"
-echo -e "proper SSL settings."
+echo -e "Modified SSL settings are no longer needed, so you can run"
+echo -e "/opt/xivlauncher/XIVLauncher.Core directly if you choose."
 
 %preun
 
@@ -149,12 +144,10 @@ fi
 /usr/share/applications/XIVLauncher.desktop
 /usr/share/pixmaps/xivlauncher.png
 /opt/xivlauncher/CHANGELOG.md
-/opt/xivlauncher/cleanupprofile.sh
 /opt/xivlauncher/COPYING
 /opt/xivlauncher/libcimgui.so
 /opt/xivlauncher/libskeychain.so
 /opt/xivlauncher/libsteam_api64.so
-/opt/xivlauncher/openssl_fix.cnf
 /opt/xivlauncher/README.md
 /opt/xivlauncher/xivlauncher.sh
 /opt/xivlauncher/xivlauncher.png

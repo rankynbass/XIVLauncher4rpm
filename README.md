@@ -22,13 +22,15 @@ sudo dnf remove XIVLauncher
 sudo dnf copr remove rankyn/xivlauncher
 ```
 ### openSUSE
-The repo is built for tumbleweed, but works with LEAP 15.4 as well. It's possible anything from the 15.x family will work, but 15.2 hit end-of-life on 2021-12-31 and 15.3 will hit EOL on 2022-11-30, so I won't bother testing them. If you ever have problems with the repo not refreshing properly (not seeing a new update, for example), just uninstall and reinstall the repo.
+The repo is built for tumbleweed, LEAP 15.4 and 15.5. It's possible anything from the 15.x family will work, but 15.2 hit end-of-life on 2021-12-31 and 15.3 will hit EOL on 2022-11-30, so I won't bother testing them. If you ever have problems with the repo not refreshing properly (not seeing a new update, for example), just uninstall and reinstall the repo.
 
 *Install*
 ```
 sudo zypper addrepo -r https://copr.fedorainfracloud.org/coprs/rankyn/xivlauncher/repo/opensuse-tumbleweed/rankyn-xivlauncher-opensuse-tumbleweed.repo
 sudo zypper install XIVLauncher
 ```
+Replace opensuse-tumbleweed with opensuse-leap-15.4 or opensuse-leap-15.5 for those distos.
+
 *Uninstall*
 ```
 sudo zypper remove XIVLauncher
@@ -71,9 +73,9 @@ The program installs to `/opt/XIVLauncher`. Two .desktop files are included at `
 
 ### Steam Configuration
 
-If you are using steam, you can add a non-Steam game and find "XIVLauncher (native)", or browse to `/usr/bin/xivlauncher`. Then add this to the launch options: `--parent-expose-pids --parent-share-pids --parent-pid=1`. If you want to add environment variables or make other changes to the command line, consider editing the `~/.local/bin/xivlauncher-custom.sh script instead of the Steam launch options, since that's the script being called anyway.
+If you are using steam, you can add a non-Steam game and find "XIVLauncher RPM", or browse to `/usr/bin/xivlauncher-core`.
 
-Start the launcher, and on the main page, make sure "Use Steam Service" is checked. Also, the launcher sometimes does not properly close, and will show itself as still running after you exit the game. You can just click the STOP button to fix it, or right-click and STOP.
+Start the launcher, and on the main page, make sure "Use Steam Service" is checked if you have a Steam-linked FFXIV account. Also, the launcher sometimes does not properly close, and will show itself as still running after you exit the game. You can just click the STOP button to fix it, or right-click and STOP.
 
 If you want an icon for XIVLauncher in the library list, you can find one at `/opt/XIVLauncher/xivlauncher.png`, and a custom logo at `/opt/XIVLauncher/xivlogo.png`
 
