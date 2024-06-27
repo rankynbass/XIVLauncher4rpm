@@ -150,7 +150,6 @@ fi
 /opt/xivlauncher-rb/libcimgui.so
 /opt/xivlauncher-rb/libskeychain.so
 /opt/xivlauncher-rb/libsteam_api64.so
-/opt/xivlauncher-rb/openssl_fix.cnf
 /opt/xivlauncher-rb/README.md
 /opt/xivlauncher-rb/xivlauncher.sh
 /opt/xivlauncher-rb/xivlauncher.png
