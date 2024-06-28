@@ -1,5 +1,5 @@
 #!/bin/bash
-DownstreamTag=$(awk 'NR==6 {print; exit}' < _version)-$(awk 'NR==7 {print; exit}' < _version)
+DownstreamTag=$(awk 'NR==3 {print; exit}' < _version)-$(awk 'NR==4 {print; exit}' < _version)
 repodir="$(realpath "$(dirname "${BASH_SOURCE[0]}")/../")"
 
 # Colors: success (brightgreen), critical (red), informational (blue) 

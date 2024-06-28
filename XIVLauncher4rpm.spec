@@ -23,11 +23,10 @@ Source2:        _version
 # Repo tags are now pulled from the _version file, so it only has to be changed in one place.
 # This is why sources were declared above.
 %define xlname %(awk 'NR==1 {print; exit}' < %{SOURCE2} )
-%define CoreTag %(awk 'NR==3 {print; exit}' < %{SOURCE2} )
-%define LauncherTag %(awk 'NR==5 {print; exit}' < %{SOURCE2} )
-%define xlversion %(awk 'NR==6 {print; exit}' < %{SOURCE2} )
-%define xlrelease %(awk 'NR==7 {print; exit}' < %{SOURCE2} )
-%define DownstreamTag %{xlversion}
+%define xlversion %(awk 'NR==3 {print; exit}' < %{SOURCE2} )
+%define xlrelease %(awk 'NR==4 {print; exit}' < %{SOURCE2} )
+%define hash %(awk 'NR==5 {print; exit}' < %{SOURCE2} )
+%define DownstreamTag %{xlversion}-%{xlrelease}
 
 Name:           %{xlname}
 Version:        %{xlversion}
@@ -37,8 +36,8 @@ Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM pac
 Group:          Applications/Games
 License:        GPL-3.0-only
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
-Source0:        XIVLauncher.Core-%{CoreTag}.tar.gz
-Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
+Source0:        XIVLauncher-RB-%{xlversion}.tar.gz
+Source1:        XIVLauncher4rpm-rb-v%{DownstreamTag}.tar.gz
 
 # These package names are from the fedora / redhat repos. Other rpm distros might
 # have different names for these.
@@ -85,15 +84,14 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # Run the script .copr/getsources.sh to download tarballs to the appropriate locations. 
 %prep
 # Set some short names for convenience.
-%define repo0 XIVLauncher.Core
-%define repo1 XIVLauncher4rpm-%{DownstreamTag}
+%define repo0 XIVLauncher-RB
+%define repo1 XIVLauncher4rpm
 
 # Unpack source0. -n tells the macro the name of the folder.
 %setup -n %{repo0}
 # Now unpack the files from the second source into a folder. -T to prevent source0 from unpacking.
 # -b 1 tells it to unpack source1, and -n tells it the name of the folder.
 %setup -T -b 1 -n %{repo1}
-
 
 ### BUILD SECTION
 %build
@@ -102,7 +100,7 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
 cd %{_builddir}/%{repo0}
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:BuildHash="%{CoreTag}"
+dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:BuildHash="%{hash}"
 cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
 cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
 cd %{_builddir}/%{repo1}
@@ -123,11 +121,9 @@ ln -sr "opt/xivlauncher-rb/XIVLauncher.desktop" "usr/share/applications/XIVLaunc
 %pre
 
 %post
-echo -e "To clean your .xlcore profile when switching from flatpak to native XIVLauncher,"
-echo -e "you should run the script /opt/xivlauncher-rb/cleanupprofile.sh. Do not run with"
-echo -e "sudo. This should *not* be done if you are using a custom wine install.\n"
-echo -e "The /usr/bin/xivlauncher-rb script will simply launch XIVLauncher.Core with the"
-echo -e "proper SSL settings."
+echo -e "Modified SSL settings are no longer needed, so you can run"
+echo -e "/opt/xivlauncher/XIVLauncher.Core directly if you choose."
+echo -e "/usr/bin/xivlauncher-rb is still provided."
 
 %preun
 
@@ -145,7 +141,6 @@ fi
 /usr/share/applications/XIVLauncher-RB.desktop
 /usr/share/pixmaps/xivlauncher-rb.png
 /opt/xivlauncher-rb/CHANGELOG.md
-/opt/xivlauncher-rb/cleanupprofile.sh
 /opt/xivlauncher-rb/COPYING
 /opt/xivlauncher-rb/libcimgui.so
 /opt/xivlauncher-rb/libskeychain.so

@@ -1,4 +1,11 @@
 # Changelog
+### Thu Jun 27 2024 Rankyn Bass <rankyn@proton.me>
+1.0.9.1
+- Merged in 1.0.9 changes from official project
+- Added in the game repair fix
+- Updated to dotnet8. Lots of warnings, but it builds and runs.
+- Got rid of the openssl fix. It's no longer needed.
+
 ### Tue Mar 19 2024 Rankyn Bass <rankyn@proton.me>
 1.0.8.1
 - Added in upstream changes so we can log in
@@ -164,6 +171,33 @@ Changed back to tar.gz files for faster testing. Size saving isn't worth it.
 - Changed FFXIVQuickLauncher commit to 261464a. This is only one commit off the offical xlcore 1.0.2 commit, but has the XIVLauncher.Core stuff moved out of the repo. This prevents a bunch of duplicates in the tar.gz / SRPM.
 - XIVLauncher.Core is now on commit ad6b701 (it actually has been for a few releases). This commit skips version checking for non-flatpak releases. The version check function can sometimes take up to 5 seconds to execute (at which point it times out and gives up), and the window contents won't load until it's finished.
 
+1.0.8-2
+- Get rid of overly complicated launcher script.
+- Make it no longer conflict with -RB package.
+- Move to /opt/xivlauncher instead of /opt/XIVLauncher
+- Renamed primary launcher script to /usr/bin/xivlauncher-core to match other distros.
+
+### Sun Jun 18 2023 Rankyn Bass <rankyn@proton.me>
+Updated to 1.0.4-3. Fixed a bug that would prevent launching if wine had not already been downloaded.
+
+### Sat Jun 17 2023 Rankyn Bass <rankyn@proton.me>
+Updated to 1.0.4-2. There's a few minor fixes. Dalamud plugins might work better, now.
+
+### Sat Jun 17 2023 Rankyn Bass <rankyn@proton.me>
+Updated to version 1.0.4
+
+### Sat Jan 14 2023 Rankyn Bass <rankyn@proton.me>
+Updated to version 1.0.3
+
+### Mon Nov 28 2022 Rankyn Bass <rankyn@proton.me>
+Release bumped to 6
+
+Updated the xivlauncher script. It has some management features built in
+- It will create .desktop files for your custom scripts in `~/.local/share/applications` (or the $XDG_DATA_HOME directory if that is set).
+- You can list scripts with -l, delete with -d <script>, and refresh (to default) with -r <script>.
+- There is some basic sanity parsing, but not too much. You can break this if you try. I'm not responsible if you do.
+
+Updated the submodule to the xlcore removed commit. This cuts the source size in half, which means I went back to using tar.gz instead of tar.xz. This doesn't change functionality at all.
 
 ### Wed Nov 02 2022 Rankyn Bass <rankyn@proton.me>
 Release bumped to 5
