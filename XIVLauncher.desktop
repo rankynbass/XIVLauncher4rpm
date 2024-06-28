@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=XIVLauncher RPM
 Comment=Custom launcher for Final Fantasy XIV. RPM (non-flatpak) version.
-Exec=/usr/bin/xivlauncher-core
+Exec=/usr/bin/xivlauncher-rb
 Icon=xivlauncher
 Terminal=false
 Type=Application

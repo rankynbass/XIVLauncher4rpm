@@ -1,2 +1,2 @@
 #!/bin/sh
-/opt/xivlauncher/XIVLauncher.Core
+/opt/xivlauncher-rb/XIVLauncher.Core
