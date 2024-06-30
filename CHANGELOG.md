@@ -1,4 +1,15 @@
 # Changelog
+### Sun Jun 30 2024 Rankyn Bass <rankyn@proton.me>
+1.1.0.2
+- Updated to a completely new Proton layer, inspired by umu-launcher. Code is much cleaner and robust, and doesn't break every time I look at it funny.
+- Proton versions and runtimes can now be downloaded just like wine versions.
+- Removed the scaling patch for now. I'll pull in the PR on the main repo in a bit so that it'll be easier to maintain in the future, but that's several hours of work I don't want to do right now.
+- Removed automatic wayland settings for the same reason. I'll add it back later. Doing it manually still works, of course.
+
+### Fri Jun 28 2024 Rankyn Bass <rankyn@proton.me>
+1.1.0.1
+- Pulled in a few more patches to bring in line with 1.1.0
+
 ### Thu Jun 27 2024 Rankyn Bass <rankyn@proton.me>
 1.0.9.1
 - Merged in 1.0.9 changes from official project
