@@ -1,5 +1,9 @@
 # Changelog
 ### Sun Jun 30 2024 Rankyn Bass <rankyn@proton.me>
+1.1.0.3
+- Fix a bug where the launcher would crash with an ini file missing ProtonVersion entery and with no GE-Proton8-9 installed. This was leftover from a previous testing build. I re-added some GE-Proton builds, including 8-9, to fix this.
+
+### Sun Jun 30 2024 Rankyn Bass <rankyn@proton.me>
 1.1.0.2
 - Updated to a completely new Proton layer, inspired by umu-launcher. Code is much cleaner and robust, and doesn't break every time I look at it funny.
 - Proton versions and runtimes can now be downloaded just like wine versions.
