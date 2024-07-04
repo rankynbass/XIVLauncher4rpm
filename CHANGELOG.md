@@ -1,4 +1,8 @@
 # Changelog
+### Wed Jul 03 2024 Rankyn Bass <rankyn@proton.me>
+1.1.0.4
+- Restored XL_PATH environment variable handling. It accidentally got deleted when I did the new proton layer merge.
+
 ### Sun Jun 30 2024 Rankyn Bass <rankyn@proton.me>
 1.1.0.3
 - Fix a bug where the launcher would crash with an ini file missing ProtonVersion entery and with no GE-Proton8-9 installed. This was leftover from a previous testing build. I re-added some GE-Proton builds, including 8-9, to fix this.
