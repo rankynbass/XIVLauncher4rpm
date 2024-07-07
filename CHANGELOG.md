@@ -1,4 +1,9 @@
 # Changelog
+### Sun Jul 07 2024 Rankyn Bass <rankyn@proton.me>
+1.1.0.5
+- Added WINEDLLOVERRIDES in Wine tab. This is the correct way to set extra overrides.
+- Updated wine and proton versions
+
 ### Wed Jul 03 2024 Rankyn Bass <rankyn@proton.me>
 1.1.0.4
 - Restored XL_PATH environment variable handling. It accidentally got deleted when I did the new proton layer merge.
