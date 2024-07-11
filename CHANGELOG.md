@@ -1,4 +1,6 @@
 # Changelog
+## All future updates will be found at https://github.com/rankynbass/XIVLauncher.Core/blob/RB-patched/CHANGELOG.md
+
 ### Sun Jul 07 2024 Rankyn Bass <rankyn@proton.me>
 1.1.0.5
 - Added WINEDLLOVERRIDES in Wine tab. This is the correct way to set extra overrides.
