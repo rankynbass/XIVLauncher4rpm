@@ -61,7 +61,7 @@ Requires:       (libgcc or libgcc_s1)
 Requires:       (libpcap or libpcap1)
 Requires:       (libFAudio or libFAudio0)
 Requires:       desktop-file-utils
-Requires:       jxrlib
+Requires:       zstd
 Provides:       %{xlname}
 
 # There isn't any linux / rpm debug info available with the source git
