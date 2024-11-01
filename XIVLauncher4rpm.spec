@@ -102,7 +102,7 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 # build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
 cd %{_builddir}/%{repo0}
 cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash=%{hash}
+GITHUB_REPOSITORY=goatcorp/XIVLauncher.Core dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash=%{hash}
 cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
 cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
 cd %{_builddir}/%{repo1}
