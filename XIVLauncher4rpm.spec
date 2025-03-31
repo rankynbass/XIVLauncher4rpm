@@ -87,23 +87,14 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 %define repo0 XIVLauncher.Core
 %define repo1 XIVLauncher4rpm-%{DownstreamTag}
 
-# Unpack source0. -n tells the macro the name of the folder.
+# Unpack source0. -c tells it to create the directory, -n tells the macro the name of the folder.
 %setup -c -n %{repo0}
 # Now unpack the files from the second source into a folder. -T to prevent source0 from unpacking.
 # -b 1 tells it to unpack source1, and -n tells it the name of the folder.
 %setup -T -b 1 -n %{repo1}
 
 ### BUILD SECTION
-#%build
-# We need to pass two extra -p switches to dotnet publish. The first sets the version of wine to download, and the second sets
-# the build hash and prevents the compiler from trying to do a git describe to create or find one. This eliminates git as a
-# build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
-#cd %{_builddir}/%{repo0}
-#cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-#GITHUB_REPOSITORY=goatcorp/XIVLauncher.Core dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash=%{hash}
-#cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
-#cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
-#cd %{_builddir}/%{repo1}
+# This is no longer done. The pre-build tarball from https://github.com/goatcorp/XIVLauncher.Core is used instead.
 
 ### INSTALL SECTION
 %install
