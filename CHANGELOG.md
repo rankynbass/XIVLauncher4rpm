@@ -1,4 +1,8 @@
 # Changelog
+### Mon Mar 31 2025 Rankyn Bass <rankyn@proton.me>
+1.1.2-1
+- Use XIVLauncher.Core-fedora.tar.gz from goatcorp repo instead of compiling
+
 ### Tue Mar 19 2024 Rankyn Bass <rankyn@proton.me>
 1.0.8-2
 - Get rid of overly complicated launcher script.

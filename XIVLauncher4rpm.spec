@@ -8,11 +8,9 @@
 # https://docs.fedoraproject.org/en-US/legal/license-field/
 
 # COMPATABILITY
-# I've tested on the following distros. It will at least install, launch, and log in, although I haven't installed
-# or played FFXIV on all of them.
-# Fedora - 35 and 36
-# OpenSuse - Leap 15.3 and 15.4, and Tumbleweed
-# Rocky Linux 9 - Requires out-of-tree packages. Get here: https://copr.fedorainfracloud.org/coprs/rankyn/xl-deps-el9/
+# This should work on current fedora releases, the latest opensuse leap, and opensuse tumbleweed.
+# Enterprise Linux (Rocky, RedHad, Centos Stream, etc) Requires out-of-tree packages.
+# Get here: https://copr.fedorainfracloud.org/coprs/rankyn/xl-deps-el9/
 
 # Version File Source
 # I've put it here because I need it declared before it's used in some definitions. And it's Source2 because I'm
@@ -44,7 +42,7 @@ Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 # These package names are from the fedora / redhat repos. Other rpm distros might
 # have different names for these.
 # (x or y) has been used where fedora and opensuse have different package names (fedora-pkg or opensuse-pkg).
-BuildRequires:  dotnet-sdk-8.0
+# BuildRequires:  dotnet-sdk-8.0
 Requires:       aria2
 Requires:       (SDL2 or libSDL2-2_0-0)
 Requires:       (libsecret or libsecret-1-0)
@@ -90,22 +88,22 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 %define repo1 XIVLauncher4rpm-%{DownstreamTag}
 
 # Unpack source0. -n tells the macro the name of the folder.
-%setup -n %{repo0}
+%setup -c -n %{repo0}
 # Now unpack the files from the second source into a folder. -T to prevent source0 from unpacking.
 # -b 1 tells it to unpack source1, and -n tells it the name of the folder.
 %setup -T -b 1 -n %{repo1}
 
 ### BUILD SECTION
-%build
+#%build
 # We need to pass two extra -p switches to dotnet publish. The first sets the version of wine to download, and the second sets
 # the build hash and prevents the compiler from trying to do a git describe to create or find one. This eliminates git as a
 # build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
-cd %{_builddir}/%{repo0}
-cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-GITHUB_REPOSITORY=goatcorp/XIVLauncher.Core dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash=%{hash}
-cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
-cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
-cd %{_builddir}/%{repo1}
+#cd %{_builddir}/%{repo0}
+#cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
+#GITHUB_REPOSITORY=goatcorp/XIVLauncher.Core dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:DefineConstants=WINE_XIV_FEDORA_LINUX -p:BuildHash=%{hash}
+#cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
+#cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
+#cd %{_builddir}/%{repo1}
 
 ### INSTALL SECTION
 %install
@@ -114,6 +112,7 @@ install -d "%{buildroot}/opt/xivlauncher"
 install -d "%{buildroot}/usr/share/doc/xivlauncher"
 install -d "%{buildroot}/usr/share/applications"
 install -D -m 644 "%{_builddir}/%{repo1}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher.png"
+cp -r "%{_builddir}/%{repo0}"/* "%{buildroot}/opt/xivlauncher"
 cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/xivlauncher"
 cp %{buildroot}/opt/xivlauncher/COPYING %{buildroot}/usr/share/doc/xivlauncher/COPYING
 cd %{buildroot}
@@ -165,4 +164,5 @@ fi
 %license /usr/share/doc/xivlauncher/COPYING
 
 %changelog
-# See CHANGELOG.md
+* Mon Mar 31 2025 Rankyn Bass <rankyn@proton.me>
+- See CHANGELOG.md
