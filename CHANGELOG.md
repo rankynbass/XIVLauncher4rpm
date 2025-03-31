@@ -1,6 +1,6 @@
 # Changelog
 ### Mon Mar 31 2025 Rankyn Bass <rankyn@proton.me>
-1.1.2-1
+1.1.2-2
 - Use XIVLauncher.Core-fedora.tar.gz from goatcorp repo instead of compiling
 
 ### Tue Mar 19 2024 Rankyn Bass <rankyn@proton.me>

@@ -23,7 +23,6 @@ Source2:        _version
 %define xlname %(awk 'NR==1 {print; exit}' < %{SOURCE2} )
 %define xlversion %(awk 'NR==3 {print; exit}' < %{SOURCE2} )
 %define xlrelease %(awk 'NR==4 {print; exit}' < %{SOURCE2} )
-%define hash %(awk 'NR==5 {print; exit}' < %{SOURCE2} )
 %define DownstreamTag %{xlversion}-%{xlrelease}
 
 Name:           %{xlname}

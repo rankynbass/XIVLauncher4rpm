@@ -6,7 +6,6 @@ PkgName=$(awk 'NR==1 {print; exit}' < "${repodir}/_version")
 CoreRepo=$(awk 'NR==2 {print; exit}' < "${repodir}/_version")
 CoreTag=$(awk 'NR==3 {print; exit}' < "${repodir}/_version")
 Release=$(awk 'NR==4 {print; exit}' < "${repodir}/_version")
-Hash=$(awk 'NR==5 {print; exit}' < "${repodir}/_version")
 xlsource=$(rpmbuild --eval='%_sourcedir')
 source0="${xlsource}/XIVLauncher.Core-${CoreTag}.tar.gz"
 source1=${xlsource}/XIVLauncher4rpm-${CoreTag}-${Release}.tar.gz
@@ -35,5 +34,4 @@ ${PkgName}
 ${CoreRepo}
 ${CoreTag}
 ${Release}
-${Hash}
 EOF
