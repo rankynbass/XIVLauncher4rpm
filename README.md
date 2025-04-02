@@ -115,7 +115,7 @@ sudo dnf rpmdevtools rpm-build
 
 Set up the build directories if they don't already exist (`~/rpmbuild` and subfolders). Run the command `rpmdev-setuptree`. Do NOT run with sudo/root access. You want to make these directories in your own home folder.
 
-Install dotnet-sdk-6.0, which is needed for the build, with `sudo dnf install dotnet-sdk-6.0`.
+Install dotnet-sdk-8.0+, which is needed for the build, with `sudo dnf install dotnet-sdk-8.0`.
 
 ### OpenSUSE setup
 
@@ -125,7 +125,7 @@ This is almost the same as Fedora, just with one extra step. Dotnet is not in th
 sudo zypper install libicu
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 sudo zypper ar https://packages.microsoft.com/config/opensuse/15/prod.repo
-sudo install dotnet-sdk-6.0
+sudo install dotnet-sdk-8.0
 ```
 
 After that, install rpm build packages with `sudo zypper in rpm-build rpmdevtools`, and run `rpmdev-setuptree` (NOT as root).

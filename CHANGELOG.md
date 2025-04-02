@@ -4,6 +4,7 @@
 ### Tue Apr 2025 Rankyn Bass <rankyn@proton.me>
 1.1.2.1-1
 - Use XIVLauncher.Core-fedora.tar.gz from goatcorp repo instead of compiling
+- OpenSUSE Tumbleweed is currently not building on COPR. This is due to a bug in the tumbleweed-dnf image, and can't be fixed on my side. I'll update it as soon as possible. In the mean time, tumbleweed users can probably use the Leap 15.6 repo.
 
 ### Sun Jul 07 2024 Rankyn Bass <rankyn@proton.me>
 1.1.0.5
