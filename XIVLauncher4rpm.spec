@@ -25,7 +25,6 @@ Source2:        _version
 %define xlname %(awk 'NR==1 {print; exit}' < %{SOURCE2} )
 %define xlversion %(awk 'NR==3 {print; exit}' < %{SOURCE2} )
 %define xlrelease %(awk 'NR==4 {print; exit}' < %{SOURCE2} )
-%define hash %(awk 'NR==5 {print; exit}' < %{SOURCE2} )
 %define DownstreamTag %{xlversion}-%{xlrelease}
 
 Name:           %{xlname}
@@ -42,7 +41,6 @@ Source1:        XIVLauncher4rpm-rb-v%{DownstreamTag}.tar.gz
 # These package names are from the fedora / redhat repos. Other rpm distros might
 # have different names for these.
 # (x or y) has been used where fedora and opensuse have different package names (fedora-pkg or opensuse-pkg).
-BuildRequires:  dotnet-sdk-8.0
 Requires:       aria2
 Requires:       (SDL2 or libSDL2-2_0-0)
 Requires:       (libsecret or libsecret-1-0)
@@ -85,25 +83,16 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 %prep
 # Set some short names for convenience.
 %define repo0 XIVLauncher-RB
-%define repo1 XIVLauncher4rpm
+%define repo1 XIVLauncher4rpm-rb-v%{DownstreamTag}
 
-# Unpack source0. -n tells the macro the name of the folder.
-%setup -n %{repo0}
+# Unpack source0. -c tells it to create the directory, -n tells the macro the name of the folder.
+%setup -c -n %{repo0}
 # Now unpack the files from the second source into a folder. -T to prevent source0 from unpacking.
 # -b 1 tells it to unpack source1, and -n tells it the name of the folder.
 %setup -T -b 1 -n %{repo1}
 
 ### BUILD SECTION
-%build
-# We need to pass two extra -p switches to dotnet publish. The first sets the version of wine to download, and the second sets
-# the build hash and prevents the compiler from trying to do a git describe to create or find one. This eliminates git as a
-# build requirement (and dirty hack of doing git init) and drastically speeds up the compile.
-cd %{_builddir}/%{repo0}
-cd %{_builddir}/%{repo0}/src/XIVLauncher.Core
-dotnet publish -r linux-x64 --sc -o "%{_builddir}/%{repo1}" --configuration Release -p:Version=%{xlversion} -p:BuildHash="%{hash}"
-cp ../../misc/linux_distrib/512.png %{_builddir}/%{repo1}/xivlauncher.png
-cp ../../misc/header.png %{_builddir}/%{repo1}/xivlogo.png
-cd %{_builddir}/%{repo1}
+# This is no longer done. The pre-built tarball from https://github.com/rankynbass/XIVLauncher.Core is used instead.
 
 ### INSTALL SECTION
 %install
@@ -112,6 +101,8 @@ install -d "%{buildroot}/opt/xivlauncher-rb"
 install -d "%{buildroot}/usr/share/doc/xivlauncher-rb"
 install -d "%{buildroot}/usr/share/applications"
 install -D -m 644 "%{_builddir}/%{repo1}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher-rb.png"
+rm -f "%{_builddir}/%{repo0}"/openssl_fix.cnf
+cp -r "%{_builddir}/%{repo0}"/* "%{buildroot}/opt/xivlauncher-rb"
 cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/xivlauncher-rb"
 cp %{buildroot}/opt/xivlauncher-rb/COPYING %{buildroot}/usr/share/doc/xivlauncher-rb/COPYING
 cd %{buildroot}
@@ -121,7 +112,7 @@ ln -sr "opt/xivlauncher-rb/XIVLauncher.desktop" "usr/share/applications/XIVLaunc
 %pre
 
 %post
-echo -e "Modified SSL settings are no longer needed, so you can run"
+echo -e "\nModified SSL settings are no longer needed, so you can run"
 echo -e "/opt/xivlauncher/XIVLauncher.Core directly if you choose."
 echo -e "/usr/bin/xivlauncher-rb is still provided."
 
@@ -129,10 +120,10 @@ echo -e "/usr/bin/xivlauncher-rb is still provided."
 
 %postun
 if [ "$1" = "0" ]; then
-    echo -e "Reminder: Removing this package does not remove your ~/.xlcore folder or"
+    echo -e "\nReminder: Removing this package does not remove your ~/.xlcore folder or"
     echo -e "uninstall the FFXIV game files. There may also be xivlauncher-*.sh scripts in"
     echo -e "~/.local/bin and XIVLauncher-*.desktop files in ~/.local/share/applications"
-    echo -e "that you will have to remove manually from older versions of this package.\n"
+    echo -e "that you will have to remove manually from older versions of this package."
 fi
 
 ### FILES SECTION
@@ -162,4 +153,5 @@ fi
 %license /usr/share/doc/xivlauncher-rb/COPYING
 
 %changelog
-# See CHANGELOG.md
+* Tue Apr 01 2025 Rankyn Bass <rankyn@proton.me>
+- See CHANGELOG.md
