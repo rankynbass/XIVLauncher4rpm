@@ -18,9 +18,9 @@ rm ${source0}
 rm ${source1}
 
 cd "${workingdir}" || exit
-echo "Downloading ${CoreTag}/XIVLauncher.Core-fedora.tar.gz from git repository ${CoreRepo}"
+echo "Downloading ${CoreTag}/XIVLauncher.Core.tar.gz from git repository ${CoreRepo}"
 echo "Renaming as XIVLauncher.Core-${CoreTag}.tar.gz"
-curl -L https://github.com/goatcorp/XIVLauncher.Core/releases/download/${CoreTag}/XIVLauncher.Core-fedora.tar.gz -o ${xlsource}/XIVLauncher.Core-${CoreTag}.tar.gz
+curl -L https://github.com/goatcorp/XIVLauncher.Core/releases/download/${CoreTag}/XIVLauncher.Core.tar.gz -o ${xlsource}/XIVLauncher.Core-${CoreTag}.tar.gz
 
 cd "${repodir}" || exit
 mkdir -p "${workingdir}/XIVLauncher4rpm-${CoreTag}-${Release}"
