@@ -105,6 +105,7 @@ rm -f "%{_builddir}/%{repo0}"/openssl_fix.cnf
 cp -r "%{_builddir}/%{repo0}"/* "%{buildroot}/opt/xivlauncher-rb"
 cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/xivlauncher-rb"
 cp %{buildroot}/opt/xivlauncher-rb/COPYING %{buildroot}/usr/share/doc/xivlauncher-rb/COPYING
+cp %{buildroot}/opt/xivlauncher-rb/MIT %{buildroot}/usr/share/doc/xivlauncher-rb/MIT
 cd %{buildroot}
 ln -sr "opt/xivlauncher-rb/xivlauncher.sh" "usr/bin/xivlauncher-rb"
 ln -sr "opt/xivlauncher-rb/XIVLauncher.desktop" "usr/share/applications/XIVLauncher-RB.desktop"
@@ -136,7 +137,9 @@ fi
 /opt/xivlauncher-rb/libcimgui.so
 /opt/xivlauncher-rb/libskeychain.so
 /opt/xivlauncher-rb/libsteam_api64.so
+/opt/xivlauncher-rb/LICENSE
 /opt/xivlauncher-rb/README.md
+/opt/xivlauncher-rb/MIT
 /opt/xivlauncher-rb/xivlauncher.sh
 /opt/xivlauncher-rb/xivlauncher.png
 /opt/xivlauncher-rb/XIVLauncher.Common.pdb
@@ -151,6 +154,8 @@ fi
 /opt/xivlauncher-rb/XIVLauncher.desktop
 /opt/xivlauncher-rb/xivlogo.png
 %license /usr/share/doc/xivlauncher-rb/COPYING
+%license /usr/share/doc/xivlauncher-rb/MIT
+
 
 %changelog
 * Tue Apr 01 2025 Rankyn Bass <rankyn@proton.me>
