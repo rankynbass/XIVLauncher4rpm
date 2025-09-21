@@ -1,6 +1,10 @@
 # Changelog
 ## All future updates will be found at https://github.com/rankynbass/XIVLauncher.Core/blob/RB-patched/CHANGELOG.md
 
+### Sun Sep 21 2025 Rankyn Bass <rankyn@proton.me>
+1.2.1.4-2
+- Fix broken icon
+
 ### Tue Apr 2025 Rankyn Bass <rankyn@proton.me>
 1.1.2.1-1
 - Use XIVLauncher.Core-fedora.tar.gz from goatcorp repo instead of compiling
