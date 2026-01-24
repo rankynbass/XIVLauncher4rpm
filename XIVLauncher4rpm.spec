@@ -42,7 +42,7 @@ Source1:        XIVLauncher4rpm-rb-v%{DownstreamTag}.tar.gz
 # have different names for these.
 # (x or y) has been used where fedora and opensuse have different package names (fedora-pkg or opensuse-pkg).
 Requires:       aria2
-Requires:       (SDL2 or libSDL2-2_0-0)
+Requires:       (SDL3 or libSDL3-0)
 Requires:       (libsecret or libsecret-1-0)
 Requires:       (libattr or libattr1)
 Requires:       fontconfig
@@ -134,14 +134,19 @@ fi
 /usr/share/pixmaps/xivlauncher-rb.png
 /opt/xivlauncher-rb/CHANGELOG.md
 /opt/xivlauncher-rb/COPYING
-/opt/xivlauncher-rb/libcimgui.so
 /opt/xivlauncher-rb/libskeychain.so
 /opt/xivlauncher-rb/libsteam_api64.so
 /opt/xivlauncher-rb/LICENSE
 /opt/xivlauncher-rb/README.md
 /opt/xivlauncher-rb/MIT
+/opt/xivlauncher-rb/cimgui.so
+/opt/xivlauncher-rb/ImGuiImplSDL3.so
+/opt/xivlauncher-rb/libSDL3.so
+/opt/xivlauncher-rb/libSDL3_image.so
 /opt/xivlauncher-rb/xivlauncher.sh
 /opt/xivlauncher-rb/xivlauncher.png
+/opt/xivlauncher-rb/XIVLauncher.Aria.pdb
+/opt/xivlauncher-rb/XIVLauncher.Aria.xml
 /opt/xivlauncher-rb/XIVLauncher.Common.pdb
 /opt/xivlauncher-rb/XIVLauncher.Common.Unix.pdb
 /opt/xivlauncher-rb/XIVLauncher.Common.Unix.xml
