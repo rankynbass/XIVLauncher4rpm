@@ -31,8 +31,7 @@ Release:        %{xlrelease}%{?dist}
 # Original Versioning: a.b.c.d-r
 # Epoch 1  Versioning: a.b.c-r
 Epoch:          1
-Summary:        Custom Launcher for the MMORPG Final Fantasy XIV (Native RPM package)
-Group:          Applications/Games
+Summary:        Custom Launcher for the MMORPG Final Fantasy XIV
 License:        GPL-3.0-only
 URL:            https://github.com/rankynbass/XIVLauncher4rpm
 Source0:        XIVLauncher.Core-%{xlversion}.tar.gz
@@ -72,11 +71,8 @@ Provides:       %{xlname}
 # Turn off build_id links to prevent conflict with main XIVLauncher package.
 %define _build_id_links none
 
-# Binaries will be deposited into this directory. Macro'd for convenience.
-%define launcher %{_builddir}/XIVLauncher
-
 %description
-Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This is a native build for fedora 36 and several other rpm based distos.
+Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV.
 
 ### PREP SECTION
 # Be aware that rpmbuild DOES NOT download sources from urls. It expects the source files to be in the %%{_sourcedir} directory.
@@ -97,17 +93,14 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV. This
 
 ### INSTALL SECTION
 %install
-install -d "%{buildroot}/usr/bin"
+install -d "%{buildroot}%{_bindir}"
 install -d "%{buildroot}/opt/xivlauncher"
-install -d "%{buildroot}/usr/share/doc/xivlauncher"
-install -d "%{buildroot}/usr/share/applications"
-install -D -m 644 "%{_builddir}/%{repo1}/xivlauncher.png" "%{buildroot}/usr/share/pixmaps/xivlauncher.png"
+install -d "%{buildroot}%{_datadir}/applications"
+install -D -m 644 "%{_builddir}/%{repo1}/xivlauncher.png" "%{buildroot}%{_datadir}/pixmaps/dev.goats.xivlauncher.png"
 cp -r "%{_builddir}/%{repo0}"/* "%{buildroot}/opt/xivlauncher"
 cp -r "%{_builddir}/%{repo1}"/* "%{buildroot}/opt/xivlauncher"
-cp %{buildroot}/opt/xivlauncher/COPYING %{buildroot}/usr/share/doc/xivlauncher/COPYING
-cd %{buildroot}
-ln -sr "opt/xivlauncher/xivlauncher.sh" "usr/bin/xivlauncher-core"
-ln -sr "opt/xivlauncher/XIVLauncher.desktop" "usr/share/applications/XIVLauncher.desktop"
+ln -sr "%{buildroot}/opt/xivlauncher/XIVLauncher.Core" "%{buildroot}/%{_bindir}/xivlauncher-core"
+mv "%{buildroot}/opt/xivlauncher/XIVLauncher.desktop" "%{buildroot}/%{_datadir}/applications/XIVLauncher.desktop"
 
 %pre
 
@@ -129,30 +122,25 @@ fi
 
 ### FILES SECTION
 %files
-/usr/bin/xivlauncher-core
-/usr/share/applications/XIVLauncher.desktop
-/usr/share/pixmaps/xivlauncher.png
-/opt/xivlauncher/CHANGELOG.md
-/opt/xivlauncher/COPYING
-/opt/xivlauncher/libcimgui.so
-/opt/xivlauncher/libskeychain.so
-/opt/xivlauncher/libsteam_api64.so
-/opt/xivlauncher/README.md
-/opt/xivlauncher/xivlauncher.sh
-/opt/xivlauncher/xivlauncher.png
-/opt/xivlauncher/XIVLauncher.Common.pdb
-/opt/xivlauncher/XIVLauncher.Common.Unix.pdb
-/opt/xivlauncher/XIVLauncher.Common.Unix.xml
-/opt/xivlauncher/XIVLauncher.Common.Windows.pdb
-/opt/xivlauncher/XIVLauncher.Common.Windows.xml
-/opt/xivlauncher/XIVLauncher.Common.xml
-/opt/xivlauncher/XIVLauncher.Core
-/opt/xivlauncher/XIVLauncher.Core.pdb
-/opt/xivlauncher/XIVLauncher.Core.xml
-/opt/xivlauncher/XIVLauncher.desktop
-/opt/xivlauncher/xivlogo.png
-%license /usr/share/doc/xivlauncher/COPYING
+%license /opt/xivlauncher/COPYING
+%doc /opt/xivlauncher/CHANGELOG.md
+%doc /opt/xivlauncher/README.md
+%{_bindir}/xivlauncher-core
+%{_datadir}/applications/XIVLauncher.desktop
+%{_datadir}/pixmaps/dev.goats.xivlauncher.png
+/opt/xivlauncher/
 
 %changelog
+* Thu Feb 26 2026 Tarulia <mihawk.90+git@googlemail.com>
+- removed unused, discouraged, and deprecated Group tag
+- removed unused macro definition
+- removed reference to F36 from Description
+- use RPM macros instead of absolute paths in install section
+- removed wrapper shellscript and symlinked binary directly
+- move .desktop file instead of symlinking it
+- rename application icon to match official Flatpak
+- proper doc and license tags for RPM payload data
+- package directory instead of individual file list
+
 * Mon Mar 31 2025 Rankyn Bass <rankyn@proton.me>
 - See CHANGELOG.md

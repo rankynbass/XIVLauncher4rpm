@@ -24,7 +24,7 @@ curl -L https://github.com/goatcorp/XIVLauncher.Core/releases/download/${CoreTag
 
 cd "${repodir}" || exit
 mkdir -p "${workingdir}/XIVLauncher4rpm-${CoreTag}-${Release}"
-cp CHANGELOG.md README.md xivlauncher.png xivlauncher.sh xivlogo.png XIVLauncher.desktop COPYING "${workingdir}/XIVLauncher4rpm-${CoreTag}-${Release}/"
+cp CHANGELOG.md README.md xivlauncher.png xivlogo.png XIVLauncher.desktop COPYING "${workingdir}/XIVLauncher4rpm-${CoreTag}-${Release}/"
 cd "${workingdir}" || exit
 echo "Creating XIVLauncher4rpm-${CoreTag}-${Release}.tar.gz"
 tar -czf "${source1}" "XIVLauncher4rpm-${CoreTag}-${Release}"
