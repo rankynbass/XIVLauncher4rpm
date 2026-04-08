@@ -40,9 +40,9 @@ Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 # These package names are from the fedora / redhat repos. Other rpm distros might
 # have different names for these.
 # (x or y) has been used where fedora and opensuse have different package names (fedora-pkg or opensuse-pkg).
-# BuildRequires:  dotnet-sdk-8.0
+BuildRequires:  patchelf
 Requires:       aria2
-Requires:       (SDL2 or libSDL2-2_0-0)
+Requires:       (SDL3 or llibSDL3-0)
 Requires:       (libsecret or libsecret-1-0)
 Requires:       (libattr or libattr1)
 Requires:       fontconfig
@@ -57,9 +57,7 @@ Requires:       (mesa-libGLU or libGLU1)
 Requires:       (libSM or libSM6)
 Requires:       (libgcc or libgcc_s1)
 Requires:       (libpcap or libpcap1)
-Requires:       (libFAudio or libFAudio0)
 Requires:       desktop-file-utils
-Requires:       jxrlib
 Provides:       %{xlname}
 
 # There isn't any linux / rpm debug info available with the source git
@@ -89,7 +87,10 @@ Third-party launcher for the critically acclaimed MMORPG Final Fantasy XIV.
 %setup -T -b 1 -n %{repo1}
 
 ### BUILD SECTION
-# This is no longer done. The pre-build tarball from https://github.com/goatcorp/XIVLauncher.Core is used instead.
+# Using this section to fix the libSDL3_image.so file so RPM will build
+%build
+cd %{_builddir}/%{repo0}
+patchelf --remove-rpath libSDL3_image.so
 
 ### INSTALL SECTION
 %install
