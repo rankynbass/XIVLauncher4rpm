@@ -42,7 +42,7 @@ Source1:        XIVLauncher4rpm-%{DownstreamTag}.tar.gz
 # (x or y) has been used where fedora and opensuse have different package names (fedora-pkg or opensuse-pkg).
 BuildRequires:  patchelf
 Requires:       aria2
-Requires:       (SDL3 or llibSDL3-0)
+Requires:       (SDL3 or libSDL3-0)
 Requires:       (libsecret or libsecret-1-0)
 Requires:       (libattr or libattr1)
 Requires:       fontconfig
@@ -132,6 +132,13 @@ fi
 /opt/xivlauncher/
 
 %changelog
+* Thu Apr 16 2026 Rankyn Bass <rankyn@proton.me>
+- Fix libSDL3 dependency for tumbleweed, opensuse
+
+* Wed Apr 08 2026 Rankyn Bass <rankyn@proton.me>
+- Added patchelf to build instructions
+- Updated dependencies for new UI toolkit (SDL2 -> SDL3)
+
 * Thu Feb 26 2026 Tarulia <mihawk.90+git@googlemail.com>
 - removed unused, discouraged, and deprecated Group tag
 - removed unused macro definition
